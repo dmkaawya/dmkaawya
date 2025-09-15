@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio - Dark Edition</title>
+    <title>D.M.Kaawya - Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -621,16 +621,24 @@
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
-            padding: 1rem;
+            padding: 1.5rem;
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .contact-item i {
+        .contact-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(10px);
+        }
+
+        .contact-item-icon {
             font-size: 1.5rem;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
             color: var(--primary-red);
+            width: 40px;
+            text-align: center;
         }
 
         .contact-form {
@@ -855,7 +863,7 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="logo">Portfolio</div>
+            <div class="logo">D.M.Kaawya</div>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -875,7 +883,7 @@
     <section id="home" class="section home">
         <div class="container">
             <div class="home-content">
-                <h1>Your Name</h1>
+                <h1>D.M.Kaawya</h1>
                 <p class="subtitle">Creative Developer & Designer</p>
                 <div class="cta-buttons">
                     <a href="#about" class="cta-button">View My Work</a>
@@ -891,7 +899,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="profile-section">
-                    <div class="profile-img">👨‍💻</div>
+                    <div class="profile-img">🚀</div>
                     <div class="stats">
                         <div class="stat">
                             <h4>5+</h4>
@@ -909,9 +917,9 @@
                 </div>
                 <div class="about-text">
                     <h3>Creative Professional</h3>
-                    <p>I'm a passionate developer with expertise in creating stunning, high-performance web applications. My journey combines creativity with cutting-edge technology to deliver exceptional digital experiences.</p>
+                    <p>I'm D.M.Kaawya, a passionate developer with expertise in creating stunning, high-performance web applications. My journey combines creativity with cutting-edge technology to deliver exceptional digital experiences.</p>
                     <p>Specialized in modern frameworks and technologies, I transform complex ideas into elegant solutions. Every project is crafted with attention to detail, user experience, and performance optimization.</p>
-                    <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, and mentoring aspiring developers in the community.</p>
+                    <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, and mentoring aspiring developers in the community. I believe in continuous learning and pushing the boundaries of what's possible in web development.</p>
                 </div>
             </div>
         </div>
@@ -925,29 +933,20 @@
                 <div class="skill-card">
                     <div class="skill-icon">⚡</div>
                     <h3>Frontend Development</h3>
-                    <p>React, Vue.js, Angular, TypeScript, Next.js, and modern CSS frameworks. Building responsive, interactive, and performant user interfaces.</p>
+                    <p>React, Vue.js, Angular, TypeScript, Next.js, and modern CSS frameworks. Building responsive, interactive, and performant user interfaces that engage users.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">🚀</div>
                     <h3>Backend Development</h3>
-                    <p>Node.js, Python, PHP, Express, FastAPI, database design, REST APIs, GraphQL, and microservices architecture.</p>
+                    <p>Node.js, Python, PHP, Express, FastAPI, database design, REST APIs, GraphQL, and microservices architecture for scalable applications.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">📱</div>
                     <h3>Mobile Development</h3>
-                    <p>React Native, Flutter, PWAs, and cross-platform solutions for iOS and Android with native performance.</p>
+                    <p>React Native, Flutter, PWAs, and cross-platform solutions for iOS and Android with native performance and smooth user experiences.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">🎨</div>
                     <h3>UI/UX Design</h3>
-                    <p>Figma, Adobe Creative Suite, user research, prototyping, and creating intuitive designs that convert.</p>
+                    <p>Figma, Adobe Creative Suite, user research, prototyping, and creating intuitive designs that convert visitors into customers.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">☁️</div>
-                    <h3>Cloud & DevOps</h3>
-                    <p>AWS, Azure, Docker, Kubernetes, CI/CD pipelines, and scalable cloud infrastructure deployment.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🔒</div>
-                    <h3>Security & Performance</h3>
-                    <p>Web
