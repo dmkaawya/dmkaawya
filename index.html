@@ -91,6 +91,18 @@
             transition: 0.3s;
         }
 
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
         /* Mobile Navigation */
         @media (max-width: 768px) {
             .hamburger {
@@ -107,6 +119,7 @@
                 text-align: center;
                 transition: 0.3s;
                 padding: 2rem 0;
+                backdrop-filter: blur(10px);
             }
 
             .nav-menu.active {
@@ -123,11 +136,13 @@
             opacity: 0;
             transform: translateY(50px);
             transition: all 0.8s ease;
+            display: none;
         }
 
         .section.active {
             opacity: 1;
             transform: translateY(0);
+            display: block;
         }
 
         /* Hero Section */
@@ -218,6 +233,27 @@
             box-shadow: 0 10px 25px rgba(255, 51, 51, 0.6);
         }
 
+        /* Section Titles */
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #ff3333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff3333, #ff5555);
+            border-radius: 2px;
+        }
+
         /* About Section */
         .about-content {
             display: grid;
@@ -266,24 +302,10 @@
             100% { transform: rotate(360deg); }
         }
 
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #ff3333;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, #ff3333, #ff5555);
-            border-radius: 2px;
+        .about-text {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 1.1rem;
         }
 
         /* Skills Section */
@@ -389,12 +411,80 @@
         .project-content h3 {
             color: #ff3333;
             margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .project-content p {
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            height: 250px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ff3333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 51, 51, 0.1), rgba(255, 85, 85, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            border-color: #ff3333;
+            box-shadow: 0 8px 25px rgba(255, 51, 51, 0.4);
+        }
+
+        .gallery-text {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .gallery-text h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .gallery-text p {
+            font-size: 0.9rem;
+            color: #aaa;
         }
 
         /* Contact Section */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -427,7 +517,7 @@
         }
 
         .contact-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #ff3333;
             margin-bottom: 1rem;
             display: block;
@@ -436,45 +526,19 @@
         .contact-card h3 {
             color: #ff3333;
             margin-bottom: 0.5rem;
+            font-size: 1.3rem;
         }
 
         .contact-card p {
             color: #cccccc;
+            font-size: 1.1rem;
         }
 
-        /* Gallery Section */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .gallery-item {
-            height: 200px;
-            background: linear-gradient(45deg, #333, #555);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #ff3333;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-            border-color: #ff3333;
-            box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
-        }
-
-        /* Admin Login Tab */
+        /* Admin Tab */
         .admin-tab {
             position: fixed;
             top: 50%;
-            right: -200px;
+            right: -180px;
             transform: translateY(-50%);
             background: linear-gradient(135deg, #ff3333, #ff5555);
             padding: 1rem;
@@ -494,6 +558,7 @@
             font-weight: bold;
             writing-mode: vertical-rl;
             text-orientation: mixed;
+            font-size: 0.9rem;
         }
 
         /* Login Modal */
@@ -518,6 +583,7 @@
             width: 90%;
             max-width: 400px;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .close {
@@ -529,6 +595,7 @@
             position: absolute;
             right: 20px;
             top: 15px;
+            transition: color 0.3s ease;
         }
 
         .close:hover {
@@ -537,6 +604,12 @@
 
         .login-form {
             margin-top: 2rem;
+        }
+
+        .login-form h2 {
+            color: #ff3333;
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .login-form input {
@@ -548,6 +621,7 @@
             border-radius: 5px;
             color: white;
             font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
         .login-form input:focus {
@@ -594,34 +668,40 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #ff3333;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .admin-nav {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .admin-nav button {
-            padding: 0.5rem 1rem;
+            padding: 0.7rem 1.2rem;
             background: transparent;
             color: white;
             border: 1px solid #333;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .admin-nav button.active,
         .admin-nav button:hover {
             background: #ff3333;
             border-color: #ff3333;
+            transform: translateY(-2px);
         }
 
         .logout-btn {
             background: linear-gradient(45deg, #ff3333, #ff5555);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.7rem 1.2rem;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -654,6 +734,7 @@
             color: #ff3333;
             margin-bottom: 2rem;
             text-align: center;
+            font-size: 2rem;
         }
 
         .form-group {
@@ -664,6 +745,7 @@
             display: block;
             margin-bottom: 0.5rem;
             color: #cccccc;
+            font-weight: bold;
         }
 
         .form-group input,
@@ -676,6 +758,7 @@
             border-radius: 5px;
             color: white;
             font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus,
@@ -695,6 +778,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            font-weight: bold;
         }
 
         .add-btn:hover {
@@ -708,28 +792,96 @@
 
         .item {
             background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
+            padding: 1.5rem;
             margin: 1rem 0;
             border-radius: 8px;
             border: 1px solid #333;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .item:hover {
+            border-color: #ff3333;
+            box-shadow: 0 3px 10px rgba(255, 51, 51, 0.2);
+        }
+
+        .item-info h4 {
+            color: #ff3333;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info p {
+            color: #cccccc;
+            font-size: 0.9rem;
         }
 
         .delete-btn {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .delete-btn:hover {
             background: #c82333;
             transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(220, 53, 69, 0.4);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(45deg, #28a745, #34ce57);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Error Message */
+        .error-message {
+            background: linear-gradient(45deg, #dc3545, #e74c3c);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #333;
+            border-radius: 50%;
+            border-top-color: #ff3333;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Responsive Design */
@@ -765,32 +917,37 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #333;
-            border-radius: 50%;
-            border-top-color: #ff3333;
-            animation: spin 1s ease-in-out infinite;
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
         }
 
-        /* Success Message */
-        .success-message {
-            background: linear-gradient(45deg, #28a745, #34ce57);
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-            text-align: center;
-            display: none;
+        ::-webkit-scrollbar-thumb {
+            background: #ff3333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5555;
         }
     </style>
 </head>
@@ -807,7 +964,7 @@
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -824,11 +981,12 @@
     <div id="loginModal" class="login-modal">
         <div class="login-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
-            <h2 style="color: #ff3333; text-align: center;">Admin Login</h2>
             <form class="login-form" onsubmit="adminLogin(event)">
+                <h2>Admin Login</h2>
                 <input type="text" id="username" placeholder="Username" required>
                 <input type="password" id="password" placeholder="Password" required>
                 <button type="submit" class="login-btn">Login</button>
+                <div id="loginError" class="error-message">Invalid username or password!</div>
             </form>
         </div>
     </div>
@@ -843,110 +1001,4 @@
                 <button onclick="showAdminSection('certificates')" class="admin-nav-btn">Certificates</button>
                 <button onclick="showAdminSection('gallery')" class="admin-nav-btn">Gallery</button>
             </div>
-            <button class="logout-btn" onclick="adminLogout()">Logout</button>
-        </div>
-        <div class="admin-content">
-            <!-- Projects Section -->
-            <div id="adminProjects" class="admin-section active">
-                <h2>Manage Projects</h2>
-                <div class="form-group">
-                    <label for="projectName">Project Name:</label>
-                    <input type="text" id="projectName" placeholder="Enter project name">
-                </div>
-                <div class="form-group">
-                    <label for="projectDescription">Description:</label>
-                    <textarea id="projectDescription" rows="4" placeholder="Enter project description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="projectCategory">Category:</label>
-                    <select id="projectCategory">
-                        <option value="web">Web Development</option>
-                        <option value="mobile">Mobile App</option>
-                        <option value="desktop">Desktop Application</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <button class="add-btn" onclick="addProject()">Add Project</button>
-                <div id="projectsList" class="item-list"></div>
-                <div id="projectSuccess" class="success-message">Project added successfully!</div>
-            </div>
-
-            <!-- Skills Section -->
-            <div id="adminSkills" class="admin-section">
-                <h2>Manage Skills</h2>
-                <div class="form-group">
-                    <label for="skillName">Skill Name:</label>
-                    <input type="text" id="skillName" placeholder="Enter skill name">
-                </div>
-                <div class="form-group">
-                    <label for="skillCategory">Category:</label>
-                    <select id="skillCategory">
-                        <option value="programming">Programming</option>
-                        <option value="certification">Certification</option>
-                        <option value="education">Education</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <button class="add-btn" onclick="addSkill()">Add Skill</button>
-                <div id="skillsList" class="item-list"></div>
-                <div id="skillSuccess" class="success-message">Skill added successfully!</div>
-            </div>
-
-            <!-- Certificates Section -->
-            <div id="adminCertificates" class="admin-section">
-                <h2>Manage Certificates</h2>
-                <div class="form-group">
-                    <label for="certName">Certificate Name:</label>
-                    <input type="text" id="certName" placeholder="Enter certificate name">
-                </div>
-                <div class="form-group">
-                    <label for="certOrganization">Organization:</label>
-                    <input type="text" id="certOrganization" placeholder="Enter organization name">
-                </div>
-                <div class="form-group">
-                    <label for="certDate">Date:</label>
-                    <input type="date" id="certDate">
-                </div>
-                <button class="add-btn" onclick="addCertificate()">Add Certificate</button>
-                <div id="certificatesList" class="item-list"></div>
-                <div id="certSuccess" class="success-message">Certificate added successfully!</div>
-            </div>
-
-            <!-- Gallery Section -->
-            <div id="adminGallery" class="admin-section">
-                <h2>Manage Gallery</h2>
-                <div class="form-group">
-                    <label for="photoName">Photo Name:</label>
-                    <input type="text" id="photoName" placeholder="Enter photo name">
-                </div>
-                <div class="form-group">
-                    <label for="photoDescription">Description:</label>
-                    <input type="text" id="photoDescription" placeholder="Enter photo description">
-                </div>
-                <button class="add-btn" onclick="addPhoto()">Add Photo</button>
-                <div id="photosList" class="item-list"></div>
-                <div id="photoSuccess" class="success-message">Photo added successfully!</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Home Section -->
-        <section id="home" class="section active hero">
-            <div class="hero-content">
-                <h1>D.M.Kaawya</h1>
-                <p>Web Developer | Student | Tech Enthusiast</p>
-                <a href="#contact" class="cta-button">Get In Touch</a>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="profile-card">
-                    <div class="profile-img">
-                        DK
-                    </div>
-                    <h3 style="color: #ff3333;">D.M.
+            <button class="logout-btn" onclick="adminLogout()">
