@@ -1,1335 +1,530 @@
-<!DOCTYPE html>
-<html lang="si">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.M.Kaawya - Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #ff0844;
-            --dark-red: #cc0635;
-            --purple: #8b5cf6;
-            --dark-purple: #7c3aed;
-            --black: #0a0a0a;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #404040;
-            --white: #ffffff;
-            --text-gray: #e0e0e0;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-gray);
-            background: var(--black);
-            overflow-x: hidden;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-gray);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(45deg, var(--dark-red), var(--dark-purple));
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--medium-gray);
-            padding: 1rem 2rem;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(10, 10, 10, 0.98);
-            box-shadow: 0 10px 40px rgba(255, 8, 68, 0.1);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--text-gray);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav-menu a:hover {
-            color: var(--primary-red);
-            transform: translateY(-2px);
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-red);
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
-
-        /* Sections */
-        .section {
-            min-height: 100vh;
-            padding: 120px 2rem 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        /* Home Section */
-        .home {
-            background: radial-gradient(circle at 30% 20%, var(--primary-red) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, var(--purple) 0%, transparent 50%),
-                        var(--black);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .home::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            animation: float 30s ease-in-out infinite;
-        }
-
-        .home-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .home h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: glitch 2s infinite;
-            background: linear-gradient(45deg, var(--white), var(--primary-red), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .home .subtitle {
-            font-size: 1.8rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            animation: slideInUp 1s ease-out 0.5s both;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: slideInUp 1s ease-out 1s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 18px 40px;
-            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
-            color: white;
-            text-decoration: none;
-            border-radius: 0;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(255, 8, 68, 0.3);
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            border: 2px solid var(--purple);
-            color: var(--purple);
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(255, 8, 68, 0.5);
-        }
-
-        .cta-button.secondary:hover {
-            background: var(--purple);
-            color: white;
-            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.5);
-        }
-
-        /* Glitch Animation */
-        @keyframes glitch {
-            0%, 100% {
-                text-shadow: 0 0 5px var(--primary-red);
-            }
-            25% {
-                text-shadow: -2px 0 var(--primary-red), 2px 0 var(--purple);
-            }
-            50% {
-                text-shadow: 2px 0 var(--primary-red), -2px 0 var(--purple);
-            }
-            75% {
-                text-shadow: 0 0 5px var(--purple);
-            }
-        }
-
-        /* About Section */
-        .about {
-            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
-        }
-
-        .about h2 {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: center;
-            text-align: left;
-        }
-
-        .profile-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .profile-img {
-            width: 280px;
-            height: 280px;
-            border-radius: 20px;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: white;
-            margin-bottom: 2rem;
-            box-shadow: 0 20px 60px rgba(255, 8, 68, 0.3);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-img::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.8s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05) rotateY(10deg);
-            box-shadow: 0 30px 80px rgba(255, 8, 68, 0.5);
-        }
-
-        .profile-img:hover::before {
-            left: 100%;
-            top: 100%;
-        }
-
-        .about-text h3 {
-            font-size: 2rem;
-            color: var(--primary-red);
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: var(--text-gray);
-        }
-
-        .stats {
-            display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 8, 68, 0.1);
-            border-radius: 10px;
-            border: 1px solid var(--primary-red);
-        }
-
-        .stat h4 {
-            font-size: 2rem;
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-
-        .stat p {
-            color: var(--text-gray);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        /* Skills Section */
-        .skills {
-            background: var(--black);
-            position: relative;
-        }
-
-        .skills::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, var(--purple) 0%, transparent 50%),
-                        radial-gradient(circle at 90% 20%, var(--primary-red) 0%, transparent 50%);
-            opacity: 0.1;
-        }
-
-        .skills h2 {
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .certifications {
-            background: var(--medium-gray);
-            position: relative;
-        }
-
-        .certifications h2 {
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .cert-card {
-            background: linear-gradient(145deg, var(--dark-gray), var(--black));
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--primary-red);
-            box-shadow: 0 10px 30px rgba(255, 8, 68, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            transform: translateY(20px);
-            opacity: 0;
-        }
-
-        .cert-card.animate {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .cert-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-        }
-
-        .cert-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(255, 8, 68, 0.3);
-        }
-
-        .cert-card h4 {
-            color: var(--primary-red);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        .cert-card p {
-            color: var(--text-gray);
-            margin-bottom: 0.5rem;
-        }
-
-        .cert-institution {
-            color: var(--purple);
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .skill-card {
-            background: linear-gradient(145deg, var(--dark-gray), var(--medium-gray));
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            transition: all 0.5s ease;
-            transform: translateY(20px);
-            opacity: 0;
-            border: 1px solid var(--light-gray);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            transform: scaleX(0);
-            transition: transform 0.5s ease;
-        }
-
-        .skill-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .skill-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(255, 8, 68, 0.2);
-            border-color: var(--primary-red);
-        }
-
-        .skill-card.animate {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .skill-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .skill-card h3 {
-            color: var(--white);
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .skill-card p {
-            color: var(--text-gray);
-            line-height: 1.6;
-        }
-
-        /* Projects Section */
-        .projects {
-            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--black) 100%);
-        }
-
-        .projects h2 {
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-
-        .project-card {
-            background: var(--medium-gray);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            cursor: pointer;
-            border: 1px solid var(--light-gray);
-            position: relative;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, var(--primary-red), var(--purple));
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover::before {
-            opacity: 0.1;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(255, 8, 68, 0.3);
-            border-color: var(--primary-red);
-        }
-
-        .project-content {
-            padding: 2.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-content h3 {
-            font-size: 1.6rem;
-            color: var(--white);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .project-content p {
-            color: var(--text-gray);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tech {
-            color: var(--primary-red);
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: radial-gradient(circle at 50% 50%, var(--primary-red) 0%, var(--black) 70%);
-            color: white;
-            position: relative;
-        }
-
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .contact h2 {
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-info h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--white);
-            text-transform: uppercase;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateX(10px);
-        }
-
-        .contact-item-icon {
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
-            color: var(--primary-red);
-            width: 40px;
-            text-align: center;
-        }
-
-        .contact-form {
-            background: rgba(255,255,255,0.05);
-            padding: 2.5rem;
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 18px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: var(--medium-gray);
-            color: var(--white);
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-red);
-            box-shadow: 0 0 20px rgba(255, 8, 68, 0.3);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--text-gray);
-        }
-
-        .submit-btn {
-            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 8, 68, 0.4);
-        }
-
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .about-content,
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-
-            .stats {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 80px;
-                flex-direction: column;
-                background: var(--dark-gray);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                padding: 2rem 0;
-                border-top: 1px solid var(--light-gray);
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .home h1 {
-                font-size: 3rem;
-            }
-
-            .home .subtitle {
-                font-size: 1.3rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .profile-img {
-                width: 220px;
-                height: 220px;
-            }
-
-            .section {
-                padding: 100px 1rem 60px;
-            }
-
-            .stats {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .stat {
-                width: 150px;
-            }
-        }
-
-        /* Floating Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--primary-red);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float-particle 20s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) {
-            width: 4px;
-            height: 4px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .particle:nth-child(2) {
-            width: 6px;
-            height: 6px;
-            top: 60%;
-            right: 20%;
-            animation-delay: 2s;
-            background: var(--purple);
-        }
-
-        .particle:nth-child(3) {
-            width: 3px;
-            height: 3px;
-            top: 80%;
-            left: 30%;
-            animation-delay: 4s;
-        }
-
-        .particle:nth-child(4) {
-            width: 5px;
-            height: 5px;
-            top: 40%;
-            right: 40%;
-            animation-delay: 6s;
-            background: var(--purple);
-        }
-
-        @keyframes float-particle {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.1;
-            }
-            33% {
-                transform: translateY(-100px) rotate(120deg);
-                opacity: 0.3;
-            }
-            66% {
-                transform: translateY(-200px) rotate(240deg);
-                opacity: 0.1;
-            }
-        }
-    </style>
-</head>
-<body>
-    <script>
-        // Mobile Navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-
-            hamburger.addEventListener('click', function() {
-                navMenu.classList.toggle('active');
-                hamburger.classList.toggle('active');
-            });
-
-            // Close menu when clicking on a link
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                link.addEventListener('click', function() {
-                    navMenu.classList.remove('active');
-                    hamburger.classList.remove('active');
-                });
-            });
-
-            // Smooth Scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Skill Cards Animation (updated for certificates too)
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('animate');
-                        }, index * 200);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.skill-card, .cert-card').forEach(card => {
-                observer.observe(card);
-            });
-
-            // Form Submission
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const submitBtn = this.querySelector('.submit-btn');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Sending...';
-                    submitBtn.style.background = '#95a5a6';
-                    
-                    setTimeout(() => {
-                        submitBtn.textContent = 'Message Sent! ✓';
-                        submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
-                        
-                        setTimeout(() => {
-                            submitBtn.textContent = originalText;
-                            submitBtn.style.background = 'linear-gradient(45deg, var(--primary-red), var(--dark-red))';
-                            this.reset();
-                        }, 2000);
-                    }, 1500);
-                });
-            }
-
-            // Navbar Background on Scroll
-            window.addEventListener('scroll', () => {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-
-            // Parallax effect for floating particles
-            window.addEventListener('scroll', () => {
-                const particles = document.querySelectorAll('.particle');
-                const scrolled = window.pageYOffset;
-                
-                particles.forEach((particle, index) => {
-                    const rate = scrolled * -0.3 * (index + 1);
-                    particle.style.transform = `translateY(${rate}px)`;
-                });
-            });
-        });
-    </script>
-    <!-- Floating Particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="logo">D.M.Kaawya</div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#certifications">Certificates</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+import React, { useState, useEffect } from 'react';
+import { Home, User, FolderOpen, Wrench, Award, Briefcase, Phone, LogIn, Menu, X, Mail, MapPin, Facebook, Linkedin, Instagram, Youtube, MessageCircle, Send, Eye, BarChart3, Plus, Edit, Trash2 } from 'lucide-react';
+
+// Initial data
+const initialCertificates = [
+  { id: 1, title: "Web Development Bootcamp", org: "Udemy", desc: "Full stack web development course" },
+  { id: 2, title: "React Advanced", org: "Coursera", desc: "Advanced React patterns and best practices" },
+  { id: 3, title: "Business Management", org: "edX", desc: "Fundamentals of business and entrepreneurship" },
+];
+
+const initialProjects = [
+  { id: 1, name: "Kedu Education Platform", url: "https://kedu.vercel.app", desc: "Educational platform for students" },
+  { id: 2, name: "Home WiFi Manager", url: "https://homewifi.vercel.app", desc: "WiFi management system" },
+  { id: 3, name: "RU Online Store", url: "https://ruonlinesstore.vercel.app", desc: "E-commerce platform" },
+  { id: 4, name: "A/L Exam Portal", url: "https://al-exam.vercel.app", desc: "Exam preparation platform" },
+  { id: 5, name: "Personal Portfolio", url: "https://dmkaawya.vercel.app", desc: "My portfolio website" },
+];
+
+const App = () => {
+  const [page, setPage] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [stats, setStats] = useState({ visitors: 1247, certificates: initialCertificates.length, skills: 12 });
+  const [certificates, setCertificates] = useState(initialCertificates);
+  const [projects, setProjects] = useState(initialProjects);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('');
+  const [editItem, setEditItem] = useState(null);
+
+  useEffect(() => {
+    setStats(prev => ({ ...prev, certificates: certificates.length }));
+  }, [certificates]);
+
+  const navigation = [
+    { name: 'About', icon: User, page: 'about' },
+    { name: 'Categories', icon: FolderOpen, page: 'categories' },
+    { name: 'Skills', icon: Wrench, page: 'skills' },
+    { name: 'Certificates', icon: Award, page: 'certificates' },
+    { name: 'Projects', icon: Briefcase, page: 'projects' },
+    { name: 'Contact', icon: Phone, page: 'contact' },
+  ];
+
+  const skills = [
+    { name: "React.js", level: 90 },
+    { name: "JavaScript", level: 85 },
+    { name: "HTML/CSS", level: 95 },
+    { name: "Node.js", level: 80 },
+    { name: "Python", level: 75 },
+    { name: "Business Strategy", level: 85 },
+    { name: "Content Creation", level: 90 },
+    { name: "Video Editing", level: 80 },
+    { name: "Social Media Marketing", level: 85 },
+    { name: "Entrepreneurship", level: 88 },
+    { name: "UI/UX Design", level: 82 },
+    { name: "Database Management", level: 78 },
+  ];
+
+  const handleLogin = () => {
+    if (loginForm.username === 'admin' && loginForm.password === 'admin') {
+      setIsLoggedIn(true);
+      setPage('dashboard');
+    } else {
+      alert('Invalid credentials! Use admin/admin');
+    }
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    alert(`Message sent!\n\nFrom: ${contactForm.name}\nEmail: ${contactForm.email}\nMessage: ${contactForm.message}\n\nThis would be sent to dmkaawya@gmail.com`);
+    setContactForm({ name: '', email: '', message: '' });
+  };
+
+  const handleAddEdit = (type, item = null) => {
+    setModalType(type);
+    setEditItem(item);
+    setShowModal(true);
+  };
+
+  const handleDelete = (type, id) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      if (type === 'certificate') {
+        setCertificates(certificates.filter(c => c.id !== id));
+      } else if (type === 'project') {
+        setProjects(projects.filter(p => p.id !== id));
+      }
+    }
+  };
+
+  const handleModalSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    if (modalType === 'certificate') {
+      if (editItem) {
+        setCertificates(certificates.map(c => c.id === editItem.id ? { ...c, ...data } : c));
+      } else {
+        setCertificates([...certificates, { id: Date.now(), ...data }]);
+      }
+    } else if (modalType === 'project') {
+      if (editItem) {
+        setProjects(projects.map(p => p.id === editItem.id ? { ...p, ...data } : p));
+      } else {
+        setProjects([...projects, { id: Date.now(), ...data }]);
+      }
+    }
+    setShowModal(false);
+    setEditItem(null);
+  };
+
+  const NavBar = () => (
+    <nav className="fixed top-0 w-full bg-black border-b-2 border-red-600 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <button onClick={() => setPage('home')} className="text-2xl font-bold text-red-600 hover:text-red-500 transition">
+            🖋️ D.M.Kaawya
+          </button>
+          
+          <div className="hidden md:flex space-x-6">
+            {navigation.map(item => (
+              <button key={item.page} onClick={() => setPage(item.page)} className="text-white hover:text-red-600 transition flex items-center gap-2">
+                <item.icon size={18} />
+                {item.name}
+              </button>
+            ))}
+            {!isLoggedIn ? (
+              <button onClick={() => setPage('login')} className="text-white hover:text-red-600 transition flex items-center gap-2">
+                <LogIn size={18} />
+                Login
+              </button>
+            ) : (
+              <button onClick={() => setPage('dashboard')} className="text-red-600 hover:text-red-500 transition flex items-center gap-2">
+                <BarChart3 size={18} />
+                Dashboard
+              </button>
+            )}
+          </div>
+
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white">
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+      </div>
+
+      {menuOpen && (
+        <div className="md:hidden bg-black border-t border-red-600">
+          {navigation.map(item => (
+            <button key={item.page} onClick={() => { setPage(item.page); setMenuOpen(false); }} className="block w-full text-left px-4 py-3 text-white hover:bg-red-600 transition">
+              <item.icon size={18} className="inline mr-2" />
+              {item.name}
+            </button>
+          ))}
+          <button onClick={() => { setPage(isLoggedIn ? 'dashboard' : 'login'); setMenuOpen(false); }} className="block w-full text-left px-4 py-3 text-white hover:bg-red-600 transition">
+            {isLoggedIn ? <><BarChart3 size={18} className="inline mr-2" />Dashboard</> : <><LogIn size={18} className="inline mr-2" />Login</>}
+          </button>
+        </div>
+      )}
     </nav>
+  );
 
-    <!-- Home Section -->
-    <section id="home" class="section home">
-        <div class="container">
-            <div class="home-content">
-                <h1>D.M.Kaawya</h1>
-                <p class="subtitle">Businessman| Developer| Student| Content Creator</p>
-                <div class="cta-buttons">
-                    <a href="#about" class="cta-button">View My Work</a>
-                    <a href="#contact" class="cta-button secondary">Get In Touch</a>
-                </div>
-            </div>
+  const HomePage = () => (
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="text-center">
+        <div className="w-40 h-40 mx-auto mb-8 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-6xl">
+          👨‍💻
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="profile-section">
-                    <div class="profile-img">🚀</div>
-                    <div class="stats">
-                        <div class="stat">
-                            <h4>A/L</h4>
-                            <p>Student</p>
-                        </div>
-                        <div class="stat">
-                            <h4>10+</h4>
-                            <p>Certificates</p>
-                        </div>
-                         <div class="stat">
-                            <h4>15+</h4>
-                            <p>Skills</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-text">
-    <h3>About Me</h3>
-    <p>I am <strong>D.M. Kaawya</strong> — a Businessman, Developer, Student, and Content Creator.</p>
-    <p>I have successfully completed <em>Networking Essentials</em> and <em>Introduction to Cybersecurity</em> at the Cisco Networking Academy, as well as <em>Python Essentials 1</em> at the University of Moratuwa. In addition, I hold a <em>Fundamentals of Digital Marketing</em> certification from Google Digital Garage.</p>
-    <p>Currently, I am pursuing my Advanced Level studies in ICT, Korean, and Media, while also following an AI/ML Engineering course at SLIT. My future goals include becoming a Network Engineer, building leading vehicle sales and other businesses in Sri Lanka, and pursuing higher education opportunities in South Korea.</p>
-    <p>My passions revolve around technology, business innovation, and digital transformation, and I am constantly learning and creating to make a positive impact.</p>
-  <p><strong>Focus Areas:</strong> Web Development, Cybersecurity, Business Technology</p>
-                </div>
-            </div>
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">D.M.C.K.Chandrasekara</h1>
+        <p className="text-xl md:text-2xl text-red-600 mb-8">Business | Entrepreneur | Content Creator | Developer | Student</p>
+        
+        <div className="flex flex-wrap justify-center gap-8 mb-8">
+          <div className="bg-red-600 p-6 rounded-lg min-w-[150px]">
+            <Award className="mx-auto mb-2" size={32} />
+            <div className="text-3xl font-bold">{stats.certificates}</div>
+            <div className="text-sm">Certificates</div>
+          </div>
+          <div className="bg-red-600 p-6 rounded-lg min-w-[150px]">
+            <Wrench className="mx-auto mb-2" size={32} />
+            <div className="text-3xl font-bold">{stats.skills}</div>
+            <div className="text-sm">Skills</div>
+          </div>
+          <div className="bg-red-600 p-6 rounded-lg min-w-[150px]">
+            <Eye className="mx-auto mb-2" size={32} />
+            <div className="text-3xl font-bold">{stats.visitors}</div>
+            <div className="text-sm">Website Views</div>
+          </div>
         </div>
-    </section>
 
-    <!-- Certifications Section -->
-    <section id="certifications" class="section certifications">
-        <div class="container">
-            <h2>My Certifications</h2>
-            <div class="cert-grid">
-                <div class="cert-card">
-                    <h4>Python for Beginner</h4>
-                    <p class="cert-institution">University of Moratuwa</p>
-                     <p>Beginners Python programming concepts, data structures, and application development</p>
-                    <p class="cert-institution">Conducted by the</p>
-                    <p>Department of computer science & Engineering</p>
-                    <P>Faculty of Engineering,University of Moratuwa</P>
-                </div>
-                <div class="cert-card">
-                    <h4>Network Essentials</h4>
-                    <p class="cert-institution">Cisco Academy</p>
-                    <p>Comprehensive networking fundamentals, protocols, and infrastructure management</p>
-                </div>
-                <div class="cert-card">
-                    <h4>Python Essentials 1</h4>
-                    <p class="cert-institution">Cisco Academy</p>
-                    <p>Python programming basics, syntax, and fundamental programming concepts</p>
-                </div>
-                <div class="cert-card">
-                    <h4>Cybersecurity Introduction</h4>
-                    <p class="cert-institution">Cisco Academy</p>
-                    <p>Cybersecurity fundamentals, threat analysis, and security best practices</p>
-                </div>
-                <div class="cert-card">
-                    <h4>Marketing Foundation</h4>
-                    <p class="cert-institution">Google Digital Garage</p>
-                    <p>Digital marketing strategies, analytics, and online business growth techniques</p>
-                </div>
-                 <div class="cert-card">
-                    <h4>Computer Hardware</h4>
-                    <p class="cert-institution">Cisco Academy</p>
-                    <p>Introduction to computer hardware</p>
-                </div>
-                <div class="cert-card">
-                    <h4>Cloud Computer</h4>
-                    <p class="cert-institution">E Academy</p>
-                    <p>Introduction to cloud computer</p>
-                </div>
-                <div class="cert-card">
-                    <h4>5G Technology</h4>
-                    <p class="cert-institution">E Academy</p>
-                    <p>Fundamentals of 5G Technology</p>
-                </div>
-                <div class="cert-card">
-                    <h4>Gmail</h4>
-                    <p class="cert-institution">GCF Global Learning</p>
-                    <p>Introduction to Gmail</p>
-                </div>
-                <div class="cert-card">
-                    <h4>HTML & CSS</h4>
-                    <p class="cert-institution">E Academy</p>
-                    <p>Introduction to programming using HTML & CSS</p>
-                </div>
-            </div>
+        <div className="flex flex-wrap justify-center gap-4">
+          <button onClick={() => setPage('projects')} className="bg-red-600 hover:bg-red-700 px-8 py-3 rounded-lg font-semibold transition">
+            View Projects
+          </button>
+          <button onClick={() => setPage('contact')} className="border-2 border-red-600 hover:bg-red-600 px-8 py-3 rounded-lg font-semibold transition">
+            Hire Me
+          </button>
         </div>
-    </section>
+      </div>
+    </div>
+  );
 
-    <!-- Skills Section -->
-    <section id="skills" class="section skills">
-        <div class="container">
-            <h2>My Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">⚡</div>
-                    <h3>Frontend Development</h3>
-                    <p>React, Vue.js, Angular, TypeScript, Next.js, and modern CSS frameworks. Building responsive, interactive, and performant user interfaces that engage users.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🚀</div>
-                    <h3>Backend Development</h3>
-                    <p>Node.js, Python, PHP, Express, FastAPI, database design, REST APIs, GraphQL, and microservices architecture for scalable applications.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">📱</div>
-                    <h3>Mobile Development</h3>
-                    <p>React Native, Flutter, PWAs, and cross-platform solutions for iOS and Android with native performance and smooth user experiences.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🎨</div>
-                    <h3>UI/UX Design</h3>
-                    <p>Figma, Adobe Creative Suite, user research, prototyping, and creating intuitive designs that convert visitors into customers.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">☁️</div>
-                    <h3>Cloud & DevOps</h3>
-                    <p>AWS, Azure, Docker, Kubernetes, CI/CD pipelines, and scalable cloud infrastructure deployment for modern applications.</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🔒</div>
-                    <h3>Security & Performance</h3>
-                    <p>Web security best practices, performance optimization, SEO, and ensuring applications are fast, secure, and accessible.</p>
-                </div>
-            </div>
+  const AboutPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <div className="text-center mb-8">
+        <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-8xl border-4 border-red-600">
+          👨‍💻
         </div>
-    </section>
+        <h1 className="text-4xl font-bold text-white mb-4">About Me</h1>
+      </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section projects">
-        <div class="container">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>🌐 ProKol Website</h3>
-                        <p>Modern business website with responsive design, interactive elements, and optimized performance. Built with clean code architecture and user-friendly interface.</p>
-                        <p class="project-tech">Tech: HTML5, CSS3, JavaScript, Responsive Design</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>🛍️ E-commerce Platform</h3>
-                        <p>A full-stack e-commerce solution with modern design, payment integration, real-time inventory management, and comprehensive admin dashboard.</p>
-                        <p class="project-tech">Tech: React, Node.js, MongoDB, Stripe API</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>📊 Analytics Dashboard</h3>
-                        <p>Real-time data visualization dashboard with interactive charts, reporting features, and advanced filtering for business intelligence.</p>
-                        <p class="project-tech">Tech: Vue.js, D3.js, Firebase, Chart.js</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>🎵 Music Streaming App</h3>
-                        <p>Cross-platform music streaming application with playlists, social features, offline mode, and personalized recommendations.</p>
-                        <p class="project-tech">Tech: React Native, Express, PostgreSQL</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>🏠 Real Estate Portal</h3>
-                        <p>Modern property listing platform with advanced search, virtual tours, mortgage calculator, and agent management system.</p>
-                        <p class="project-tech">Tech: Next.js, Python Django, MySQL</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>💰 Crypto Trading Bot</h3>
-                        <p>Automated cryptocurrency trading bot with AI-powered market analysis, risk management, and real-time portfolio tracking.</p>
-                        <p class="project-tech">Tech: Python, TensorFlow, Binance API</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>📚 Learning Management System</h3>
-                        <p>Complete LMS with video streaming, assignment tracking, quiz system, and interactive virtual classrooms for online education.</p>
-                        <p class="project-tech">Tech: Angular, .NET Core, SQL Server</p>
-                    </div>
-                </div>
+      <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-8 mb-6">
+        <p className="text-lg leading-relaxed mb-4">
+          මම තවම A/L වලට ඉගෙන ගන්න ළමයෙක්. ඒත් මගේ ප්‍රධාන අරමුණ තමයි business එකක් හදාගන්න එක. දැනටමත් මම content creation, development, සහ entrepreneurship ක්ෂේත්‍රවල active වෙලා ඉන්නවා.
+        </p>
+        <p className="text-lg leading-relaxed mb-4">
+          I'm a passionate student currently preparing for my A/Levels, but my real focus is on building a successful business. I'm already active in content creation, web development, and entrepreneurship. I believe in learning by doing and constantly expanding my skill set.
+        </p>
+        <p className="text-lg leading-relaxed">
+          Through my journey, I've developed multiple platforms, earned various certifications, and gained practical experience in business management, digital marketing, and software development. My goal is to create innovative solutions that make a real impact.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4">
+        <button onClick={() => setPage('skills')} className="bg-red-600 hover:bg-red-700 p-6 rounded-lg transition">
+          <Wrench className="mx-auto mb-2" size={32} />
+          <div className="font-semibold">View Skills</div>
+        </button>
+        <button onClick={() => setPage('certificates')} className="bg-red-600 hover:bg-red-700 p-6 rounded-lg transition">
+          <Award className="mx-auto mb-2" size={32} />
+          <div className="font-semibold">View Certificates</div>
+        </button>
+        <button onClick={() => setPage('contact')} className="bg-red-600 hover:bg-red-700 p-6 rounded-lg transition">
+          <Phone className="mx-auto mb-2" size={32} />
+          <div className="font-semibold">Contact Me</div>
+        </button>
+      </div>
+    </div>
+  );
+
+  const CategoriesPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Categories</h1>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[
+          { name: 'Skills', icon: Wrench, page: 'skills', available: true },
+          { name: 'Certificates', icon: Award, page: 'certificates', available: true },
+          { name: 'Projects', icon: Briefcase, page: 'projects', available: true },
+          { name: 'Visited Countries', icon: '🌍', available: false },
+          { name: 'Diplomas & Degrees', icon: '📜', available: false },
+          { name: 'Coming Soon', icon: '🔥', available: false },
+        ].map((cat, i) => (
+          <button key={i} onClick={() => cat.available && setPage(cat.page)} disabled={!cat.available} className={`p-8 rounded-lg border-2 transition ${cat.available ? 'bg-gradient-to-br from-gray-900 to-black border-red-600 hover:border-red-500 cursor-pointer' : 'bg-gray-800 border-gray-700 opacity-50 cursor-not-allowed'}`}>
+            <div className="text-5xl mb-4">{typeof cat.icon === 'string' ? cat.icon : <cat.icon size={48} className="mx-auto text-red-600" />}</div>
+            <div className="text-xl font-semibold">{cat.name}</div>
+            {!cat.available && <div className="text-sm text-gray-400 mt-2">Coming Soon</div>}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const SkillsPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">My Skills</h1>
+      <div className="space-y-6">
+        {skills.map((skill, i) => (
+          <div key={i} className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+            <div className="flex justify-between mb-2">
+              <span className="font-semibold text-lg">{skill.name}</span>
+              <span className="text-red-600 font-bold">{skill.level}%</span>
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2>Let's Connect</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">📧</div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>dmkaawya@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">📱</div>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <p>+94 77 504 8455</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">📍</div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Kalutara, Sri Lanka</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">💼</div>
-                        <div>
-                            <h4>LinkedIn</h4>
-                            <p>dm kaawya</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">📘</div>
-                        <div>
-                            <h4>Facebook</h4>
-                            <p>dm kaawya</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">📷</div>
-                        <div>
-                            <h4>Instagram</h4>
-                            <p>dm kaawya</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
+            <div className="w-full bg-gray-700 rounded-full h-3">
+              <div className="bg-gradient-to-r from-red-600 to-red-500 h-3 rounded-full transition-all duration-1000" style={{ width: `${skill.level}%` }}></div>
             </div>
-        </div>
-    </section>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
-</body>
-</html>
+  const CertificatesPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Certificates</h1>
+      <div className="grid md:grid-cols-2 gap-6">
+        {certificates.map(cert => (
+          <div key={cert.id} className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6 hover:border-red-500 transition">
+            <Award className="text-red-600 mb-4" size={40} />
+            <h3 className="text-xl font-bold mb-2">{cert.title}</h3>
+            <p className="text-red-600 mb-2">{cert.org}</p>
+            <p className="text-gray-400">{cert.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const ProjectsPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">My Projects</h1>
+      <div className="grid md:grid-cols-2 gap-6">
+        {projects.map(project => (
+          <div key={project.id} className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6 hover:border-red-500 transition">
+            <Briefcase className="text-red-600 mb-4" size={40} />
+            <h3 className="text-xl font-bold mb-2">{project.name}</h3>
+            <p className="text-gray-400 mb-4">{project.desc}</p>
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-block bg-red-600 hover:bg-red-700 px-6 py-2 rounded transition">
+              Visit Project →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const ContactPage = () => (
+    <div className="max-w-4xl mx-auto px-4">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Contact Me</h1>
+      
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+          <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <MapPin className="text-red-600" size={24} />
+              <span>Kalutara, Sri Lanka</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone className="text-red-600" size={24} />
+              <span>0775048455</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Mail className="text-red-600" size={24} />
+              <span>dmkaawya@gmail.com</span>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="font-semibold mb-3">Quick Contact</h4>
+            <div className="flex flex-wrap gap-2">
+              <a href="https://wa.me/94775048455" target="_blank" rel="noopener noreferrer" className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition">WhatsApp</a>
+              <a href="https://t.me/0775048455" target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded transition">Telegram</a>
+              <a href="sms:0775048455" className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded transition">SMS</a>
+              <a href="tel:0775048455" className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition">Call</a>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="font-semibold mb-3">Social Media</h4>
+            <div className="flex gap-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-600 transition"><Facebook size={28} /></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-600 transition"><Linkedin size={28} /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-600 transition"><Instagram size={28} /></a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-600 transition"><Youtube size={28} /></a>
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-600 transition"><MessageCircle size={28} /></a>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+          <h3 className="text-xl font-bold mb-4">Send a Message</h3>
+          <form onSubmit={handleContactSubmit} className="space-y-4">
+            <input type="text" placeholder="Your Name" value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+            <input type="email" placeholder="Your Email" value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+            <textarea placeholder="Your Message" rows="5" value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500"></textarea>
+            <button type="submit" className="w-full bg-red-600 hover:bg-red-700 py-3 rounded font-semibold transition flex items-center justify-center gap-2">
+              <Send size={20} />
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
+  const LoginPage = () => (
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-8 max-w-md w-full">
+        <h1 className="text-3xl font-bold text-white mb-6 text-center">Admin Login</h1>
+        <div className="space-y-4">
+          <input type="text" placeholder="Username" value={loginForm.username} onChange={(e) => setLoginForm({...loginForm, username: e.target.value})} className="w-full bg-black border border-red-600 rounded px-4 py-3 focus:outline-none focus:border-red-500" />
+          <input type="password" placeholder="Password" value={loginForm.password} onChange={(e) => setLoginForm({...loginForm, password: e.target.value})} className="w-full bg-black border border-red-600 rounded px-4 py-3 focus:outline-none focus:border-red-500" />
+          <button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700 py-3 rounded font-semibold transition">
+            Login
+          </button>
+          <p className="text-center text-gray-400 text-sm">Default: admin / admin</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const DashboardPage = () => (
+    <div className="max-w-6xl mx-auto px-4">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold text-white">Admin Dashboard</h1>
+        <button onClick={() => { setIsLoggedIn(false); setPage('home'); }} className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded transition">
+          Logout
+        </button>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+          <Eye className="text-red-600 mb-2" size={32} />
+          <div className="text-3xl font-bold">{stats.visitors}</div>
+          <div className="text-gray-400">Total Visitors</div>
+        </div>
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+          <Award className="text-red-600 mb-2" size={32} />
+          <div className="text-3xl font-bold">{certificates.length}</div>
+          <div className="text-gray-400">Certificates</div>
+        </div>
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-6">
+          <Briefcase className="text-red-600 mb-2" size={32} />
+          <div className="text-3xl font-bold">{projects.length}</div>
+          <div className="text-gray-400">Projects</div>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold text-white">Certificates</h2>
+          <button onClick={() => handleAddEdit('certificate')} className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition flex items-center gap-2">
+            <Plus size={20} />
+            Add New
+          </button>
+        </div>
+        <div className="space-y-4">
+          {certificates.map(cert => (
+            <div key={cert.id} className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-4 flex justify-between items-center">
+              <div>
+                <h3 className="font-bold">{cert.title}</h3>
+                <p className="text-sm text-gray-400">{cert.org} - {cert.desc}</p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => handleAddEdit('certificate', cert)} className="bg-blue-600 hover:bg-blue-700 p-2 rounded transition">
+                  <Edit size={18} />
+                </button>
+                <button onClick={() => handleDelete('certificate', cert.id)} className="bg-red-600 hover:bg-red-700 p-2 rounded transition">
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold text-white">Projects</h2>
+          <button onClick={() => handleAddEdit('project')} className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition flex items-center gap-2">
+            <Plus size={20} />
+            Add New
+          </button>
+        </div>
+        <div className="space-y-4">
+          {projects.map(project => (
+            <div key={project.id} className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-600 rounded-lg p-4 flex justify-between items-center">
+              <div>
+                <h3 className="font-bold">{project.name}</h3>
+                <p className="text-sm text-gray-400">{project.url}</p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => handleAddEdit('project', project)} className="bg-blue-600 hover:bg-blue-700 p-2 rounded transition">
+                  <Edit size={18} />
+                </button>
+                <button onClick={() => handleDelete('project', project.id)} className="bg-red-600 hover:bg-red-700 p-2 rounded transition">
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const Modal = () => {
+    if (!showModal) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <div className="bg-gray-900 border-2 border-red-600 rounded-lg p-6 max-w-md w-full">
+          <h2 className="text-2xl font-bold mb-4">{editItem ? 'Edit' : 'Add'} {modalType === 'certificate' ? 'Certificate' : 'Project'}</h2>
+          <form onSubmit={handleModalSubmit} className="space-y-4">
+            {modalType === 'certificate' ? (
+              <>
+                <input type="text" name="title" placeholder="Certificate Title" defaultValue={editItem?.title} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+                <input type="text" name="org" placeholder="Organization" defaultValue={editItem?.org} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+                <textarea name="desc" placeholder="Description" defaultValue={editItem?.desc} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" rows="3"></textarea>
+              </>
+            ) : (
+              <>
+                <input type="text" name="name" placeholder="Project Name" defaultValue={editItem?.name} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+                <input type="url" name="url" placeholder="Project URL" defaultValue={editItem?.url} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" />
+                <textarea name="desc" placeholder="Description" defaultValue={editItem?.desc} required className="w-full bg-black border border-red-600 rounded px-4 py-2 focus:outline-none focus:border-red-500" rows="3"></textarea>
+              </>
+            )}
+            <div className="flex gap-4">
+              <button type="submit" className="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded transition">
+                {editItem ? 'Update' : 'Add'}
+              </button>
+              <button type="button" onClick={() => { setShowModal(false); setEditItem(null); }} className="flex-1 bg-gray-700 hover:bg-gray-600 py-2 rounded transition">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <NavBar />
+      <div className="pt-20 pb-10">
+        {page === 'home' && <HomePage />}
+        {page === 'about' && <AboutPage />}
+        {page === 'categories' && <CategoriesPage />}
+        {page === 'skills' && <SkillsPage />}
+        {page === 'certificates' && <CertificatesPage />}
+        {page === 'projects' && <ProjectsPage />}
+        {page === 'contact' && <ContactPage />}
+        {page === 'login' && <LoginPage />}
+        {page === 'dashboard' && isLoggedIn && <DashboardPage />}
+      </div>
+      <Modal />
+    </div>
+  );
+};
+
+export default App;
