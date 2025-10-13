@@ -1,701 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.M.Kaawya - Portfolio</title>
+    <title>D.M.Kawya - Coming Soon</title>
     <style>
-        /* Color Theme */
-        :root {
-            --bg-color: #000000;
-            --accent-color: #ff0000;
-            --text-color: #ffffff;
-        }
-
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            right: 15%;
+            top: 40%;
+            animation-delay: 2s;
+        }
+
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            left: 20%;
+            bottom: 20%;
+            animation-delay: 4s;
+        }
+
+        .circle:nth-child(4) {
+            width: 50px;
+            height: 50px;
+            right: 25%;
+            bottom: 30%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px);
+            }
+            50% {
+                transform: translateY(-60px) translateX(-20px);
+            }
+            75% {
+                transform: translateY(-30px) translateX(20px);
+            }
         }
 
         .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
             width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            animation: slideIn 0.8s ease-out;
         }
 
-        /* Navigation Bar */
-        nav {
-            background-color: rgba(0, 0, 0, 0.9);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 48px;
             font-weight: bold;
-            color: var(--text-color);
-            text-decoration: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .logo:hover {
-            color: var(--accent-color);
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 20px;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Home Page */
-        .home {
-            margin-top: 80px;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .full-name {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #cccccc;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .stat-item {
-            margin: 0 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #cc0000;
-        }
-
-        /* About Page */
-        .about {
-            padding: 40px 0;
-        }
-
-        .profile-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: block;
-            border: 3px solid var(--accent-color);
-        }
-
-        .bio {
-            margin-bottom: 30px;
-            text-align: justify;
-        }
-
-        .page-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .page-links a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        /* Categories Page */
-        .categories {
-            padding: 40px 0;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .category-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            background-color: rgba(255, 0, 0, 0.2);
-        }
-
-        /* Skills Page */
-        .skills {
-            padding: 40px 0;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .skill-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 5px;
-            flex: 1 1 calc(33.333% - 20px);
-            min-width: 200px;
-        }
-
-        /* Certificates Page */
-        .certificates {
-            padding: 40px 0;
-        }
-
-        .certificate-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .certificate-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 5px;
-            border-left: 3px solid var(--accent-color);
-        }
-
-        .certificate-title {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .certificate-org {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        /* Projects Page */
-        .projects {
-            padding: 40px 0;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .project-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 5px;
-            transition: transform 0.3s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* Contact Page */
-        .contact {
-            padding: 40px 0;
-        }
-
-        .contact-info {
-            margin-bottom: 30px;
-        }
-
-        .contact-item {
-            margin-bottom: 15px;
-        }
-
-        .contact-label {
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-right: 10px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
+        h1 {
+            font-size: 36px;
+            color: #333;
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(240, 147, 251, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(240, 147, 251, 0.8);
+            }
+        }
+
+        .message {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 32px;
+            font-weight: bold;
             display: block;
-            margin-bottom: 5px;
-            color: var(--accent-color);
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            color: var(--text-color);
+        .countdown-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-top: 5px;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
         }
 
-        /* Page Sections (Hidden by default) */
-        .page-section {
-            display: none;
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .active {
-            display: block;
+        .footer {
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(0, 0, 0, 0.9);
-                padding: 20px;
-                display: none;
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
             }
 
-            .nav-links.active {
-                display: flex;
+            h1 {
+                font-size: 28px;
             }
 
-            .nav-links li {
-                margin: 10px 0;
+            .logo {
+                font-size: 36px;
             }
 
-            .stats {
-                flex-direction: column;
-                align-items: center;
+            .countdown-item {
+                min-width: 60px;
+                padding: 15px;
             }
 
-            .stat-item {
-                margin: 10px 0;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .skill-item {
-                flex: 1 1 100%;
+            .countdown-number {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo" onclick="showPage('home')">D.M.Kaawya</a>
-            <ul class="nav-links">
-                <li><a href="#" onclick="showPage('about')">About</a></li>
-                <li><a href="#" onclick="showPage('categories')">Categories</a></li>
-                <li><a href="#" onclick="showPage('skills')">Skills</a></li>
-                <li><a href="#" onclick="showPage('certificates')">Certificates</a></li>
-                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
-                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
-                <li><a href="#" onclick="showPage('login')">Login</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div class="background-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
 
     <div class="container">
-        <!-- Home Page -->
-        <div id="home" class="page-section active">
-            <div class="home">
-                <h1 class="full-name">D.M.C.K.Chandrasekara</h1>
-                <p class="tagline">"Business | Entrepreneur | Content Creator | Developer | Student"</p>
-                
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number">12</div>
-                        <div>Certificates</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">8</div>
-                        <div>Skills</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">1,245</div>
-                        <div>Website Views</div>
-                    </div>
-                </div>
-                
-                <div class="cta-buttons">
-                    <button class="btn" onclick="showPage('projects')">View Projects</button>
-                    <button class="btn" onclick="showPage('contact')">Hire Me</button>
-                </div>
+        <div class="icon">⚙️</div>
+        <div class="logo">D.M.Kawya</div>
+        <h1>Coming Soon</h1>
+        <div class="status-badge">🚧 Under Construction</div>
+        
+        <div class="message">
+            Our website is currently undergoing updates.<br>
+            We'll be back soon with an improved experience!
+        </div>
+
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">10</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
             </div>
         </div>
 
-        <!-- About Page -->
-        <div id="about" class="page-section">
-            <div class="about">
-                <img src="https://via.placeholder.com/200" alt="Profile Photo" class="profile-photo">
-                
-                <div class="bio">
-                    <p>මම තවම A/L වලට ඉගෙන ගන්න ළමයෙක්... [the paragraph you gave]</p>
-                    <p>I am still a student studying for A/Ls... [the paragraph you gave]</p>
-                </div>
-                
-                <div class="page-links">
-                    <a href="#" onclick="showPage('skills')">Skills</a>
-                    <a href="#" onclick="showPage('certificates')">Certificates</a>
-                    <a href="#" onclick="showPage('contact')">Contact</a>
-                </div>
-            </div>
+        <div class="message">
+            <strong>Launching in 10 days!</strong>
         </div>
 
-        <!-- Categories Page -->
-        <div id="categories" class="page-section">
-            <div class="categories">
-                <h2>Categories</h2>
-                <div class="category-grid">
-                    <div class="category-card">
-                        <h3>Skills</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Certificates</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Projects</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Visited Countries</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Diplomas & Degrees</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Coming Soon</h3>
-                    </div>
-                    <div class="category-card">
-                        <h3>Coming Soon</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Skills Page -->
-        <div id="skills" class="page-section">
-            <div class="skills">
-                <h2>Skills</h2>
-                <div class="skills-container">
-                    <div class="skill-item">
-                        <h3>Web Development</h3>
-                        <p>HTML, CSS, JavaScript, React</p>
-                    </div>
-                    <div class="skill-item">
-                        <h3>Content Creation</h3>
-                        <p>Video editing, Graphic design</p>
-                    </div>
-                    <div class="skill-item">
-                        <h3>Business Management</h3>
-                        <p>Strategic planning, Project management</p>
-                    </div>
-                    <div class="skill-item">
-                        <h3>Digital Marketing</h3>
-                        <p>Social media marketing, SEO</p>
-                    </div>
-                    <div class="skill-item">
-                        <h3>Mobile App Development</h3>
-                        <p>React Native, Flutter</p>
-                    </div>
-                    <div class="skill-item">
-                        <h3>Database Management</h3>
-                        <p>MySQL, MongoDB</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Certificates Page -->
-        <div id="certificates" class="page-section">
-            <div class="certificates">
-                <h2>Certificates</h2>
-                <div class="certificate-grid">
-                    <div class="certificate-card">
-                        <h3 class="certificate-title">Web Development Fundamentals</h3>
-                        <div class="certificate-org">Coursera</div>
-                        <p>Comprehensive course covering HTML, CSS, and JavaScript basics.</p>
-                    </div>
-                    <div class="certificate-card">
-                        <h3 class="certificate-title">Digital Marketing Specialization</h3>
-                        <div class="certificate-org">Google</div>
-                        <p>Complete digital marketing course covering SEO, SEM, and social media marketing.</p>
-                    </div>
-                    <div class="certificate-card">
-                        <h3 class="certificate-title">Business Administration</h3>
-                        <div class="certificate-org">edX</div>
-                        <p>Fundamentals of business administration and management.</p>
-                    </div>
-                    <div class="certificate-card">
-                        <h3 class="certificate-title">React Development</h3>
-                        <div class="certificate-org">Udemy</div>
-                        <p>Complete guide to building applications with React.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Projects Page -->
-        <div id="projects" class="page-section">
-            <div class="projects">
-                <h2>Projects</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <a href="https://kedu.vercel.app" class="project-link" target="_blank">kedu.vercel.app</a>
-                        <p>Educational platform for students</p>
-                    </div>
-                    <div class="project-card">
-                        <a href="https://homewifi.vercel.app" class="project-link" target="_blank">homewifi.vercel.app</a>
-                        <p>Home WiFi management system</p>
-                    </div>
-                    <div class="project-card">
-                        <a href="https://ruonlinesstore.vercel.app" class="project-link" target="_blank">ruonlinesstore.vercel.app</a>
-                        <p>Online store for RU products</p>
-                    </div>
-                    <div class="project-card">
-                        <a href="https://al-exam.vercel.app" class="project-link" target="_blank">al-exam.vercel.app</a>
-                        <p>A/L exam preparation platform</p>
-                    </div>
-                    <div class="project-card">
-                        <a href="https://dmkaawya.vercel.app" class="project-link" target="_blank">dmkaawya.vercel.app</a>
-                        <p>Personal portfolio website</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Page -->
-        <div id="contact" class="page-section">
-            <div class="contact">
-                <h2>Contact</h2>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span class="contact-label">Location:</span> Kalutara
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Phone:</span> 0775048455
-                        <div style="margin-top: 10px;">
-                            <button class="btn" style="margin-right: 5px;">WhatsApp</button>
-                            <button class="btn" style="margin-right: 5px;">Telegram</button>
-                            <button class="btn" style="margin-right: 5px;">SMS</button>
-                            <button class="btn">Call</button>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span> dmkaawya@gmail.com
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Social:</span>
-                        <div class="social-links">
-                            <a href="#" target="_blank">FB</a>
-                            <a href="#" target="_blank">LI</a>
-                            <a href="#" target="_blank">IG</a>
-                            <a href="#" target="_blank">TT</a>
-                            <a href="#" target="_blank">YT</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Login Page -->
-        <div id="login" class="page-section">
-            <div class="login">
-                <h2>Admin Login</h2>
-                <form class="contact-form" style="max-width: 400px;">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                </form>
-            </div>
+        <div class="footer">
+            Thank you for your patience 🙏
         </div>
     </div>
 
     <script>
-        // Function to show a specific page and hide others
-        function showPage(pageId) {
-            // Hide all page sections
-            const pageSections = document.querySelectorAll('.page-section');
-            pageSections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show the selected page section
-            document.getElementById(pageId).classList.add('active');
-            
-            // Scroll to top of page
-            window.scrollTo(0, 0);
-        }
-        
-        // Contact form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // In a real implementation, you would send this data to a server
-            // For now, we'll just show an alert
-            alert(`Thank you for your message, ${name}! We'll contact you soon at ${email}.`);
-            
-            // Reset form
-            this.reset();
-        });
-        
-        // Login form submission
-        document.querySelector('#login .contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Check credentials (in a real app, this would be done server-side)
-            if (username === 'admin' && password === 'admin') {
-                alert('Login successful! Redirecting to admin dashboard...');
-                // In a real implementation, you would redirect to the admin dashboard
-                showPage('home');
-            } else {
-                alert('Invalid username or password. Please try again.');
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 10);
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown').innerHTML = '<div style="font-size: 24px; color: #667eea;">🎉 Now Live!</div>';
             }
-            
-            // Reset form
-            this.reset();
-        });
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
