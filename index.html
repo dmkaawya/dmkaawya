@@ -1,312 +1,350 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.M.Kawya - Coming Soon</title>
+    <title>DMC Group - Coming Soon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #fff;
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .background-animation {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .circle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            top: 20%;
-            animation-delay: 0s;
-        }
-
-        .circle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            right: 15%;
-            top: 40%;
-            animation-delay: 2s;
-        }
-
-        .circle:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            left: 20%;
-            bottom: 20%;
-            animation-delay: 4s;
-        }
-
-        .circle:nth-child(4) {
-            width: 50px;
-            height: 50px;
-            right: 25%;
-            bottom: 30%;
-            animation-delay: 6s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-            }
-            25% {
-                transform: translateY(-30px) translateX(20px);
-            }
-            50% {
-                transform: translateY(-60px) translateX(-20px);
-            }
-            75% {
-                transform: translateY(-30px) translateX(20px);
-            }
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px 10px;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 90%;
-            animation: slideIn 0.8s ease-out;
+            padding: 1.5rem;
+            max-width: 800px;
+            animation: fadeIn 1.5s ease-out;
+            width: 100%;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .logo {
-            font-size: 48px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 1.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 20px;
-            animation: pulse 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+            line-height: 1.2;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+        .logo p {
+            font-size: 1rem;
+            color: #bdc3c7;
+            margin-top: 0.5rem;
         }
 
-        h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 20px;
+        .coming-soon {
+            font-size: 1.5rem;
+            margin: 1.2rem 0;
+            color: #ecf0f1;
+            letter-spacing: 1px;
+            line-height: 1.3;
         }
 
-        .status-badge {
+        .description {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #bdc3c7;
+            margin-bottom: 2rem;
+            max-width: 100%;
+        }
+
+        .main-site {
             display: inline-block;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            animation: glow 2s ease-in-out infinite;
+            margin: 1rem 0;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.95rem;
         }
 
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(240, 147, 251, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(240, 147, 251, 0.8);
-            }
+        .main-site:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
         }
 
-        .message {
-            font-size: 18px;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .countdown {
+        .notification-form {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            width: 100%;
         }
 
-        .countdown-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .notification-form input {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            width: 100%;
+            max-width: 350px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .notification-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .notification-form input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+        }
+
+        .notification-form button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #25D366, #128C7E);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            min-width: 80px;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 350px;
         }
 
-        .countdown-number {
-            font-size: 32px;
-            font-weight: bold;
-            display: block;
+        .notification-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
         }
 
-        .countdown-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        .icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        .whatsapp-note {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #95a5a6;
+            max-width: 100%;
+            line-height: 1.4;
         }
 
         .footer {
-            margin-top: 30px;
-            color: #777;
-            font-size: 14px;
+            position: relative;
+            bottom: 0;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding: 1rem 0;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 20px;
-            }
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
 
-            h1 {
-                font-size: 28px;
-            }
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
 
-            .logo {
-                font-size: 36px;
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
             }
-
-            .countdown-item {
-                min-width: 60px;
-                padding: 15px;
+            10% {
+                opacity: 1;
             }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
 
-            .countdown-number {
-                font-size: 24px;
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+            
+            .coming-soon {
+                font-size: 1.3rem;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+            }
+            
+            .notification-form input,
+            .notification-form button {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-    </div>
-
+    <div class="particles" id="particles"></div>
+    
     <div class="container">
-        <div class="icon">⚙️</div>
-        <div class="logo">D.M.Kawya</div>
-        <h1>Coming Soon</h1>
-        <div class="status-badge">🚧 Under Construction</div>
+        <div class="logo">
+            <h1>DMC GROUP</h1>
+            <p>Excellence in Every Endeavor</p>
+        </div>
         
-        <div class="message">
-            Our website is currently undergoing updates.<br>
-            We'll be back soon with an improved experience!
+        <div class="coming-soon">OUR NEW WEBSITE IS COMING SOON</div>
+        
+        <p class="description">
+            We're currently working on something extraordinary. Our new digital experience will showcase our innovative solutions and global expertise. Stay tuned for the official launch of our redesigned platform.
+        </p>
+        
+        <div class="main-site" href="https://dmcgroup.vercel.app/" target="_blank">
+            <i class="fas fa-globe"></i> Visit Our Main Website
         </div>
-
-        <div class="countdown">
-            <div class="countdown-item">
-                <span class="countdown-number" id="days">10</span>
-                <span class="countdown-label">Days</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="hours">00</span>
-                <span class="countdown-label">Hours</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="minutes">00</span>
-                <span class="countdown-label">Minutes</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="seconds">00</span>
-                <span class="countdown-label">Seconds</span>
-            </div>
-        </div>
-
-        <div class="message">
-            <strong>Launching in 10 days!</strong>
-        </div>
-
-        <div class="footer">
-            Thank you for your patience 🙏
-        </div>
+        
+        <form class="notification-form" id="notifyForm">
+            <input type="email" placeholder="Enter your email address" required>
+            <button type="submit">
+                <i class="fab fa-whatsapp"></i> Notify via WhatsApp
+            </button>
+        </form>
+        
+        <p class="whatsapp-note">
+            Clicking the button will open WhatsApp with a pre-filled message. 
+            You'll need to send it to our official number to receive launch notifications.
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2023 DMC Group. All rights reserved.</p>
     </div>
 
     <script>
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 10);
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = String(days).padStart(2, '0');
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
-            if (distance < 0) {
-                document.querySelector('.countdown').innerHTML = '<div style="font-size: 24px; color: #667eea;">🎉 Now Live!</div>';
+        // Particle animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20; // Reduced for better mobile performance
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 3px and 8px
+                const size = Math.random() * 5 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random starting position
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 20 + 15;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
             }
-        }
+        });
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        // Form submission - WhatsApp integration
+        document.getElementById('notifyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // WhatsApp business number (0775048455 with Sri Lanka country code)
+            const whatsappNumber = "94775048455"; // Formatted: 94 (country code) + 775048455 (without leading zero)
+            
+            // Pre-filled message
+            const message = `Hello DMC Team, I would like to be notified when your new website launches. My email is: ${email}`;
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.style.position = 'fixed';
+            successMsg.style.top = '20px';
+            successMsg.style.left = '50%';
+            successMsg.style.transform = 'translateX(-50%)';
+            successMsg.style.background = 'linear-gradient(90deg, #25D366, #128C7E)';
+            successMsg.style.color = 'white';
+            successMsg.style.padding = '1rem 1.5rem';
+            successMsg.style.borderRadius = '50px';
+            successMsg.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
+            successMsg.style.zIndex = '1000';
+            successMsg.style.animation = 'fadeIn 0.5s ease-out';
+            successMsg.style.fontSize = '0.9rem';
+            successMsg.style.textAlign = 'center';
+            successMsg.style.maxWidth = '90%';
+            successMsg.textContent = 'Opening WhatsApp... Please send the message to complete your subscription.';
+            
+            document.body.appendChild(successMsg);
+            
+            // Reset form
+            this.reset();
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                successMsg.style.animation = 'fadeOut 0.5s ease-out forwards';
+                setTimeout(() => {
+                    document.body.removeChild(successMsg);
+                }, 500);
+            }, 5000);
+        });
+
+        // Main website link
+        document.querySelector('.main-site').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('https://dmcgroup.vercel.app/', '_blank');
+        });
     </script>
 </body>
 </html>
