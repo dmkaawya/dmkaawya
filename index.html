@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.M.C. Kaawya Chandrasekara | Portfolio</title>
+    <title>D.M.C. Kaawya Chandrasekara | Full Portfolio</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -21,7 +21,6 @@
             --ice: #00d2ff;
             --water: #3a86ff;
             --gradient: linear-gradient(135deg, var(--fire), var(--water));
-            --glow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
         * {
@@ -44,32 +43,20 @@
         }
 
         /* --- Scrollbar --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gradient);
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--gradient); border-radius: 4px; }
 
-        /* --- Animation: Background Canvas --- */
+        /* --- Background Canvas --- */
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.4;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.4;
         }
 
         /* --- Navigation --- */
         nav {
             position: fixed;
-            top: 0;
             width: 100%;
             padding: 20px 50px;
             display: flex;
@@ -82,320 +69,203 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.5rem; font-weight: 700;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
+        .nav-links { display: flex; gap: 30px; }
         .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 0.9rem;
+            color: var(--text-main); text-decoration: none; font-weight: 500;
+            transition: 0.3s; font-size: 0.9rem;
         }
-
-        .nav-links a:hover {
-            color: var(--ice);
-        }
+        .nav-links a:hover { color: var(--ice); }
 
         /* --- Hero Section --- */
         .hero {
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 0 20px;
         }
 
-        .hero-content {
-            max-width: 800px;
-            z-index: 1;
-        }
-
+        .hero-content { max-width: 800px; z-index: 1; }
         .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeUp 1s forwards 0.5s;
+            font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px;
+            opacity: 0; animation: fadeUp 1s forwards 0.5s;
         }
-
-        .hero h1 span {
-            color: var(--fire);
-        }
-        
-        .hero h1 .highlight-ice {
-            color: var(--ice);
-        }
-
+        .hero h1 span { color: var(--fire); }
+        .hero h1 .highlight-ice { color: var(--ice); }
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeUp 1s forwards 0.8s;
+            font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;
+            opacity: 0; animation: fadeUp 1s forwards 0.8s;
         }
-
         .btn {
-            display: inline-block;
-            padding: 12px 35px;
-            background: transparent;
-            border: 2px solid var(--water);
-            color: var(--water);
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: 0.3s;
-            opacity: 0;
-            animation: fadeUp 1s forwards 1.1s;
+            display: inline-block; padding: 12px 35px;
+            background: transparent; border: 2px solid var(--water);
+            color: var(--water); text-decoration: none; font-weight: 600;
+            border-radius: 50px; transition: 0.3s;
+            opacity: 0; animation: fadeUp 1s forwards 1.1s;
         }
-
         .btn:hover {
-            background: var(--water);
-            color: #000;
+            background: var(--water); color: #000;
             box-shadow: 0 0 25px var(--water);
         }
 
         /* --- Stats Banner --- */
         .stats-banner {
-            display: flex;
-            justify-content: space-around;
-            padding: 40px 20px;
+            display: flex; justify-content: space-around; padding: 40px 20px;
             background: rgba(255, 255, 255, 0.03);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-wrap: wrap; gap: 20px;
         }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--fire);
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--fire); }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; }
 
         /* --- Section Styles --- */
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
         .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-            left: 50%;
+            font-size: 2.5rem; text-align: center; margin-bottom: 50px;
+            position: relative; display: inline-block; left: 50%;
             transform: translateX(-50%);
         }
-
         .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient);
-            margin: 10px auto 0;
-            border-radius: 2px;
+            content: ''; display: block; width: 60px; height: 4px;
+            background: var(--gradient); margin: 10px auto 0; border-radius: 2px;
         }
 
-        /* --- Companies Grid --- */
-        .company-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .company-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none; /* For link styling */
-            color: white;
-            display: block;
-        }
-
-        .company-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient);
-        }
-
-        .company-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--ice);
-        }
-
-        .company-icon {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--ice);
-        }
-
-        .visit-btn {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: var(--fire);
-            font-weight: 700;
-        }
-
-        /* --- Social Media Section --- */
+        /* --- Social Media Grid --- */
         .social-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            display: flex; justify-content: center; gap: 20px;
+            flex-wrap: wrap; margin-top: 20px;
         }
-
         .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 25px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-            border: 1px solid transparent;
+            display: flex; align-items: center; gap: 10px;
+            padding: 15px 25px; background: rgba(255,255,255,0.05);
+            border-radius: 10px; color: white; text-decoration: none;
+            transition: 0.3s; border: 1px solid transparent;
         }
-
         .social-btn:hover {
             background: rgba(255,255,255,0.1);
-            border-color: var(--ice);
-            transform: scale(1.05);
+            border-color: var(--ice); transform: scale(1.05);
         }
-
-        .social-btn i {
-            font-size: 1.5rem;
-        }
-
+        .social-btn i { font-size: 1.5rem; }
         .social-btn.tiktok:hover { color: #ff0050; border-color: #ff0050; }
         .social-btn.facebook:hover { color: #1877F2; border-color: #1877F2; }
         .social-btn.instagram:hover { color: #E1306C; border-color: #E1306C; }
         .social-btn.telegram:hover { color: #0088cc; border-color: #0088cc; }
 
-        /* --- Contact Form (Glassmorphism) --- */
+        /* --- Timeline (Journey) --- */
+        .timeline {
+            position: relative; max-width: 800px; margin: 0 auto;
+        }
+        .timeline::before {
+            content: ''; position: absolute; left: 50%; width: 2px; height: 100%;
+            background: rgba(255, 255, 255, 0.1); transform: translateX(-50%);
+        }
+        .timeline-item {
+            padding: 20px 40px; position: relative; width: 50%;
+            box-sizing: border-box; opacity: 0; transition: all 0.6s ease-out;
+            transform: translateY(30px);
+        }
+        .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        .timeline-dot {
+            width: 20px; height: 20px; background: var(--bg-color);
+            border: 3px solid var(--ice); border-radius: 50%;
+            position: absolute; top: 25px; right: -10px; z-index: 10;
+            box-shadow: 0 0 10px var(--ice);
+        }
+        .timeline-item:nth-child(even) .timeline-dot { left: -10px; }
+        .timeline-content {
+            padding: 20px; background: var(--card-bg);
+            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+        .timeline-content:hover {
+            transform: translateY(-5px); border-color: var(--fire);
+        }
+        .date { color: var(--fire); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
+
+        /* --- Companies Grid --- */
+        .company-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+        }
+        .company-card {
+            background: var(--card-bg); padding: 30px;
+            border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s; position: relative; overflow: hidden;
+            text-decoration: none; color: white; display: block;
+        }
+        .company-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient);
+        }
+        .company-card:hover {
+            transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border-color: var(--ice);
+        }
+        .company-icon { font-size: 2rem; margin-bottom: 20px; color: var(--ice); }
+        .visit-btn { margin-top: 15px; font-size: 0.9rem; color: var(--fire); font-weight: 700; }
+
+        /* --- Education --- */
+        .edu-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .cert-list { list-style: none; }
+        .cert-list li {
+            background: rgba(255, 255, 255, 0.03); margin-bottom: 10px;
+            padding: 15px; border-radius: 5px; border-left: 3px solid var(--water);
+            transition: 0.3s;
+        }
+        .cert-list li:hover { background: rgba(255, 255, 255, 0.08); padding-left: 20px; }
+        .lang-tags span {
+            display: inline-block; padding: 5px 15px; margin: 5px;
+            background: rgba(255, 77, 77, 0.2); color: var(--fire);
+            border-radius: 20px; font-size: 0.9rem; font-weight: 600;
+        }
+
+        /* --- Contact Form --- */
         .contact-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(22, 22, 22, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 20px;
+            max-width: 600px; margin: 0 auto;
+            background: rgba(22, 22, 22, 0.6); backdrop-filter: blur(15px);
+            padding: 40px; border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; }
         .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: white;
-            font-family: inherit;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 12px 15px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            color: white; font-family: inherit; outline: none; transition: 0.3s;
         }
-
-        .form-group input:focus {
-            border-color: var(--ice);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-        }
-
+        .form-group input:focus { border-color: var(--ice); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
         .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--gradient);
-            border: none;
-            color: white;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
+            width: 100%; padding: 15px; background: var(--gradient); border: none;
+            color: white; font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.3s;
         }
-
-        .submit-btn:hover {
-            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
-        }
+        .submit-btn:hover { box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
 
         /* --- Footer --- */
         footer {
-            text-align: center;
-            padding: 40px;
-            margin-top: 80px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
+            text-align: center; padding: 40px; margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); color: var(--text-muted);
         }
 
         /* --- Animations --- */
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Simplified for single file demo */
-            .contact-container { padding: 25px; }
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; }
+            .timeline-item:nth-child(even) { left: 0; }
+            .timeline-item:nth-child(odd) { text-align: left; }
+            .timeline-dot { left: 10px; right: auto; }
+            .timeline-item:nth-child(even) .timeline-dot { left: 10px; }
+            .nav-links { display: none; }
+            .edu-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -411,6 +281,7 @@
             <a href="#about">About</a>
             <a href="#journey">Journey</a>
             <a href="#companies">Companies</a>
+            <a href="#education">Education</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -442,9 +313,9 @@
 
     <!-- About & Socials -->
     <section id="about" class="reveal">
-        <h2 class="section-title">Connect With Me</h2>
+        <h2 class="section-title">About & Socials</h2>
         <div style="text-align: center; margin-bottom: 30px; color: var(--text-muted);">
-            <p>Follow me on social media for the latest updates.</p>
+            <p>Follow me on social media for the latest updates. (User: dmkaawya)</p>
         </div>
         <div class="social-grid">
             <a href="https://tiktok.com/@dmkaawya" target="_blank" class="social-btn tiktok">
@@ -462,9 +333,64 @@
         </div>
     </section>
 
+    <!-- Journey Timeline -->
+    <section id="journey" class="reveal">
+        <h2 class="section-title">My Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">2021</span>
+                    <h3>The Beginning</h3>
+                    <p>Started my career in non-profit management, handling Facebook and WhatsApp pages/groups as an Admin.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">April 2024</span>
+                    <h3>DMK Store Launch</h3>
+                    <p>Launched my first profitable online business, DMK Store.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">Nov 2024</span>
+                    <h3>Reseller Expansion</h3>
+                    <p>Expanded the business model, connecting with 40 initial resellers.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">Jan - Feb 2025</span>
+                    <h3>ABLK Studio</h3>
+                    <p>Worked as a Content Creator and Social Media Manager at ABLK Studio.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">Nov 2025</span>
+                    <h3>Acquired Ru Online Stores</h3>
+                    <p>Acquired the company and transformed it into a massive Dropshipping platform.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">Dec 2025</span>
+                    <h3>Birth of DMC Group</h3>
+                    <p>Rebranded into DMC Group, managing 2000+ resellers and launching subsidiaries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Companies Section -->
     <section id="companies" class="reveal">
-        <h2 class="section-title">My Companies</h2>
+        <h2 class="section-title">DMC Group Subsidiaries</h2>
         <div class="company-grid">
             
             <a href="https://dmcgroup.vercel.app" target="_blank" class="company-card">
@@ -480,7 +406,7 @@
                 <i class="fa-solid fa-store company-icon"></i>
                 <h3>DMC Store</h3>
                 <p style="color: var(--text-muted); margin-top: 10px;">
-                    Includes Ru Online Stores (Dropshipping) and Laaba Kade (Retail). Your one-stop shop.
+                    Includes Ru Online Stores (Dropshipping) and Laaba Kade (Retail).
                 </p>
                 <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
             </a>
@@ -493,6 +419,70 @@
                 </p>
                 <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
             </a>
+
+            <a href="#contact" class="company-card">
+                <i class="fa-solid fa-laptop-code company-icon"></i>
+                <h3>DMC Web Design</h3>
+                <p style="color: var(--text-muted); margin-top: 10px;">
+                    Creative web design agency crafting professional websites for modern businesses.
+                </p>
+                <div class="visit-btn">Contact for Service <i class="fa-solid fa-envelope"></i></div>
+            </a>
+
+            <a href="#contact" class="company-card">
+                <i class="fa-solid fa-car company-icon"></i>
+                <h3>DMC Motor Deals</h3>
+                <p style="color: var(--text-muted); margin-top: 10px;">
+                    Vehicle sales and automotive services, offering the best deals in the market.
+                </p>
+                <div class="visit-btn">Contact for Service <i class="fa-solid fa-envelope"></i></div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="reveal">
+        <h2 class="section-title">Education & Skills</h2>
+        <div class="edu-container">
+            
+            <div class="edu-box">
+                <h3 style="color: var(--fire); margin-bottom: 20px;">Academic Background</h3>
+                <ul class="cert-list">
+                    <li>
+                        <strong>O/L - May 2024</strong><br>
+                        <span style="font-size: 0.9rem; color: #aaa;">Successfully completed</span>
+                    </li>
+                    <li>
+                        <strong>A/L - August 2026 (Pending)</strong><br>
+                        <span style="font-size: 0.9rem; color: #aaa;">Subjects: Korean, ICT, Media</span>
+                    </li>
+                </ul>
+                <div style="margin-top: 20px;">
+                    <p style="color:white; margin-bottom:10px;">Languages:</p>
+                    <div class="lang-tags">
+                        <span>Sinhala (Good)</span>
+                        <span>English (Average)</span>
+                        <span>Korean (Good)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-box">
+                <h3 style="color: var(--ice); margin-bottom: 20px;">Certifications</h3>
+                <ul class="cert-list">
+                    <li>Fundamental Digital Marketing (Google Garage, 2021)</li>
+                    <li>Fundamental Cyber Security (Cisco NetAcad, 2022)</li>
+                    <li>Gmail (Google, 2022)</li>
+                    <li>5G Network (EAcademy, 2023)</li>
+                    <li>Network Essentials (Cisco NetAcad, 2025)</li>
+                    <li>Python Essentials (Cisco NetAcad, 2025)</li>
+                    <li>Computer Hardware (Cisco NetAcad, 2025)</li>
+                    <li>Python Essentials 1 (Uni of Moratuwa, 2025)</li>
+                    <li>AI/ML Engineer (SLIIT, 2025)</li>
+                    <li><strong>Current:</strong> Network Engineer (Coursera)</li>
+                </ul>
+            </div>
 
         </div>
     </section>
@@ -528,15 +518,13 @@
 
     <!-- JavaScript -->
     <script>
-        // --- 1. Background Particle Animation (Fire & Ice Effect) ---
+        // --- 1. Background Particle Animation ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         let particlesArray;
-
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -568,9 +556,7 @@
         function initParticles() {
             particlesArray = [];
             let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
+            for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
         }
 
         function animateParticles() {
@@ -598,9 +584,7 @@
             const elementVisible = 150;
             revealElements.forEach((reveal) => {
                 const elementTop = reveal.getBoundingClientRect().top;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveal.classList.add('active');
-                }
+                if (elementTop < windowHeight - elementVisible) reveal.classList.add('active');
             });
         };
         window.addEventListener('scroll', revealOnScroll);
@@ -609,23 +593,12 @@
         // --- 3. WhatsApp Form Logic ---
         document.getElementById('whatsappForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get values
             var name = document.getElementById("name").value;
             var city = document.getElementById("city").value;
             var age = document.getElementById("age").value;
-
-            // Format Message
             var message = "Hello Kaawya, my name is " + name + ". I am from " + city + " and I am " + age + " years old.";
-            
-            // WhatsApp Number (International format: 94 followed by number without leading 0)
-            // 0775048455 -> 94775048455
             var phoneNumber = "94775048455"; 
-
-            // Create Link
             var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
-
-            // Open
             window.open(url, '_blank').focus();
         });
     </script>
