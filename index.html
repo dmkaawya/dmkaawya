@@ -95,7 +95,6 @@
             opacity: 0; animation: fadeUp 1s forwards 0.5s;
         }
         .hero h1 span { color: var(--fire); }
-        .hero h1 .highlight-ice { color: var(--ice); }
         .hero p {
             font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;
             opacity: 0; animation: fadeUp 1s forwards 0.8s;
@@ -232,12 +231,17 @@
         }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; }
-        .form-group input {
+        .form-group input, .form-group textarea {
             width: 100%; padding: 12px 15px; background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
             color: white; font-family: inherit; outline: none; transition: 0.3s;
         }
-        .form-group input:focus { border-color: var(--ice); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--ice); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
+        /* Added styling for textarea */
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
         .submit-btn {
             width: 100%; padding: 15px; background: var(--gradient); border: none;
             color: white; font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.3s;
@@ -381,8 +385,16 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <span class="date">Dec 2025</span>
-                    <h3>Birth of DMC Group</h3>
-                    <p>Rebranded into DMC Group, managing 400+ resellers and launching subsidiaries.</p>
+                    <h3>DMC Group & M&K Boost</h3>
+                    <p>Founded DMC Group and worked as Co-CEO at M&K Boost promotions company.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="date">Feb 2026</span>
+                    <h3>NovaX Team Evolution</h3>
+                    <p>M&K Boost rebranded into NovaX Team. Currently serving as a core team member driving digital growth.</p>
                 </div>
             </div>
         </div>
@@ -393,6 +405,17 @@
         <h2 class="section-title">DMC Group Subsidiaries</h2>
         <div class="company-grid">
             
+            <!-- 1. NovaX Team (Moved to 1st Place) -->
+            <a href="https://nova-x-team.vercel.app/" target="_blank" class="company-card">
+                <i class="fa-solid fa-rocket company-icon"></i>
+                <h3>NovaX Team</h3>
+                <p style="color: var(--text-muted); margin-top: 10px;">
+                    Sri Lanka's #1 Promotions Network. Specialized in digital marketing and brand growth strategies.
+                </p>
+                <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <!-- 2. DMC Group -->
             <a href="https://dmcgroup.vercel.app" target="_blank" class="company-card">
                 <i class="fa-solid fa-building company-icon"></i>
                 <h3>DMC Group</h3>
@@ -402,6 +425,7 @@
                 <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
+            <!-- 3. DMC Store -->
             <a href="https://dmc-stores.vercel.app" target="_blank" class="company-card">
                 <i class="fa-solid fa-store company-icon"></i>
                 <h3>DMC Store</h3>
@@ -411,15 +435,7 @@
                 <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <a href="https://m-k-boost.vercel.app/" target="_blank" class="company-card">
-                <i class="fa-solid fa-rocket company-icon"></i>
-                <h3>M&K Boost</h3>
-                <p style="color: var(--text-muted); margin-top: 10px;">
-                    Specialized promotion and marketing agency helping brands grow their digital presence.
-                </p>
-                <div class="visit-btn">Visit Website <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
+            <!-- 4. DMC Web Design -->
             <a href="#contact" class="company-card">
                 <i class="fa-solid fa-laptop-code company-icon"></i>
                 <h3>DMC Web Design</h3>
@@ -429,6 +445,7 @@
                 <div class="visit-btn">Contact for Service <i class="fa-solid fa-envelope"></i></div>
             </a>
 
+            <!-- 5. DMC Motor Deals -->
             <a href="#contact" class="company-card">
                 <i class="fa-solid fa-car company-icon"></i>
                 <h3>DMC Motor Deals</h3>
@@ -500,9 +517,10 @@
                     <label for="city">City</label>
                     <input type="text" id="city" placeholder="Enter your city" required>
                 </div>
+                <!-- Replaced Age with Message -->
                 <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="number" id="age" placeholder="Enter your age" required>
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Type your message here..." required></textarea>
                 </div>
                 <button type="submit" class="submit-btn">
                     <i class="fa-brands fa-whatsapp"></i> Send to WhatsApp
@@ -595,10 +613,12 @@
             e.preventDefault();
             var name = document.getElementById("name").value;
             var city = document.getElementById("city").value;
-            var age = document.getElementById("age").value;
-            var message = "Hello Kaawya, my name is " + name + ". I am from " + city + " and I am " + age + " years old.";
+            // Updated to get message instead of age
+            var message = document.getElementById("message").value;
+            
+            var text = "Hello Kaawya, my name is " + name + " from " + city + ". Message: " + message;
             var phoneNumber = "94775048455"; 
-            var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+            var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(text);
             window.open(url, '_blank').focus();
         });
     </script>
