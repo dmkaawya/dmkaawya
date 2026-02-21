@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inceptra 25 | Project Proposal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Mode Variables (Default) */
+            --bg-color: #0B0F19;
+            --card-bg: #151A2E;
+            --text-main: #FFFFFF;
+            --text-muted: #8B92A5;
+            --border-color: #252D40;
+            --primary-color: #5C6BC0; /* Indigo Shade */
+            --secondary-color: #7986CB;
+            --accent-bg: #1E2642;
+            --accent-text: #8C9EFF;
+            --success-bg: rgba(76, 175, 80, 0.15);
+            --success-text: #66BB6A;
+            --danger-color: #EF5350; /* Red for discount */
+        }
+
+        [data-theme="light"] {
+            /* Light Mode Variables */
+            --bg-color: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border-color: #E5E7EB;
+            --primary-color: #3B82F6;
+            --secondary-color: #2563EB;
+            --accent-bg: #EFF6FF;
+            --accent-text: #1D4ED8;
+            --success-bg: #ECFDF5;
+            --success-text: #059669;
+            --danger-color: #DC2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.4s, color 0.4s;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #242B45 0%, #151A2E 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Light Mode Header Override */
+        [data-theme="light"] header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, #8C9EFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        [data-theme="light"] h1 {
+            background: none;
+            -webkit-text-fill-color: white;
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            color: #B0BEC5;
+        }
+        
+        [data-theme="light"] .project-name {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        /* Meta Info */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 0 40px;
+            margin-top: -25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .meta-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .meta-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 5px;
+        }
+
+        /* Content */
+        .content {
+            padding: 50px 40px;
+        }
+
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Features */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul li::before {
+            content: '▹';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Pricing Table */
+        .pricing-card {
+            background: var(--bg-color);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 4fr 1fr;
+            padding: 15px 25px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 4fr 1fr;
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row:hover {
+            background: rgba(92, 107, 192, 0.05);
+        }
+
+        .item-name {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .item-price {
+            text-align: right;
+            font-weight: 600;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-muted);
+        }
+
+        /* Pricing Summary */
+        .pricing-summary {
+            margin-top: 0;
+            background: var(--card-bg);
+            padding: 25px;
+            border-top: 2px dashed var(--border-color);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .total-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .total-value {
+            font-weight: 600;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .discount-value {
+            color: var(--danger-color); /* Red Color for Discount */
+            font-weight: 700;
+        }
+
+        .grand-total-row {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grand-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .grand-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--success-text);
+            background: var(--success-bg);
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            background: var(--bg-color);
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .date-box {
+            text-align: center;
+        }
+
+        .date-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .date-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 5px;
+        }
+
+        .duration-badge {
+            background: var(--accent-bg);
+            color: var(--accent-text);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        /* Link Button */
+        .project-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(92, 107, 192, 0.3);
+        }
+
+        .project-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(92, 107, 192, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-color);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .signature-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .signature-role {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+                text-align: center;
+            }
+            .content, footer {
+                padding: 25px;
+            }
+            .meta-grid {
+                padding: 0 25px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark"> <!-- Default Dark Mode -->
+
+<div class="container">
+    <header>
+        <div class="header-content">
+            <div>
+                <div class="logo">DMC Group</div>
+                <h1>Project Proposal</h1>
+                <div class="project-name">Custom Live Voting Web App - Inceptra 25</div>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-sun" id="theme-icon"></i> 
+                <span id="theme-text">Light Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Meta Grid -->
+    <div class="meta-grid">
+        <div class="meta-item">
+            <div class="meta-label">Prepared For</div>
+            <div class="meta-value">Nadeeja Bandara</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Date</div>
+            <div class="meta-value">February 21, 2026</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Project ID</div>
+            <div class="meta-value">#INCEP-25-V1</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Overview -->
+        <section>
+            <h2><i class="fas fa-info-circle"></i> Project Overview</h2>
+            <p>
+                The objective of this project is to design and develop a fully automated Voting System for the <strong>Inceptra 25</strong> competition. 
+                This is a complex web application featuring real-time data updates, advanced security protocols, and Location Tracking (Geo-fencing) to ensure a seamless and transparent voting process.
+            </p>
+            <a href="https://inceptra25.vercel.app/" target="_blank" class="project-link-btn">
+                <i class="fas fa-external-link-alt"></i> View Live Project
+            </a>
+        </section>
+
+        <!-- Scope -->
+        <section>
+            <h2><i class="fas fa-laptop-code"></i> Scope of Work</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Security & Authentication</div>
+                    <ul>
+                        <li>Secure User Registration & Login.</li>
+                        <li>Location Detection & Geo-fencing.</li>
+                        <li>One-User-One-Vote Security.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Core Voting Engine</div>
+                    <ul>
+                        <li>Responsive UI (Mobile & PC).</li>
+                        <li>Live Countdown Timers.</li>
+                        <li>Separate Boys & Girls Categories.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Admin Dashboard</div>
+                    <ul>
+                        <li>Real-time Analytics & Results.</li>
+                        <li>Contestant Management.</li>
+                        <li>Timeline & Radius Control.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">Backend & Deployment</div>
+                    <ul>
+                        <li>Real-time Cloud Database.</li>
+                        <li>SSL Configuration.</li>
+                        <li>Data Export to CSV.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment -->
+        <section>
+            <h2><i class="fas fa-file-invoice-dollar"></i> Investment Estimate</h2>
+            <div class="pricing-card">
+                <!-- Header -->
+                <div class="table-header">
+                    <span>Service / Feature</span>
+                    <span style="text-align: right;">Value (LKR)</span>
+                </div>
+                
+                <!-- Items -->
+                <div class="table-row">
+                    <span class="item-name">UI/UX Design & Frontend Development</span>
+                    <span class="item-price">16,000.00</span>
+                </div>
+                <div class="table-row">
+                    <span class="item-name">Backend Database Setup & Security</span>
+                    <span class="item-price">25,000.00</span>
+                </div>
+                <div class="table-row">
+                    <span class="item-name">User Login & Live Voting Engine</span>
+                    <span class="item-price">18,000.00</span>
+                </div>
+                <div class="table-row">
+                    <span class="item-name">Admin Dashboard & Location Config</span>
+                    <span class="item-price">24,000.00</span>
+                </div>
+                <div class="table-row">
+                    <span class="item-name">Server Deployment & Testing</span>
+                    <span class="item-price">6,000.00</span>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="pricing-summary">
+                    <div class="summary-row">
+                        <span class="total-label">Total System Value</span>
+                        <span class="total-value">LKR 89,000.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="total-label">Special Discount (100%)</span>
+                        <span class="total-value discount-value">- LKR 89,000.00</span>
+                    </div>
+                    
+                    <div class="grand-total-row">
+                        <span class="grand-label">Final Total</span>
+                        <span class="grand-value">LKR 0.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section>
+            <h2><i class="fas fa-calendar-alt"></i> Development Timeline</h2>
+            <div class="timeline-container">
+                <div class="date-box">
+                    <div class="date-label">Start Date</div>
+                    <div class="date-value">Feb 18, 2026</div>
+                </div>
+                <div class="duration-badge">
+                    4 Days Duration
+                </div>
+                <div class="date-box">
+                    <div class="date-label">Completion Date</div>
+                    <div class="date-value">Feb 21, 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms -->
+        <section>
+            <h2><i class="fas fa-handshake"></i> Terms & Conditions</h2>
+            <div style="background: var(--bg-color); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <ul>
+                    <li><strong>24/7 Support:</strong> Lifetime free technical support available at any time.</li>
+                    <li><strong>Free Modifications:</strong> Any necessary changes or updates will be done free of charge as required.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Signature -->
+        <div class="signature">
+            <div class="signature-name">D.M. Kaawya</div>
+            <div class="signature-role">Lead Developer | DMC Group</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            Designed with <i class="fas fa-heart" style="color: var(--danger-color);"></i> by <strong>DMC Web Design</strong>
+        </div>
+    </footer>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        const text = document.getElementById('theme-text');
+
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.setAttribute('data-theme', 'light');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            text.textContent = 'Dark Mode';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            text.textContent = 'Light Mode';
+        }
+    }
+</script>
+
+</body>
+</html>
