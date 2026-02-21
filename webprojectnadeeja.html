@@ -4,39 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inceptra 25 | Project Proposal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            /* Dark Mode Variables (Default) */
-            --bg-color: #0B0F19;
-            --card-bg: #151A2E;
-            --text-main: #FFFFFF;
-            --text-muted: #8B92A5;
-            --border-color: #252D40;
-            --primary-color: #5C6BC0; /* Indigo Shade */
-            --secondary-color: #7986CB;
-            --accent-bg: #1E2642;
-            --accent-text: #8C9EFF;
-            --success-bg: rgba(76, 175, 80, 0.15);
-            --success-text: #66BB6A;
-            --danger-color: #EF5350; /* Red for discount */
-        }
-
-        [data-theme="light"] {
-            /* Light Mode Variables */
-            --bg-color: #F5F7FA;
-            --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
-            --border-color: #E5E7EB;
-            --primary-color: #3B82F6;
-            --secondary-color: #2563EB;
-            --accent-bg: #EFF6FF;
-            --accent-text: #1D4ED8;
-            --success-bg: #ECFDF5;
-            --success-text: #059669;
-            --danger-color: #DC2626;
+            --bg: #08080c;
+            --bg-elevated: #0f0f14;
+            --card: rgba(18, 18, 24, 0.8);
+            --card-hover: rgba(24, 24, 32, 0.9);
+            --fg: #f4f4f5;
+            --fg-muted: #71717a;
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #ff6b35;
+            --accent-glow: rgba(255, 107, 53, 0.4);
+            --accent-secondary: #00d4aa;
+            --gradient-start: #ff6b35;
+            --gradient-end: #ff9f1c;
         }
 
         * {
@@ -45,637 +28,1049 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            transition: background-color 0.4s, color 0.4s;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: var(--card-bg);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Background Effects */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--accent) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            opacity: 0.15;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, transparent 70%);
+            bottom: 20%;
+            left: -100px;
+            opacity: 0.1;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Main Container */
+        .proposal-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
         /* Header */
-        header {
-            background: linear-gradient(135deg, #242B45 0%, #151A2E 100%);
-            color: white;
-            padding: 40px;
+        .header {
             position: relative;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        /* Light Mode Header Override */
-        [data-theme="light"] header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 60px 0 80px;
+            text-align: center;
         }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .logo {
-            font-size: 1.4rem;
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--fg-muted);
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
             margin-bottom: 20px;
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #fff, #8C9EFF);
+            background: linear-gradient(135deg, var(--fg) 0%, var(--fg-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        
-        [data-theme="light"] h1 {
-            background: none;
-            -webkit-text-fill-color: white;
+            background-clip: text;
         }
 
-        .project-name {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-            color: #B0BEC5;
-        }
-        
-        [data-theme="light"] .project-name {
-            color: rgba(255,255,255,0.9);
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--fg-muted);
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        /* Theme Toggle */
-        .theme-toggle {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.05);
-        }
-
-        /* Meta Info */
+        /* Meta Cards */
         .meta-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 0 40px;
-            margin-top: -25px;
-            position: relative;
-            z-index: 10;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 60px;
         }
 
-        .meta-item {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+        @media (max-width: 640px) {
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .meta-item:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary-color);
+        .meta-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .meta-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .meta-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .meta-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            color: var(--primary-color);
+            letter-spacing: 0.1em;
+            color: var(--accent);
             font-weight: 600;
-            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
 
         .meta-value {
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--text-main);
-            margin-top: 5px;
+            color: var(--fg);
         }
 
-        /* Content */
-        .content {
-            padding: 50px 40px;
+        /* Section Styling */
+        .section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        section {
-            margin-bottom: 45px;
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        h2 {
-            font-size: 1.3rem;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            margin-bottom: 28px;
         }
 
-        h2 i {
-            color: var(--primary-color);
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent), var(--gradient-end));
+            border-radius: 12px;
+            color: white;
             font-size: 1.2rem;
         }
 
-        p {
-            color: var(--text-muted);
-            margin-bottom: 15px;
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
-        /* Features */
+        /* Feature Cards */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .feature-card {
-            background: var(--bg-color);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: border-color 0.3s;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
         .feature-card:hover {
-            border-color: var(--primary-color);
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-title {
             font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+            color: var(--fg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        ul {
+        .feature-title i {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .feature-list {
             list-style: none;
         }
 
-        ul li {
+        .feature-list li {
             position: relative;
-            padding-left: 22px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--fg-muted);
             font-size: 0.95rem;
         }
 
-        ul li::before {
-            content: '▹';
-            color: var(--primary-color);
+        .feature-list li::before {
+            content: '';
             position: absolute;
             left: 0;
-            font-size: 1.2rem;
-            line-height: 1;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
         }
 
-        /* Pricing Table */
-        .pricing-card {
-            background: var(--bg-color);
-            border-radius: 12px;
+        /* Pricing Section */
+        .pricing-container {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
 
-        .table-header {
+        .pricing-header {
             display: grid;
-            grid-template-columns: 4fr 1fr;
-            padding: 15px 25px;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
+            grid-template-columns: 1fr auto;
+            padding: 20px 28px;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.8rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--fg-muted);
         }
 
-        .table-row {
+        .pricing-row {
             display: grid;
-            grid-template-columns: 4fr 1fr;
-            padding: 18px 25px;
-            border-bottom: 1px solid var(--border-color);
+            grid-template-columns: 1fr auto;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
             align-items: center;
             transition: background 0.2s;
         }
-        
-        .table-row:last-child {
+
+        .pricing-row:last-child {
             border-bottom: none;
         }
-        
-        .table-row:hover {
-            background: rgba(92, 107, 192, 0.05);
+
+        .pricing-row:hover {
+            background: rgba(255, 107, 53, 0.03);
         }
 
         .item-name {
-            color: var(--text-main);
             font-weight: 500;
+            color: var(--fg);
         }
 
         .item-price {
-            text-align: right;
+            font-family: 'Space Grotesk', monospace;
             font-weight: 600;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--text-muted);
+            color: var(--fg-muted);
+            font-size: 0.95rem;
         }
 
-        /* Pricing Summary */
         .pricing-summary {
-            margin-top: 0;
-            background: var(--card-bg);
-            padding: 25px;
-            border-top: 2px dashed var(--border-color);
+            padding: 28px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            border-top: 1px dashed var(--border);
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             font-size: 1rem;
         }
 
-        .total-label {
-            color: var(--text-muted);
-            font-weight: 500;
+        .summary-label {
+            color: var(--fg-muted);
         }
 
-        .total-value {
+        .summary-value {
+            font-family: 'Space Grotesk', monospace;
             font-weight: 600;
-            font-family: 'Courier New', Courier, monospace;
         }
 
-        .discount-value {
-            color: var(--danger-color); /* Red Color for Discount */
-            font-weight: 700;
+        .discount {
+            color: var(--accent);
         }
 
-        .grand-total-row {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border-color);
+        .grand-total {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 24px;
+            margin-top: 24px;
+            border-top: 1px solid var(--border);
         }
 
         .grand-label {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text-main);
         }
 
         .grand-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--success-text);
-            background: var(--success-bg);
-            padding: 8px 20px;
-            border-radius: 8px;
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--accent-secondary), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Timeline */
-        .timeline-container {
-            background: var(--bg-color);
-            padding: 30px;
-            border-radius: 12px;
+        .timeline-wrapper {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            opacity: 0.3;
+        }
+
+        .timeline-grid {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
         }
 
-        .date-box {
+        .timeline-point {
             text-align: center;
         }
 
-        .date-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .timeline-label {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--fg-muted);
+            margin-bottom: 6px;
         }
 
-        .date-value {
-            font-size: 1.2rem;
+        .timeline-value {
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-top: 5px;
+            color: var(--fg);
         }
 
-        .duration-badge {
-            background: var(--accent-bg);
-            color: var(--accent-text);
-            padding: 12px 25px;
-            border-radius: 30px;
+        .duration-pill {
+            background: linear-gradient(135deg, var(--accent), var(--gradient-end));
+            color: white;
+            padding: 14px 32px;
+            border-radius: 100px;
             font-weight: 700;
-            border: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 30px var(--accent-glow);
         }
 
-        /* Link Button */
-        .project-link-btn {
+        /* Terms */
+        .terms-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .terms-list {
+            list-style: none;
+        }
+
+        .terms-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+            color: var(--fg-muted);
+        }
+
+        .terms-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .terms-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 8px;
+            color: var(--accent-secondary);
+        }
+
+        /* CTA Button */
+        .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: var(--primary-color);
+            gap: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--gradient-end));
             color: white;
-            padding: 14px 30px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            margin-top: 20px;
-            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(92, 107, 192, 0.3);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px var(--accent-glow);
+            border: none;
+            cursor: pointer;
         }
 
-        .project-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(92, 107, 192, 0.4);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px var(--accent-glow);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
         }
 
         /* Footer */
-        footer {
-            background: var(--bg-color);
-            padding: 30px 40px;
+        .footer {
             text-align: center;
-            border-top: 1px solid var(--border-color);
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
         }
 
         .signature {
-            text-align: right;
-            margin-top: 20px;
+            margin-bottom: 40px;
         }
 
         .signature-name {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--fg);
+            margin-bottom: 4px;
         }
 
         .signature-role {
-            font-size: 0.9rem;
-            color: var(--primary-color);
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         .copyright {
-            margin-top: 30px;
+            color: var(--fg-muted);
             font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                margin: 0;
-                border-radius: 0;
+        .heart {
+            color: var(--accent);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rise 15s linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
             }
-            .header-content {
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .header {
+                padding: 40px 0 60px;
+            }
+
+            .timeline-grid {
                 flex-direction: column;
-                gap: 20px;
-                align-items: center;
+                gap: 40px;
+            }
+
+            .timeline-wrapper::before {
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                width: 2px;
+                height: 100%;
+                background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+            }
+
+            .pricing-header,
+            .pricing-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .pricing-header span:last-child,
+            .item-price {
+                text-align: left;
+            }
+
+            .grand-total {
+                flex-direction: column;
+                gap: 16px;
                 text-align: center;
-            }
-            .content, footer {
-                padding: 25px;
-            }
-            .meta-grid {
-                padding: 0 25px;
             }
         }
     </style>
 </head>
-<body data-theme="dark"> <!-- Default Dark Mode -->
+<body>
+    <!-- Background Effects -->
+    <div class="bg-pattern"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="particles" id="particles"></div>
 
-<div class="container">
-    <header>
-        <div class="header-content">
-            <div>
-                <div class="logo">DMC Group</div>
-                <h1>Project Proposal</h1>
-                <div class="project-name">Custom Live Voting Web App - Inceptra 25</div>
+    <div class="proposal-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="badge">
+                <span class="badge-dot"></span>
+                <span>Project Proposal</span>
             </div>
-            <button class="theme-toggle" onclick="toggleTheme()">
-                <i class="fas fa-sun" id="theme-icon"></i> 
-                <span id="theme-text">Light Mode</span>
-            </button>
-        </div>
-    </header>
+            <h1 class="title font-display">Inceptra 25</h1>
+            <p class="subtitle">Custom Live Voting Web Application with Real-time Analytics and Geo-fencing Security</p>
+        </header>
 
-    <!-- Meta Grid -->
-    <div class="meta-grid">
-        <div class="meta-item">
-            <div class="meta-label">Prepared For</div>
-            <div class="meta-value">Nadeeja Bandara</div>
+        <!-- Meta Cards -->
+        <div class="meta-grid">
+            <div class="meta-card">
+                <div class="meta-label">Prepared For</div>
+                <div class="meta-value">Nadeeja Bandara</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-label">Date</div>
+                <div class="meta-value">February 21, 2026</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-label">Project ID</div>
+                <div class="meta-value font-display">#INCEP-25-V1</div>
+            </div>
         </div>
-        <div class="meta-item">
-            <div class="meta-label">Date</div>
-            <div class="meta-value">February 21, 2026</div>
-        </div>
-        <div class="meta-item">
-            <div class="meta-label">Project ID</div>
-            <div class="meta-value">#INCEP-25-V1</div>
-        </div>
-    </div>
 
-    <div class="content">
-        <!-- Overview -->
-        <section>
-            <h2><i class="fas fa-info-circle"></i> Project Overview</h2>
-            <p>
-                The objective of this project is to design and develop a fully automated Voting System for the <strong>Inceptra 25</strong> competition. 
-                This is a complex web application featuring real-time data updates, advanced security protocols, and Location Tracking (Geo-fencing) to ensure a seamless and transparent voting process.
+        <!-- Overview Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                </div>
+                <h2 class="section-title font-display">Project Overview</h2>
+            </div>
+            <p style="color: var(--fg-muted); margin-bottom: 24px; font-size: 1.05rem;">
+                Design and develop a fully automated Voting System for the <strong style="color: var(--fg);">Inceptra 25</strong> competition. 
+                A complex web application featuring real-time data updates, advanced security protocols, and Location Tracking (Geo-fencing) 
+                to ensure a seamless and transparent voting process.
             </p>
-            <a href="https://inceptra25.vercel.app/" target="_blank" class="project-link-btn">
-                <i class="fas fa-external-link-alt"></i> View Live Project
+            <a href="https://inceptra25.vercel.app/" target="_blank" class="cta-button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                View Live Project
             </a>
         </section>
 
-        <!-- Scope -->
-        <section>
-            <h2><i class="fas fa-laptop-code"></i> Scope of Work</h2>
+        <!-- Scope Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                </div>
+                <h2 class="section-title font-display">Scope of Work</h2>
+            </div>
             <div class="feature-grid">
                 <div class="feature-card">
-                    <div class="feature-title">Security & Authentication</div>
-                    <ul>
-                        <li>Secure User Registration & Login.</li>
-                        <li>Location Detection & Geo-fencing.</li>
-                        <li>One-User-One-Vote Security.</li>
+                    <div class="feature-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        Security & Authentication
+                    </div>
+                    <ul class="feature-list">
+                        <li>Secure User Registration & Login</li>
+                        <li>Location Detection & Geo-fencing</li>
+                        <li>One-User-One-Vote Security</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-title">Core Voting Engine</div>
-                    <ul>
-                        <li>Responsive UI (Mobile & PC).</li>
-                        <li>Live Countdown Timers.</li>
-                        <li>Separate Boys & Girls Categories.</li>
+                    <div class="feature-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        Core Voting Engine
+                    </div>
+                    <ul class="feature-list">
+                        <li>Responsive UI (Mobile & PC)</li>
+                        <li>Live Countdown Timers</li>
+                        <li>Separate Boys & Girls Categories</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-title">Admin Dashboard</div>
-                    <ul>
-                        <li>Real-time Analytics & Results.</li>
-                        <li>Contestant Management.</li>
-                        <li>Timeline & Radius Control.</li>
+                    <div class="feature-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                        Admin Dashboard
+                    </div>
+                    <ul class="feature-list">
+                        <li>Real-time Analytics & Results</li>
+                        <li>Contestant Management</li>
+                        <li>Timeline & Radius Control</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-title">Backend & Deployment</div>
-                    <ul>
-                        <li>Real-time Cloud Database.</li>
-                        <li>SSL Configuration.</li>
-                        <li>Data Export to CSV.</li>
+                    <div class="feature-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                        Backend & Deployment
+                    </div>
+                    <ul class="feature-list">
+                        <li>Real-time Cloud Database</li>
+                        <li>SSL Configuration</li>
+                        <li>Data Export to CSV</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Investment -->
-        <section>
-            <h2><i class="fas fa-file-invoice-dollar"></i> Investment Estimate</h2>
-            <div class="pricing-card">
-                <!-- Header -->
-                <div class="table-header">
-                    <span>Service / Feature</span>
-                    <span style="text-align: right;">Value (LKR)</span>
+        <!-- Investment Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"/>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
                 </div>
-                
-                <!-- Items -->
-                <div class="table-row">
+                <h2 class="section-title font-display">Investment Estimate</h2>
+            </div>
+            <div class="pricing-container">
+                <div class="pricing-header">
+                    <span>Service / Feature</span>
+                    <span>Value (LKR)</span>
+                </div>
+                <div class="pricing-row">
                     <span class="item-name">UI/UX Design & Frontend Development</span>
                     <span class="item-price">16,000.00</span>
                 </div>
-                <div class="table-row">
+                <div class="pricing-row">
                     <span class="item-name">Backend Database Setup & Security</span>
                     <span class="item-price">25,000.00</span>
                 </div>
-                <div class="table-row">
+                <div class="pricing-row">
                     <span class="item-name">User Login & Live Voting Engine</span>
                     <span class="item-price">18,000.00</span>
                 </div>
-                <div class="table-row">
+                <div class="pricing-row">
                     <span class="item-name">Admin Dashboard & Location Config</span>
                     <span class="item-price">24,000.00</span>
                 </div>
-                <div class="table-row">
+                <div class="pricing-row">
                     <span class="item-name">Server Deployment & Testing</span>
                     <span class="item-price">6,000.00</span>
                 </div>
-
-                <!-- Summary Section -->
                 <div class="pricing-summary">
                     <div class="summary-row">
-                        <span class="total-label">Total System Value</span>
-                        <span class="total-value">LKR 89,000.00</span>
+                        <span class="summary-label">Total System Value</span>
+                        <span class="summary-value">LKR 89,000.00</span>
                     </div>
                     <div class="summary-row">
-                        <span class="total-label">Special Discount (100%)</span>
-                        <span class="total-value discount-value">- LKR 89,000.00</span>
+                        <span class="summary-label">Special Discount (100%)</span>
+                        <span class="summary-value discount">- LKR 89,000.00</span>
                     </div>
-                    
-                    <div class="grand-total-row">
-                        <span class="grand-label">Final Total</span>
+                    <div class="grand-total">
+                        <span class="grand-label font-display">Final Total</span>
                         <span class="grand-value">LKR 0.00</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Timeline -->
-        <section>
-            <h2><i class="fas fa-calendar-alt"></i> Development Timeline</h2>
-            <div class="timeline-container">
-                <div class="date-box">
-                    <div class="date-label">Start Date</div>
-                    <div class="date-value">Feb 18, 2026</div>
+        <!-- Timeline Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
                 </div>
-                <div class="duration-badge">
-                    4 Days Duration
-                </div>
-                <div class="date-box">
-                    <div class="date-label">Completion Date</div>
-                    <div class="date-value">Feb 21, 2026</div>
+                <h2 class="section-title font-display">Development Timeline</h2>
+            </div>
+            <div class="timeline-wrapper">
+                <div class="timeline-grid">
+                    <div class="timeline-point">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Start Date</div>
+                        <div class="timeline-value font-display">Feb 18, 2026</div>
+                    </div>
+                    <div class="duration-pill font-display">4 Days</div>
+                    <div class="timeline-point">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Completion</div>
+                        <div class="timeline-value font-display">Feb 21, 2026</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Terms -->
-        <section>
-            <h2><i class="fas fa-handshake"></i> Terms & Conditions</h2>
-            <div style="background: var(--bg-color); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
-                <ul>
-                    <li><strong>24/7 Support:</strong> Lifetime free technical support available at any time.</li>
-                    <li><strong>Free Modifications:</strong> Any necessary changes or updates will be done free of charge as required.</li>
+        <!-- Terms Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                    </svg>
+                </div>
+                <h2 class="section-title font-display">Terms & Conditions</h2>
+            </div>
+            <div class="terms-box">
+                <ul class="terms-list">
+                    <li>
+                        <div class="terms-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong style="color: var(--fg);">24/7 Support</strong><br>
+                            <span style="opacity: 0.8;">Lifetime free technical support available at any time.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="terms-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong style="color: var(--fg);">Free Modifications</strong><br>
+                            <span style="opacity: 0.8;">Any necessary changes or updates will be done free of charge as required.</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
 
-        <!-- Signature -->
-        <div class="signature">
-            <div class="signature-name">D.M. Kaawya</div>
-            <div class="signature-role">Lead Developer | DMC Group</div>
-        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="signature">
+                <div class="signature-name font-display">D.M. Kaawya</div>
+                <div class="signature-role">Lead Developer | DMC Group</div>
+            </div>
+            <div class="copyright">
+                Designed with <span class="heart">&#9829;</span> by <strong>DMC Web Design</strong>
+            </div>
+        </footer>
     </div>
 
-    <footer>
-        <div class="copyright">
-            Designed with <i class="fas fa-heart" style="color: var(--danger-color);"></i> by <strong>DMC Web Design</strong>
-        </div>
-    </footer>
-</div>
-
-<script>
-    function toggleTheme() {
-        const body = document.body;
-        const icon = document.getElementById('theme-icon');
-        const text = document.getElementById('theme-text');
-
-        if (body.getAttribute('data-theme') === 'dark') {
-            body.setAttribute('data-theme', 'light');
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-            text.textContent = 'Dark Mode';
-        } else {
-            body.setAttribute('data-theme', 'dark');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-            text.textContent = 'Light Mode';
+    <script>
+        // Initialize particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
         }
-    }
-</script>
 
+        // Intersection Observer for scroll animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe meta cards with stagger
+            document.querySelectorAll('.meta-card').forEach((card, index) => {
+                card.style.transitionDelay = (index * 0.1) + 's';
+                observer.observe(card);
+            });
+
+            // Observe sections
+            document.querySelectorAll('.section').forEach((section, index) => {
+                section.style.transitionDelay = (index * 0.15) + 's';
+                observer.observe(section);
+            });
+        }
+
+        // Smooth hover effects for cards
+        function initCardInteractions() {
+            const cards = document.querySelectorAll('.feature-card, .meta-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+
+        // Number counter animation
+        function animateNumbers() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const grandValue = entry.target;
+                        grandValue.style.opacity = '0';
+                        grandValue.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            grandValue.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                            grandValue.style.opacity = '1';
+                            grandValue.style.transform = 'translateY(0)';
+                        }, 300);
+                        
+                        observer.unobserve(grandValue);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const grandValue = document.querySelector('.grand-value');
+            if (grandValue) {
+                observer.observe(grandValue);
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            initScrollAnimations();
+            initCardInteractions();
+            animateNumbers();
+        });
+
+        // Reduced motion check
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('.meta-card, .section').forEach(el => {
+                el.classList.add('visible');
+            });
+        }
+    </script>
 </body>
 </html>
