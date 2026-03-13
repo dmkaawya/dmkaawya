@@ -46,22 +46,6 @@ I'm a passionate **Full-Stack Developer** from **Sri Lanka** 🇱🇰 who loves 
 
 ---
 
-## 📂 Featured Projects
-
-### 🎓 [Learning Management System (LMS)](https://github.com/dmkaawya/LMS)
-A comprehensive Learning Management System built with modern web technologies.
-- **Features:** Teacher Management, Attendance Tracking, Payment Management, Exam Results & Grading
-- **Tech Stack:** Next.js, Node.js, MongoDB/PostgreSQL
-
-### 📸 [Sadeepa Photography](https://github.com/dmkaawya/photographer)
-A luxury photographer website with modern design and seamless functionality.
-- **Features:** WhatsApp booking, PDF invoice generation, Supabase backend
-- **Tech Stack:** Next.js, Supabase, Tailwind CSS
-
-### 🏥 [DMC Hospital Booking](https://github.com/dmkaawya/DMC-Hostpital-booking)
-Hospital appointment booking system for efficient healthcare management.
-- **Tech Stack:** Next.js, Node.js, Database integration
-
 ---
 
 ## 📊 GitHub Stats
