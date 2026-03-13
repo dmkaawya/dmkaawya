@@ -118,12 +118,6 @@ Feb 2026  → NovaX Team (M&K Boost Rebranded) - Core Team Member
 ### 🎓 [Learning Management System (LMS)](https://github.com/dmkaawya/LMS)
 Comprehensive LMS with Teacher Management, Attendance Tracking, Payment Management & Exam Results.
 
-### 📸 [Sadeepa Photography](https://github.com/dmkaawya/photographer)
-Luxury photographer website with WhatsApp booking, PDF invoice generation & Supabase backend.
-
-### 🏥 [DMC Hospital Booking](https://github.com/dmkaawya/DMC-Hostpital-booking)
-Hospital appointment booking system for efficient healthcare management.
-
 ---
 
 ## 📊 GitHub Stats
