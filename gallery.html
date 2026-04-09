@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Kaawya Chandrasekara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#0a0a0f;--bg2:#111118;--card:#14141e;
+            --text:#f5f5f7;--text2:#a1a1aa;--accent:#10b981;
+            --border:rgba(255,255,255,0.06);
+        }
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+        
+        /* Nav */
+        .nav{
+            position:fixed;top:0;left:0;right:0;z-index:1000;
+            padding:18px 40px;display:flex;justify-content:space-between;align-items:center;
+            backdrop-filter:blur(20px);background:rgba(10,10,15,0.9);border-bottom:1px solid var(--border);
+        }
+        .nav-logo{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .nav-back{color:var(--text2);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:8px;transition:color .3s}
+        .nav-back:hover{color:var(--accent)}
+        
+        /* Gallery Container */
+        .gallery-section{
+            padding:120px 40px 80px;min-height:100vh;
+        }
+        .gallery-header{text-align:center;margin-bottom:60px}
+        .gallery-title{font-size:2.5rem;font-weight:700;margin-bottom:12px}
+        .gallery-sub{color:var(--text2);font-size:1.05rem}
+        
+        /* Masonry Grid */
+        .gallery-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:20px;
+            max-width:1400px;margin:0 auto;
+        }
+        
+        .gallery-item{
+            position:relative;
+            border-radius:16px;
+            overflow:hidden;
+            aspect-ratio:1;
+            cursor:pointer;
+            background:var(--card);
+            border:1px solid var(--border);
+            transition:all .3s;
+        }
+        
+        .gallery-item:hover{
+            transform:scale(1.03);
+            box-shadow:0 12px 40px rgba(0,0,0,0.4);
+            border-color:rgba(16,185,129,0.3);
+        }
+        
+        .gallery-item img{
+            width:100%;height:100%;
+            object-fit:cover;
+            transition:transform .5s;
+        }
+        
+        .gallery-item:hover img{
+            transform:scale(1.08);
+        }
+        
+        .gallery-overlay{
+            position:absolute;inset:0;
+            background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+            opacity:0;
+            transition:opacity .3s;
+            display:flex;align-items:flex-end;padding:20px;
+        }
+        
+        .gallery-item:hover .gallery-overlay{opacity:1}
+        
+        .gallery-caption{font-size:0.95rem;font-weight:600}
+        
+        /* Lightbox */
+        .lightbox{
+            display:none;position:fixed;inset:0;
+            background:rgba(0,0,0,0.95);z-index:10000;
+            align-items:center;justify-content:center;padding:40px;
+        }
+        .lightbox.active{display:flex}
+        .lightbox-img{max-width:90%;max-height:90vh;border-radius:12px;object-fit:contain}
+        .lightbox-close{
+            position:absolute;top:30px;right:30px;
+            background:none;border:none;color:white;font-size:2rem;cursor:pointer;
+            width:50px;height:50px;border-radius:50%;
+            background:rgba(255,255,255,0.1);
+            transition:all .3s;
+        }
+        .lightbox-close:hover{background:rgba(255,255,255,0.2);transform:rotate(90deg)}
+        .lightbox-nav{
+            position:absolute;top:50%;transform:translateY(-50%);
+            background:none;border:none;color:white;font-size:2rem;
+            cursor:pointer;width:50px;height:50px;border-radius:50%;
+            background:rgba(255,255,255,0.1);transition:all .3s;
+        }
+        .lightbox-prev{left:30px}
+        .lightbox-next{right:30px}
+        .lightbox-nav:hover{background:rgba(255,255,255,0.2)}
+        
+        /* Categories */
+        .gallery-filters{
+            display:flex;justify-content:center;gap:12px;
+            margin-bottom:40px;flex-wrap:wrap;
+        }
+        .filter-btn{
+            padding:10px 24px;border-radius:50px;
+            background:var(--card);border:1px solid var(--border);
+            color:var(--text2);cursor:pointer;font-size:.9rem;
+            font-weight:500;transition:all .3s;font-family:inherit;
+        }
+        .filter-btn.active,.filter-btn:hover{
+            background:var(--accent);color:white;border-color:var(--accent);
+        }
+        
+        @media(max-width:768px){
+            .nav{padding:14px 20px}
+            .gallery-section{padding:100px 20px 60px}
+            .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <a href="index.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+    </a>
+    <div class="nav-logo">Gallery</div>
+</nav>
+
+<section class="gallery-section">
+    <div class="gallery-header">
+        <h1 class="gallery-title">My Photo Gallery</h1>
+        <p class="gallery-sub">Moments captured throughout my journey</p>
+    </div>
+    
+    <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">All Photos</button>
+        <button class="filter-btn" data-filter="work">Work</button>
+        <button class="filter-btn" data-filter="personal">Personal</button>
+        <button class="filter-btn" data-filter="events">Events</button>
+    </div>
+    
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Add your images here - replace src with your actual image paths -->
+        <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
+            <img src="gjjjs.png" alt="Profile Photo" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Profile Photo</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="personal" onclick="openLightbox(this)">
+            <img src="photo1.jpg" alt="Photo 1" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Working on a project</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="events" onclick="openLightbox(this)">
+            <img src="photo2.jpg" alt="Photo 2" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Event moment</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
+            <img src="photo3.jpg" alt="Photo 3" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Coding session</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="personal" onclick="openLightbox(this)">
+            <img src="photo4.jpg" alt="Photo 4" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Guitar time 🎸</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="events" onclick="openLightbox(this)">
+            <img src="photo5.jpg" alt="Photo 5" loading="lazy">
+            <div class="gallery-overlay"><span class="gallery-caption">Team gathering</span></div>
+        </div>
+        
+        <!-- Add more photos as needed - just copy the pattern above -->
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">❮</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">❯</button>
+</div>
+
+<script>
+let currentIndex = 0;
+let galleryItems = [];
+
+// Initialize gallery items after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+});
+
+// Filter functionality
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category === filter) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Lightbox functions
+function openLightbox(item) {
+    const img = item.querySelector('img');
+    currentIndex = galleryItems.indexOf(item);
+    
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+    
+    // Filter visible items only
+    const visibleItems = galleryItems.filter(item => item.style.display !== 'none');
+    
+    if (currentIndex < 0) currentIndex = visibleItems.length - 1;
+    if (currentIndex >= visibleItems.length) currentIndex = 0;
+    
+    const img = visibleItems[currentIndex].querySelector('img');
+    document.getElementById('lightboxImg').src = img.src;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeImage(-1);
+    if (e.key === 'ArrowRight') changeImage(1);
+});
+
+// Close on outside click
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') closeLightbox();
+});
+</script>
+
+</body>
+</html>
