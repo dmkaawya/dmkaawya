@@ -3,229 +3,965 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery | Kaawya Chandrasekara</title>
+    <title>Enhanced Gallery | Kaawya Chandrasekara</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
+        
         :root{
             --bg:#0a0a0f;--bg2:#111118;--card:#14141e;
             --text:#f5f5f7;--text2:#a1a1aa;--accent:#10b981;
-            --border:rgba(255,255,255,0.06);
+            --accent2:#059669;--border:rgba(255,255,255,0.06);
+            --danger:#ef4444;--warning:#f59e0b;
         }
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
         
-        /* Nav */
+        [data-theme="light"]{
+            --bg:#f8fafc;--bg2:#e2e8f0;--card:#ffffff;
+            --text:#1e293b;--text2:#64748b;--border:rgba(0,0,0,0.08);
+        }
+        
+        body{
+            font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+            min-height:100vh;transition:all .3s ease;
+        }
+        
+        /* ===== NAVIGATION ===== */
         .nav{
             position:fixed;top:0;left:0;right:0;z-index:1000;
-            padding:18px 40px;display:flex;justify-content:space-between;align-items:center;
-            backdrop-filter:blur(20px);background:rgba(10,10,15,0.9);border-bottom:1px solid var(--border);
+            padding:16px 40px;display:flex;justify-content:space-between;align-items:center;
+            backdrop-filter:blur(20px);background:rgba(10,10,15,0.85);
+            border-bottom:1px solid var(--border);transition:all .3s;
         }
-        .nav-logo{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .nav-back{color:var(--text2);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:8px;transition:color .3s}
-        .nav-back:hover{color:var(--accent)}
+        [data-theme="light"] .nav{background:rgba(248,250,252,0.9)}
         
-        /* Gallery Container */
+        .nav-left{display:flex;align-items:center;gap:20px}
+        .nav-back{
+            color:var(--text2);text-decoration:none;font-size:.9rem;
+            display:flex;align-items:center;gap:8px;transition:all .3s;
+            padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);
+        }
+        .nav-back:hover{color:var(--accent);transform:translateX(-3px)}
+        
+        .nav-logo{
+            font-size:1.3rem;font-weight:800;
+            background:linear-gradient(135deg,#10b981,#059669,#34d399);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        
+        .nav-actions{display:flex;align-items:center;gap:12px}
+        
+        /* ===== GALLERY SECTION ===== */
         .gallery-section{
-            padding:120px 40px 80px;min-height:100vh;
-        }
-        .gallery-header{text-align:center;margin-bottom:60px}
-        .gallery-title{font-size:2.5rem;font-weight:700;margin-bottom:12px}
-        .gallery-sub{color:var(--text2);font-size:1.05rem}
-        
-        /* Masonry Grid */
-        .gallery-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-            gap:20px;
-            max-width:1400px;margin:0 auto;
+            padding:100px 40px 80px;min-height:100vh;
         }
         
-        .gallery-item{
-            position:relative;
-            border-radius:16px;
-            overflow:hidden;
-            aspect-ratio:1;
-            cursor:pointer;
-            background:var(--card);
-            border:1px solid var(--border);
-            transition:all .3s;
+        /* Header */
+        .gallery-header{text-align:center;margin-bottom:50px}
+        .gallery-title{
+            font-size:3rem;font-weight:800;margin-bottom:12px;
+            background:linear-gradient(135deg,var(--text),var(--accent));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        .gallery-sub{color:var(--text2);font-size:1.1rem;font-weight:400}
+        
+        /* Stats Bar */
+        .stats-bar{
+            display:flex;justify-content:center;gap:30px;margin:25px 0 35px;
+            flex-wrap:wrap;padding:20px;background:var(--card);
+            border-radius:16px;border:1px solid var(--border);max-width:600px;margin-left:auto;margin-right:auto;
+        }
+        .stat-item{
+            text-align:center;padding:10px 20px;
+        }
+        .stat-number{
+            font-size:1.8rem;font-weight:700;color:var(--accent);
+            display:block;line-height:1;
+        }
+        .stat-label{
+            font-size:.8rem;color:var(--text2);margin-top:5px;text-transform:uppercase;letter-spacing:1px;
         }
         
-        .gallery-item:hover{
-            transform:scale(1.03);
-            box-shadow:0 12px 40px rgba(0,0,0,0.4);
-            border-color:rgba(16,185,129,0.3);
+        /* Toolbar */
+        .toolbar{
+            display:flex;justify-content:center;align-items:center;gap:15px;
+            margin-bottom:35px;flex-wrap:wrap;padding:20px;
+            background:var(--card);border-radius:16px;border:1px solid var(--border);
+            max-width:1200px;margin-left:auto;margin-right:auto;
         }
         
-        .gallery-item img{
-            width:100%;height:100%;
-            object-fit:cover;
-            transition:transform .5s;
+        /* Feature 1: Search */
+        .search-box{
+            display:flex;align-items:center;background:var(--bg);
+            border:1px solid var(--border);border-radius:12px;padding:10px 16px;
+            gap:10px;min-width:280px;transition:all .3s;
         }
+        .search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(16,185,129,0.1)}
+        .search-box i{color:var(--text2)}
+        .search-box input{
+            background:none;border:none;outline:none;color:var(--text);
+            font-family:inherit;font-size:.95rem;width:100%;
+        }
+        .search-box input::placeholder{color:var(--text2)}
         
-        .gallery-item:hover img{
-            transform:scale(1.08);
-        }
-        
-        .gallery-overlay{
-            position:absolute;inset:0;
-            background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
-            opacity:0;
-            transition:opacity .3s;
-            display:flex;align-items:flex-end;padding:20px;
-        }
-        
-        .gallery-item:hover .gallery-overlay{opacity:1}
-        
-        .gallery-caption{font-size:0.95rem;font-weight:600}
-        
-        /* Lightbox */
-        .lightbox{
-            display:none;position:fixed;inset:0;
-            background:rgba(0,0,0,0.95);z-index:10000;
-            align-items:center;justify-content:center;padding:40px;
-        }
-        .lightbox.active{display:flex}
-        .lightbox-img{max-width:90%;max-height:90vh;border-radius:12px;object-fit:contain}
-        .lightbox-close{
-            position:absolute;top:30px;right:30px;
-            background:none;border:none;color:white;font-size:2rem;cursor:pointer;
-            width:50px;height:50px;border-radius:50%;
-            background:rgba(255,255,255,0.1);
-            transition:all .3s;
-        }
-        .lightbox-close:hover{background:rgba(255,255,255,0.2);transform:rotate(90deg)}
-        .lightbox-nav{
-            position:absolute;top:50%;transform:translateY(-50%);
-            background:none;border:none;color:white;font-size:2rem;
-            cursor:pointer;width:50px;height:50px;border-radius:50%;
-            background:rgba(255,255,255,0.1);transition:all .3s;
-        }
-        .lightbox-prev{left:30px}
-        .lightbox-next{right:30px}
-        .lightbox-nav:hover{background:rgba(255,255,255,0.2)}
-        
-        /* Categories */
-        .gallery-filters{
-            display:flex;justify-content:center;gap:12px;
-            margin-bottom:40px;flex-wrap:wrap;
-        }
+        /* Filters */
+        .filter-group{display:flex;gap:8px;flex-wrap:wrap}
         .filter-btn{
-            padding:10px 24px;border-radius:50px;
-            background:var(--card);border:1px solid var(--border);
-            color:var(--text2);cursor:pointer;font-size:.9rem;
-            font-weight:500;transition:all .3s;font-family:inherit;
+            padding:10px 22px;border-radius:50px;background:transparent;
+            border:1px solid var(--border);color:var(--text2);cursor:pointer;
+            font-size:.88rem;font-weight:500;transition:all .3s;font-family:inherit;display:flex;align-items:center;gap:6px;
         }
         .filter-btn.active,.filter-btn:hover{
             background:var(--accent);color:white;border-color:var(--accent);
+            transform:translateY(-2px);
+        }
+        .filter-btn .count{
+            background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:10px;font-size:.75rem;
         }
         
+        /* Action Buttons */
+        .action-btn{
+            width:44px;height:44px;border-radius:12px;background:var(--bg);
+            border:1px solid var(--border);color:var(--text2);cursor:pointer;
+            transition:all .3s;display:flex;align-items:center;justify-content:center;
+            font-size:1rem;
+        }
+        .action-btn:hover{background:var(--accent);color:white;border-color:var(--accent);transform:scale(1.05)}
+        .action-btn.active{background:var(--accent);color:white}
+        
+        /* Feature 8: Theme Toggle */
+        .theme-toggle{
+            width:44px;height:44px;border-radius:12px;background:var(--bg);
+            border:1px solid var(--border);color:var(--text2);cursor:pointer;
+            transition:all .3s;display:flex;align-items:center;justify-content:center;
+            font-size:1.1rem;
+        }
+        .theme-toggle:hover{background:var(--warning);color:white;border-color:var(--warning)}
+        
+        /* Feature 6: View Toggle */
+        .view-toggle{display:flex;background:var(--bg);border-radius:12px;border:1px solid var(--border);overflow:hidden}
+        .view-btn{
+            padding:10px 14px;background:none;border:none;color:var(--text2);
+            cursor:pointer;transition:all .3s;font-size:1rem;
+        }
+        .view-btn.active,.view-btn:hover{background:var(--accent);color:white}
+        
+        /* ===== GALLERY GRID ===== */
+        .gallery-container{max-width:1400px;margin:0 auto}
+        
+        /* Grid View */
+        .gallery-grid.grid-view{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+            gap:24px;
+        }
+        
+        /* Masonry View */
+        .gallery-grid.masonry-view{
+            column-count:4;column-gap:24px;
+        }
+        @media(max-width:1200px){.gallery-grid.masonry-view{column-count:3}}
+        @media(max-width:768px){.gallery-grid.masonry-view{column-count:2}}
+        @media(max-width:480px){.gallery-grid.masonry-view{column-count:1}}
+        
+        /* List View */
+        .gallery-grid.list-view{display:flex;flex-direction:column;gap:16px}
+        
+        /* Gallery Item - Enhanced Style */
+        .gallery-item{
+            position:relative;border-radius:18px;overflow:hidden;
+            cursor:pointer;background:var(--card);border:1px solid var(--border);
+            transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+            break-inside:avoid;margin-bottom:24px;
+            animation:fadeInUp .5s ease forwards;opacity:0;
+        }
+        @keyframes fadeInUp{
+            from{opacity:0;transform:translateY(30px) scale(0.95)}
+            to{opacity:1;transform:translateY(0) scale(1)}
+        }
+        
+        .gallery-item:nth-child(1){animation-delay:.05s}
+        .gallery-item:nth-child(2){animation-delay:.1s}
+        .gallery-item:nth-child(3){animation-delay:.15s}
+        .gallery-item:nth-child(4){animation-delay:.2s}
+        .gallery-item:nth-child(5){animation-delay:.25s}
+        .gallery-item:nth-child(6){animation-delay:.3s}
+        
+        .gallery-item:hover{
+            transform:translateY(-8px) scale(1.02);
+            box-shadow:0 20px 50px rgba(0,0,0,0.4),0 0 0 1px var(--accent);
+            border-color:var(--accent);
+        }
+        
+        .gallery-item.pinned{border-color:var(--warning)}
+        .gallery-item.pinned::before{
+            content:'📌';position:absolute;top:12px;left:12px;z-index:5;
+            font-size:1.2rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .gallery-item.hidden{display:none!important}
+        
+        /* Image Container */
+        .img-container{
+            position:relative;overflow:hidden;
+        }
+        .grid-view .gallery-item .img-container{aspect-ratio:1}
+        .masonry-view .gallery-item .img-container{aspect-ratio:auto}
+        .list-view .gallery-item{display:flex;align-items:center}
+        .list-view .gallery-item .img-container{width:200px;height:130px;flex-shrink:0}
+        
+        .gallery-item img{
+            width:100%;height:100%;object-fit:cover;
+            transition:transform .6s cubic-bezier(.175,.885,.32,1.275);
+        }
+        .gallery-item:hover img{transform:scale(1.12)}
+        
+        /* Overlay */
+        .gallery-overlay{
+            position:absolute;inset:0;
+            background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.3) 50%,transparent 100%);
+            opacity:0;transition:opacity .4s;
+            display:flex;flex-direction:column;justify-content:flex-end;padding:20px;
+        }
+        .gallery-item:hover .gallery-overlay{opacity:1}
+        
+        .overlay-top{
+            position:absolute;top:12px;right:12px;display:flex;gap:8px;
+        }
+        
+        /* Feature 2: Like/Favorite Button */
+        .like-btn{
+            width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(10px);border:none;color:white;cursor:pointer;
+            transition:all .3s;display:flex;align-items:center;justify-content:center;
+            font-size:1rem;
+        }
+        .like-btn:hover{background:rgba(239,68,68,0.8);transform:scale(1.15)}
+        .like-btn.liked{background:var(--danger);animation:heartBeat .4s ease}
+        @keyframes heartBeat{
+            0%,100%{transform:scale(1)}50%{transform:scale(1.3)}
+        }
+        
+        /* Feature 10: Pin Button */
+        .pin-btn{
+            width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(10px);border:none;color:white;cursor:pointer;
+            transition:all .3s;display:flex;align-items:center;justify-content:center;
+            font-size:.9rem;
+        }
+        .pin-btn:hover{background:rgba(245,158,11,0.8);transform:scale(1.15)}
+        .pin-btn.pinned{background:var(--warning)}
+        
+        /* Caption */
+        .gallery-caption{
+            font-size:1rem;font-weight:600;color:white;
+            text-shadow:0 2px 4px rgba(0,0,0,0.3);
+        }
+        .gallery-category{
+            font-size:.8rem;color:rgba(255,255,255,0.7);
+            margin-top:4px;display:flex;align-items:center;gap:5px;
+        }
+        
+        /* List View Content */
+        .list-content{padding:20px;flex:1}
+        .list-content h3{font-size:1.1rem;margin-bottom:6px}
+        .list-content p{font-size:.9rem;color:var(--text2)}
+        
+        /* Selection Mode */
+        .gallery-item.selectable{cursor:default}
+        .gallery-item.selectable::after{
+            content:'';position:absolute;top:12px;left:12px;
+            width:24px;height:24px;border-radius:50%;
+            border:2px solid white;background:transparent;
+            transition:all .3s;z-index:10;
+        }
+        .gallery-item.selectable.selected::after{
+            background:var(--accent);border-color:var(--accent);
+        }
+        .gallery-item.selectable.selected{outline:3px solid var(--accent)}
+        
+        /* ===== LIGHTBOX - Enhanced ===== */
+        .lightbox{
+            display:none;position:fixed;inset:0;
+            background:rgba(0,0,0,0.97);z-index:10000;
+            align-items:center;justify-content:center;padding:40px;
+        }
+        .lightbox.active{display:flex}
+        
+        .lightbox-header{
+            position:absolute;top:0;left:0;right:0;
+            padding:20px 30px;display:flex;justify-content:space-between;align-items:center;
+            background:linear-gradient(to bottom,rgba(0,0,0,0.8),transparent);
+        }
+        .lightbox-info{color:white}
+        .lightbox-info h3{font-size:1.2rem;margin-bottom:4px}
+        .lightbox-info p{font-size:.9rem;color:rgba(255,255,255,0.7)}
+        
+        .lightbox-actions{display:flex;gap:10px}
+        
+        .lb-btn{
+            padding:10px 18px;border-radius:10px;background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.2);color:white;cursor:pointer;
+            font-family:inherit;font-size:.9rem;transition:all .3s;
+            display:flex;align-items:center;gap:8px;
+        }
+        .lb-btn:hover{background:var(--accent);border-color:var(--accent)}
+        
+        .lightbox-close{
+            width:48px;height:48px;border-radius:50%;
+            background:rgba(255,255,255,0.1);border:none;color:white;
+            font-size:1.5rem;cursor:pointer;transition:all .3s;
+        }
+        .lightbox-close:hover{background:var(--danger);transform:rotate(90deg)}
+        
+        .lightbox-img{
+            max-width:85%;max-height:80vh;border-radius:16px;
+            object-fit:contain;box-shadow:0 25px 80px rgba(0,0,0,0.5);
+            transition:transform .3s;
+        }
+        
+        .lightbox-nav{
+            position:absolute;top:50%;transform:translateY(-50%);
+            background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+            color:white;font-size:1.5rem;cursor:pointer;
+            width:56px;height:56px;border-radius:50%;transition:all .3s;
+        }
+        .lightbox-prev{left:30px}
+        .lightbox-next{right:30px}
+        .lightbox-nav:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-50%) scale(1.1)}
+        
+        /* Lightbox Footer */
+        .lightbox-footer{
+            position:absolute;bottom:0;left:0;right:0;
+            padding:20px 30px;display:flex;justify-content:center;align-items:center;gap:20px;
+            background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+        }
+        
+        /* Feature 4: Slideshow Controls */
+        .slideshow-controls{display:flex;align-items:center;gap:15px;color:white}
+        .slideshow-btn{
+            padding:10px 20px;border-radius:10px;background:var(--accent);
+            border:none;color:white;cursor:pointer;font-family:inherit;
+            font-weight:600;transition:all .3s;display:flex;align-items:center;gap:8px;
+        }
+        .slideshow-btn:hover{background:var(--accent2);transform:scale(1.05)}
+        .slideshow-btn.playing{background:var(--danger)}
+        .slideshow-speed{
+            display:flex;align-items:center;gap:8px;font-size:.9rem;color:rgba(255,255,255,0.7)
+        }
+        .slideshow-speed input{width:80px;accent-color:var(--accent)}
+        
+        .lightbox-counter{
+            color:rgba(255,255,255,0.7);font-size:.95rem;
+            background:rgba(255,255,255,0.1);padding:8px 16px;border-radius:20px;
+        }
+        
+        /* ===== SHARE MODAL (Feature 9) ===== */
+        .modal-overlay{
+            display:none;position:fixed;inset:0;
+            background:rgba(0,0,0,0.8);z-index:11000;
+            align-items:center;justify-content:center;
+        }
+        .modal-overlay.active{display:flex}
+        
+        .modal{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:20px;padding:30px;max-width:450px;width:90%;
+            animation:modalIn .3s ease;
+        }
+        @keyframes modalIn{
+            from{opacity:0;transform:scale(0.9) translateY(20px)}
+            to{opacity:1;transform:scale(1) translateY(0)}
+        }
+        
+        .modal-header{
+            display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:25px;
+        }
+        .modal-header h3{font-size:1.3rem}
+        .modal-close{
+            width:36px;height:36px;border-radius:50%;background:var(--bg);
+            border:none;color:var(--text2);cursor:pointer;font-size:1.2rem;transition:all .3s;
+        }
+        .modal-close:hover{background:var(--danger);color:white}
+        
+        .share-options{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:25px}
+        .share-option{
+            display:flex;flex-direction:column;align-items:center;gap:8px;
+            padding:20px 15px;border-radius:14px;background:var(--bg);
+            border:1px solid var(--border);cursor:pointer;transition:all .3s;
+        }
+        .share-option:hover{transform:translateY(-5px);border-color:var(--accent)}
+        .share-option i{font-size:1.8rem}
+        .share-option.facebook i{color:#1877f2}
+        .share-option.twitter i{color:#1da1f2}
+        .share-option.whatsapp i{color:#25d366}
+        .share-option.linkedin i{color:#0a66c2}
+        .share-option.telegram i{color:#0088cc}
+        .share-option.copy i{color:var(--accent)}
+        .share-option span{font-size:.85rem;color:var(--text2)}
+        
+        .share-link{
+            display:flex;gap:10px;
+        }
+        .share-link input{
+            flex:1;padding:12px 16px;border-radius:10px;
+            background:var(--bg);border:1px solid var(--border);
+            color:var(--text);font-family:inherit;font-size:.9rem;
+        }
+        .share-link button{
+            padding:12px 20px;border-radius:10px;background:var(--accent);
+            border:none;color:white;cursor:pointer;font-weight:600;transition:all .3s;
+        }
+        .share-link button:hover{background:var(--accent2)}
+        
+        /* ===== BULK ACTION BAR (Feature 5) ===== */
+        .bulk-bar{
+            display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+            background:var(--card);border:1px solid var(--border);
+            border-radius:16px;padding:15px 25px;gap:15px;
+            align-items:center;z-index:9999;box-shadow:0 10px 40px rgba(0,0,0,0.3);
+            animation:slideUp .3s ease;
+        }
+        @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        .bulk-bar.active{display:flex}
+        .bulk-count{font-weight:600;color:var(--accent)}
+        .bulk-btn{
+            padding:10px 20px;border-radius:10px;border:none;cursor:pointer;
+            font-family:inherit;font-weight:500;transition:all .3s;display:flex;align-items:center;gap:8px;
+        }
+        .bulk-download{background:var(--accent);color:white}
+        .bulk-cancel{background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+        .bulk-btn:hover{transform:scale(1.05)}
+        
+        /* Toast Notification */
+        .toast{
+            position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
+            background:var(--card);border:1px solid var(--border);
+            color:var(--text);padding:14px 28px;border-radius:12px;
+            font-weight:500;z-index:12000;opacity:0;transition:all .3s;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
+        }
+        .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+        .toast.success{border-color:var(--accent);color:var(--accent)}
+        
+        /* Empty State */
+        .empty-state{
+            text-align:center;padding:80px 20px;display:none;
+        }
+        .empty-state.show{display:block}
+        .empty-state i{font-size:4rem;color:var(--text2);margin-bottom:20px}
+        .empty-state h3{font-size:1.5rem;margin-bottom:10px}
+        .empty-state p{color:var(--text2)}
+        
+        /* Responsive */
         @media(max-width:768px){
-            .nav{padding:14px 20px}
-            .gallery-section{padding:100px 20px 60px}
-            .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+            .nav{padding:12px 20px}
+            .gallery-section{padding:90px 16px 60px}
+            .gallery-title{font-size:2rem}
+            .toolbar{padding:15px;flex-direction:column}
+            .search-box{min-width:100%}
+            .gallery-grid.grid-view{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+            .stats-bar{gap:15px;padding:15px}
+            .stat-number{font-size:1.4rem}
+            .lightbox-img{max-width:95%;max-height:70vh}
+            .lightbox-nav{width:44px;height:44px;font-size:1.2rem}
+            .lightbox-prev{left:10px}.lightbox-next{right:10px}
+            .share-options{grid-template-columns:repeat(2,1fr)}
+            .list-view .gallery-item .img-container{width:120px;height:90px}
         }
     </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav class="nav">
-    <a href="index.html" class="nav-back">
-        <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
-    </a>
-    <div class="nav-logo">Gallery</div>
+    <div class="nav-left">
+        <a href="index.html" class="nav-back">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+        <div class="nav-logo">📸 Gallery</div>
+    </div>
+    <div class="nav-actions">
+        <!-- Feature 8: Theme Toggle -->
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+    </div>
 </nav>
 
 <section class="gallery-section">
+    <!-- Header -->
     <div class="gallery-header">
         <h1 class="gallery-title">My Photo Gallery</h1>
-        <p class="gallery-sub">Moments captured throughout my journey</p>
+        <p class="gallery-sub">Captured moments from my journey ✨</p>
     </div>
     
-    <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">All Photos</button>
-        <button class="filter-btn" data-filter="work">Work</button>
-        <button class="filter-btn" data-filter="personal">Personal</button>
-        <button class="filter-btn" data-filter="events">Events</button>
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number" id="totalCount">6</span>
+            <span class="stat-label">Total Photos</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" id="filteredCount">6</span>
+            <span class="stat-label">Showing</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" id="favCount">0</span>
+            <span class="stat-label">❤️ Favorites</span>
+        </div>
     </div>
     
-    <div class="gallery-grid" id="galleryGrid">
-        <!-- Add your images here - replace src with your actual image paths -->
-        <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Profile Photo" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Profile Photo</span></div>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <!-- Feature 1: Search -->
+        <div class="search-box">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search photos..." oninput="searchPhotos()">
         </div>
         
-        <div class="gallery-item" data-category="personal" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Photo 1" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Working on a project</span></div>
+        <!-- Filters -->
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all" onclick="filterPhotos('all',this)">
+                All <span class="count">6</span>
+            </button>
+            <button class="filter-btn" data-filter="work" onclick="filterPhotos('work',this)">
+                <i class="fa-solid fa-briefcase"></i> Work <span class="count">2</span>
+            </button>
+            <button class="filter-btn" data-filter="personal" onclick="filterPhotos('personal',this)">
+                <i class="fa-solid fa-user"></i> Personal <span class="count">2</span>
+            </button>
+            <button class="filter-btn" data-filter="events" onclick="filterPhotos('events',this)">
+                <i class="fa-solid fa-calendar"></i> Events <span class="count">2</span>
+            </button>
         </div>
         
-        <div class="gallery-item" data-category="events" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Photo 2" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Event moment</span></div>
+        <div style="width:1px;height:30px;background:var(--border)"></div>
+        
+        <!-- Feature 6: View Toggle -->
+        <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" onclick="changeView('grid',this)" title="Grid View">
+                <i class="fa-solid fa-grid-2"></i>
+            </button>
+            <button class="view-btn" data-view="masonry" onclick="changeView('masonry',this)" title="Masonry View">
+                <i class="fa-solid fa-braille"></i>
+            </button>
+            <button class="view-btn" data-view="list" onclick="changeView('list',this)" title="List View">
+                <i class="fa-solid fa-list"></i>
+            </button>
         </div>
         
-        <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Photo 3" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Coding session</span></div>
+        <!-- Feature 5: Select Mode -->
+        <button class="action-btn" id="selectBtn" onclick="toggleSelectMode()" title="Select Multiple">
+            <i class="fa-solid fa-square-check"></i>
+        </button>
+    </div>
+    
+    <!-- Gallery Container -->
+    <div class="gallery-container">
+        <div class="gallery-grid grid-view" id="galleryGrid">
+            
+            <!-- Photo 1 -->
+            <div class="gallery-item" data-category="work" data-name="profile photo" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Profile Photo" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)" title="Pin to Top">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)" title="Add to Favorites">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Profile Photo</span>
+                        <span class="gallery-category"><i class="fa-solid fa-briefcase"></i> Work</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 2 -->
+            <div class="gallery-item" data-category="personal" data-name="working on project" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Working on Project" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Working on a Project</span>
+                        <span class="gallery-category"><i class="fa-solid fa-user"></i> Personal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 3 -->
+            <div class="gallery-item" data-category="events" data-name="event moment" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Event Moment" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Event Moment</span>
+                        <span class="gallery-category"><i class="fa-solid fa-calendar"></i> Events</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 4 -->
+            <div class="gallery-item" data-category="work" data-name="coding session" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Coding Session" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Coding Session 💻</span>
+                        <span class="gallery-category"><i class="fa-solid fa-briefcase"></i> Work</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 5 -->
+            <div class="gallery-item" data-category="personal" data-name="guitar time" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Guitar Time" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Guitar Time 🎸</span>
+                        <span class="gallery-category"><i class="fa-solid fa-user"></i> Personal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 6 -->
+            <div class="gallery-item" data-category="events" data-name="team gathering" onclick="handleItemClick(this)">
+                <div class="img-container">
+                    <img src="myphoto1.jpg" alt="Team Gathering" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="overlay-top">
+                            <button class="pin-btn" onclick="event.stopPropagation();togglePin(this)">📌</button>
+                            <button class="like-btn" onclick="event.stopPropagation();toggleLike(this)">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <span class="gallery-caption">Team Gathering 👥</span>
+                        <span class="gallery-category"><i class="fa-solid fa-calendar"></i> Events</span>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         
-        <div class="gallery-item" data-category="personal" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Photo 4" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Guitar time 🎸</span></div>
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <i class="fa-regular fa-folder-open"></i>
+            <h3>No Photos Found</h3>
+            <p>Try adjusting your search or filter criteria</p>
         </div>
-        
-        <div class="gallery-item" data-category="events" onclick="openLightbox(this)">
-            <img src="myphoto1.jpg" alt="Photo 5" loading="lazy">
-            <div class="gallery-overlay"><span class="gallery-caption">Team gathering</span></div>
-        </div>
-        
-        <!-- Add more photos as needed - just copy the pattern above -->
     </div>
 </section>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
-    <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">❮</button>
+<!-- Enhanced Lightbox -->
+<div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+    <div class="lightbox-header">
+        <div class="lightbox-info">
+            <h3 id="lightboxTitle">Photo Title</h3>
+            <p id="lightboxCategory">Category</p>
+        </div>
+        <div class="lightbox-actions">
+            <!-- Feature 3: Download -->
+            <button class="lb-btn" onclick="downloadCurrentImage()">
+                <i class="fa-solid fa-download"></i> Download
+            </button>
+            <!-- Feature 9: Share -->
+            <button class="lb-btn" onclick="openShareModal()">
+                <i class="fa-solid fa-share-nodes"></i> Share
+            </button>
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        </div>
+    </div>
+    
+    <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="">
-    <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">❯</button>
+    <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    
+    <div class="lightbox-footer">
+        <span class="lightbox-counter" id="lightboxCounter">1 / 6</span>
+        <!-- Feature 4: Slideshow Controls -->
+        <div class="slideshow-controls">
+            <button class="slideshow-btn" id="slideshowBtn" onclick="toggleSlideshow()">
+                <i class="fa-solid fa-play"></i> Slideshow
+            </button>
+            <div class="slideshow-speed">
+                <label>Speed:</label>
+                <input type="range" min="1" max="5" value="3" id="slideSpeed" onchange="updateSlideSpeed()">
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Share Modal -->
+<div class="modal-overlay" id="shareModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-share-nodes"></i> Share Photo</h3>
+            <button class="modal-close" onclick="closeShareModal()">×</button>
+        </div>
+        <div class="share-options">
+            <div class="share-option facebook" onclick="shareToSocial('facebook')">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
+            </div>
+            <div class="share-option twitter" onclick="shareToSocial('twitter')">
+                <i class="fa-brands fa-twitter"></i>
+                <span>Twitter</span>
+            </div>
+            <div class="share-option whatsapp" onclick="shareToSocial('whatsapp')">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </div>
+            <div class="share-option linkedin" onclick="shareToSocial('linkedin')">
+                <i class="fa-brands fa-linkedin-in"></i>
+                <span>LinkedIn</span>
+            </div>
+            <div class="share-option telegram" onclick="shareToSocial('telegram')">
+                <i class="fa-brands fa-telegram"></i>
+                <span>Telegram</span>
+            </div>
+            <div class="share-option copy" onclick="copyLink()">
+                <i class="fa-solid fa-link"></i>
+                <span>Copy Link</span>
+            </div>
+        </div>
+        <div class="share-link">
+            <input type="text" id="shareUrl" readonly value="">
+            <button onclick="copyLink()">Copy</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Action Bar -->
+<div class="bulk-bar" id="bulkBar">
+    <span><span class="bulk-count" id="selectedCount">0</span> selected</span>
+    <button class="bulk-btn bulk-download" onclick="downloadSelected()">
+        <i class="fa-solid fa-download"></i> Download All
+    </button>
+    <button class="bulk-btn bulk-cancel" onclick="cancelSelection()">
+        Cancel
+    </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
+// ===== STATE MANAGEMENT =====
 let currentIndex = 0;
 let galleryItems = [];
+let visibleItems = [];
+let isSelectMode = false;
+let selectedItems = new Set();
+let slideshowInterval = null;
+let slideSpeed = 3000;
+let currentFilter = 'all';
+let currentView = 'grid';
 
-// Initialize gallery items after DOM loads
+// Load saved state
 document.addEventListener('DOMContentLoaded', () => {
     galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+    visibleItems = [...galleryItems];
+    
+    // Load favorites from localStorage
+    loadFavorites();
+    updateStats();
 });
 
-// Filter functionality
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+// ===== FEATURE 1: SEARCH =====
+function searchPhotos() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    let count = 0;
+    
+    galleryItems.forEach(item => {
+        const name = item.dataset.name.toLowerCase();
+        const caption = item.querySelector('.gallery-caption').textContent.toLowerCase();
+        const matchesFilter = currentFilter === 'all' || item.dataset.category === currentFilter;
+        const matchesSearch = name.includes(query) || caption.includes(query);
         
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
+        if (matchesFilter && matchesSearch) {
+            item.classList.remove('hidden');
+            count++;
+        } else {
+            item.classList.add('hidden');
+        }
     });
-});
+    
+    visibleItems = galleryItems.filter(i => !i.classList.contains('hidden'));
+    document.getElementById('filteredCount').textContent = count;
+    document.getElementById('emptyState').classList.toggle('show', count === 0);
+}
 
-// Lightbox functions
+// ===== FILTER PHOTOS =====
+function filterPhotos(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    searchPhotos();
+}
+
+// ===== FEATURE 6: VIEW TOGGLE =====
+function changeView(view, btn) {
+    currentView = view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const grid = document.getElementById('galleryGrid');
+    grid.className = 'gallery-grid ' + view + '-view';
+}
+
+// ===== FEATURE 2: LIKE/FAVORITE =====
+function toggleLike(btn) {
+    btn.classList.toggle('liked');
+    const icon = btn.querySelector('i');
+    
+    if (btn.classList.contains('liked')) {
+        icon.className = 'fa-solid fa-heart';
+        showToast('Added to favorites ❤️', 'success');
+    } else {
+        icon.className = 'fa-regular fa-heart';
+        showToast('Removed from favorites');
+    }
+    
+    saveFavorites();
+    updateStats();
+}
+
+function saveFavorites() {
+    const favorites = [];
+    document.querySelectorAll('.like-btn.liked').forEach(btn => {
+        const item = btn.closest('.gallery-item');
+        favorites.push(item.dataset.name);
+    });
+    localStorage.setItem('galleryFavorites', JSON.stringify(favorites));
+}
+
+function loadFavorites() {
+    const saved = JSON.parse(localStorage.getItem('galleryFavorites') || '[]');
+    galleryItems.forEach(item => {
+        if (saved.includes(item.dataset.name)) {
+            const btn = item.querySelector('.like-btn');
+            btn.classList.add('liked');
+            btn.querySelector('i').className = 'fa-solid fa-heart';
+        }
+    });
+    updateStats();
+}
+
+// ===== FEATURE 10: PIN TO TOP =====
+function togglePin(btn) {
+    const item = btn.closest('.gallery-item');
+    item.classList.toggle('pinned');
+    btn.classList.toggle('pinned');
+    
+    if (item.classList.contains('pinned')) {
+        // Move to top of grid
+        item.parentNode.insertBefore(item, item.parentNode.firstChild);
+        showToast('Photo pinned to top 📌', 'success');
+    } else {
+        showToast('Photo unpinned');
+    }
+}
+
+// ===== ITEM CLICK HANDLER =====
+function handleItemClick(item) {
+    if (isSelectMode) {
+        toggleSelection(item);
+    } else {
+        openLightbox(item);
+    }
+}
+
+// ===== FEATURE 5: SELECT MODE =====
+function toggleSelectMode() {
+    isSelectMode = !isSelectMode;
+    const btn = document.getElementById('selectBtn');
+    const bulkBar = document.getElementById('bulkBar');
+    
+    btn.classList.toggle('active', isSelectMode);
+    bulkBar.classList.toggle('active', isSelectMode);
+    
+    galleryItems.forEach(item => {
+        item.classList.toggle('selectable', isSelectMode);
+        if (!isSelectMode) {
+            item.classList.remove('selected');
+        }
+    });
+    
+    selectedItems.clear();
+    updateSelectedCount();
+    
+    showToast(isSelectMode ? 'Select mode ON' : 'Select mode OFF');
+}
+
+function toggleSelection(item) {
+    if (selectedItems.has(item)) {
+        selectedItems.delete(item);
+        item.classList.remove('selected');
+    } else {
+        selectedItems.add(item);
+        item.classList.add('selected');
+    }
+    updateSelectedCount();
+}
+
+function updateSelectedCount() {
+    document.getElementById('selectedCount').textContent = selectedItems.size;
+}
+
+function cancelSelection() {
+    toggleSelectMode();
+}
+
+function downloadSelected() {
+    selectedItems.forEach(item => {
+        const img = item.querySelector('img');
+        downloadImage(img.src, item.dataset.name);
+    });
+    showToast(`Downloading ${selectedItems.size} images...`, 'success');
+    cancelSelection();
+}
+
+// ===== LIGHTBOX FUNCTIONS =====
 function openLightbox(item) {
     const img = item.querySelector('img');
-    currentIndex = galleryItems.indexOf(item);
+    const caption = item.querySelector('.gallery-caption').textContent;
+    const category = item.querySelector('.gallery-category').textContent;
+    
+    currentIndex = visibleItems.indexOf(item);
     
     document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxTitle').textContent = caption;
+    document.getElementById('lightboxCategory').textContent = category;
+    document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+    document.getElementById('shareUrl').value = window.location.href + '?photo=' + encodeURIComponent(img.src);
+    
     document.getElementById('lightbox').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -233,33 +969,186 @@ function openLightbox(item) {
 function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
     document.body.style.overflow = '';
+    stopSlideshow();
 }
 
 function changeImage(direction) {
     currentIndex += direction;
-    
-    // Filter visible items only
-    const visibleItems = galleryItems.filter(item => item.style.display !== 'none');
-    
     if (currentIndex < 0) currentIndex = visibleItems.length - 1;
     if (currentIndex >= visibleItems.length) currentIndex = 0;
     
-    const img = visibleItems[currentIndex].querySelector('img');
+    const item = visibleItems[currentIndex];
+    const img = item.querySelector('img');
+    const caption = item.querySelector('.gallery-caption').textContent;
+    const category = item.querySelector('.gallery-category').textContent;
+    
     document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxTitle').textContent = caption;
+    document.getElementById('lightboxCategory').textContent = category;
+    document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+}
+
+function handleLightboxClick(e) {
+    if (e.target.id === 'lightbox') closeLightbox();
 }
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
-    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('active')) return;
     
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') changeImage(-1);
     if (e.key === 'ArrowRight') changeImage(1);
 });
 
-// Close on outside click
-document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target.id === 'lightbox') closeLightbox();
+// ===== FEATURE 3: DOWNLOAD =====
+function downloadCurrentImage() {
+    const src = document.getElementById('lightboxImg').src;
+    const name = document.getElementById('lightboxTitle').textContent;
+    downloadImage(src, name);
+}
+
+function downloadImage(url, filename) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename.replace(/[^a-z0-9]/gi, '_') + '.jpg';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Download started ⬇️', 'success');
+}
+
+// ===== FEATURE 4: SLIDESHOW =====
+function toggleSlideshow() {
+    const btn = document.getElementById('slideshowBtn');
+    
+    if (slideshowInterval) {
+        stopSlideshow();
+    } else {
+        startSlideshow();
+    }
+}
+
+function startSlideshow() {
+    const btn = document.getElementById('slideshowBtn');
+    btn.classList.add('playing');
+    btn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+    
+    slideshowInterval = setInterval(() => {
+        changeImage(1);
+    }, slideSpeed);
+}
+
+function stopSlideshow() {
+    if (slideshowInterval) {
+        clearInterval(slideshowInterval);
+        slideshowInterval = null;
+    }
+    const btn = document.getElementById('slideshowBtn');
+    btn.classList.remove('playing');
+    btn.innerHTML = '<i class="fa-solid fa-play"></i> Slideshow';
+}
+
+function updateSlideSpeed() {
+    const val = document.getElementById('slideSpeed').value;
+    slideSpeed = 7000 - (val * 1200); // 1=6s, 5=1s
+    if (slideshowInterval) {
+        stopSlideshow();
+        startSlideshow();
+    }
+}
+
+// ===== FEATURE 9: SHARE MODAL =====
+function openShareModal() {
+    document.getElementById('shareModal').classList.add('active');
+}
+
+function closeShareModal() {
+    document.getElementById('shareModal').classList.remove('active');
+}
+
+function shareToSocial(platform) {
+    const url = document.getElementById('shareUrl').value;
+    const title = document.getElementById('lightboxTitle').textContent;
+    let shareUrl = '';
+    
+    switch(platform) {
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
+            break;
+        case 'linkedin':
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            break;
+        case 'telegram':
+            shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+            break;
+    }
+    
+    if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
+    showToast(`Sharing to ${platform}...`, 'success');
+}
+
+function copyLink() {
+    const input = document.getElementById('shareUrl');
+    navigator.clipboard.writeText(input.value).then(() => {
+        showToast('Link copied to clipboard! 📋', 'success');
+    });
+}
+
+// ===== FEATURE 8: THEME TOGGLE =====
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
+    
+    if (html.dataset.theme === 'light') {
+        html.dataset.theme = 'dark';
+        icon.className = 'fa-solid fa-moon';
+        localStorage.setItem('galleryTheme', 'dark');
+    } else {
+        html.dataset.theme = 'light';
+        icon.className = 'fa-solid fa-sun';
+        localStorage.setItem('galleryTheme', 'light');
+    }
+}
+
+// Load saved theme
+(function() {
+    const saved = localStorage.getItem('galleryTheme');
+    if (saved === 'light') {
+        document.documentElement.dataset.theme = 'light';
+        document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+    }
+})();
+
+// ===== STATS UPDATE =====
+function updateStats() {
+    document.getElementById('totalCount').textContent = galleryItems.length;
+    document.getElementById('filteredCount').textContent = visibleItems.length;
+    document.getElementById('favCount').textContent = document.querySelectorAll('.like-btn.liked').length;
+}
+
+// ===== TOAST NOTIFICATION =====
+function showToast(message, type = '') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast show ' + type;
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Close modal on outside click
+document.getElementById('shareModal').addEventListener('click', (e) => {
+    if (e.target.id === 'shareModal') closeShareModal();
 });
 </script>
 
