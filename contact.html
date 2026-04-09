@@ -13,8 +13,9 @@
             --bg:#0a0a0f;--bg2:#111118;--card:#14141e;
             --text:#f5f5f7;--text2:#a1a1aa;--accent:#10b981;
             --accent2:#3b82f6;--border:rgba(255,255,255,0.06);
-            --success:#22c55e;--warning:#f59e0b;
+            --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
             --gradient:linear-gradient(135deg,#10b981,#059669);
+            --whatsapp:#25d366;
         }
         
         [data-theme="light"]{
@@ -25,356 +26,229 @@
         body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all .4s ease}
         
         /* ===== ANIMATED BACKGROUND ===== */
-        .bg-animation{
-            position:fixed;top:0;left:0;width:100%;height:100%;
-            z-index:-1;overflow:hidden;
-        }
-        .bg-orb{
-            position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;
-            animation:float 20s infinite ease-in-out;
-        }
-        .bg-orb:nth-child(1){width:600px;height:600px;background:var(--accent);top:-200px;left:-200px;animation-delay:0s}
+        .bg-animation{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden}
+        .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:float 20s infinite ease-in-out}
+        .bg-orb:nth-child(1){width:600px;height:600px;background:var(--accent);top:-200px;left:-200px}
         .bg-orb:nth-child(2){width:400px;height:400px;background:var(--accent2);bottom:-150px;right:-150px;animation-delay:-7s}
         .bg-orb:nth-child(3){width:300px;height:300px;background:#8b5cf6;top:50%;left:50%;animation-delay:-14s}
         @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(.95)}}
         
         /* ===== NAVIGATION ===== */
-        .nav{
-            position:fixed;top:0;left:0;right:0;z-index:1000;
-            padding:16px 40px;display:flex;justify-content:space-between;align-items:center;
-            backdrop-filter:blur(20px);background:rgba(10,10,15,0.85);
-            border-bottom:1px solid var(--border);transition:all .3s;
-        }
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(10,10,15,0.85);border-bottom:1px solid var(--border)}
         [data-theme="light"] .nav{background:rgba(248,250,252,0.9)}
-        
         .nav-left{display:flex;align-items:center;gap:20px}
-        .nav-back{
-            color:var(--text2);text-decoration:none;font-size:.9rem;
-            display:flex;align-items:center;gap:8px;transition:all .3s;
-            padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);
-        }
+        .nav-back{color:var(--text2);text-decoration:none;font-size:.9rem;display:flex;align-items:center;gap:8px;transition:all .3s;padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border)}
         .nav-back:hover{color:var(--accent);transform:translateX(-3px)}
-        
         .nav-logo{font-size:1.3rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        
         .nav-actions{display:flex;align-items:center;gap:12px}
-        
-        /* Theme Toggle */
-        .theme-toggle{
-            width:44px;height:44px;border-radius:12px;background:var(--card);
-            border:1px solid var(--border);color:var(--text2);cursor:pointer;
-            transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-        }
+        .theme-toggle{width:44px;height:44px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
         .theme-toggle:hover{background:var(--warning);color:white;border-color:var(--warning)}
         
         /* ===== MAIN SECTION ===== */
         .contact-section{padding:110px 40px 80px;min-height:100vh}
         .contact-container{max-width:1200px;margin:0 auto;width:100%}
         
-        /* Header with Typing Animation */
+        /* Header */
         .contact-header{text-align:center;margin-bottom:55px}
-        .contact-title{
-            font-size:3.2rem;font-weight:800;margin-bottom:16px;
-            background:linear-gradient(135deg,var(--text),var(--accent),var(--accent2));
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            background-size:200% auto;
-            animation:shimmer 3s linear infinite;
-        }
+        .contact-title{font-size:3.2rem;font-weight:800;margin-bottom:16px;background:linear-gradient(135deg,var(--text),var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:shimmer 3s linear infinite}
         @keyframes shimmer{to{background-position:200% center}}
-        
         .typing-text{display:inline-block;min-height:1.5em}
         .typing-cursor{display:inline-block;width:3px;height:1.2em;background:var(--accent);margin-left:4px;animation:blink 1s infinite;vertical-align:text-bottom}
         @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
-        
         .contact-sub{color:var(--text2);font-size:1.15rem;margin-top:12px}
         
-        /* Feature 1: Live Status */
-        .status-bar{
-            display:inline-flex;align-items:center;gap:10px;
-            background:var(--card);padding:10px 24px;border-radius:50px;
-            border:1px solid var(--border);margin-top:20px;
-        }
-        .status-dot{
-            width:12px;height:12px;border-radius:50%;
-            background:var(--success);animation:pulse 2s infinite;
-        }
+        /* Status Bar */
+        .status-bar{display:inline-flex;align-items:center;gap:10px;background:var(--card);padding:10px 24px;border-radius:50px;border:1px solid var(--border);margin-top:20px}
+        .status-dot{width:12px;height:12px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
         .status-dot.offline{background:var(--text2);animation:none}
         @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}50%{box-shadow:0 0 0 10px rgba(34,197,94,0)}}
         .status-text{font-size:.9rem;font-weight:500;color:var(--text2)}
         .status-time{font-size:.85rem;color:var(--accent)}
         
-        /* Feature 2: Quick Actions */
-        .quick-actions{
-            display:flex;justify-content:center;gap:14px;margin:35px 0 50px;
-            flex-wrap:wrap;
-        }
-        .quick-btn{
-            display:flex;align-items:center;gap:10px;padding:14px 26px;
-            background:var(--card);border:1px solid var(--border);
-            border-radius:14px;color:var(--text);text-decoration:none;
-            font-weight:600;font-size:.92rem;transition:all .3s;
-            font-family:inherit;
-        }
-        .quick-btn:hover{
-            transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,0.2);
-            border-color:var(--accent);background:rgba(16,185,129,0.08);
-        }
+        /* Quick Actions */
+        .quick-actions{display:flex;justify-content:center;gap:14px;margin:35px 0 50px;flex-wrap:wrap}
+        .quick-btn{display:flex;align-items:center;gap:10px;padding:14px 26px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);text-decoration:none;font-weight:600;font-size:.92rem;transition:all .3s;font-family:inherit}
+        .quick-btn:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,0.2);border-color:var(--accent);background:rgba(16,185,129,0.08)}
         .quick-btn i{font-size:1.15rem;color:var(--accent)}
-        .quick-btn.whatsapp{border-color:rgba(37,211,106,.3)}
-        .quick-btn.whatsapp i{color:#25d366}
+        .quick-btn.whatsapp i{color:var(--whatsapp)}
         .quick-btn.call i{color:var(--accent2)}
         .quick-btn.cv i{color:#8b5cf6}
+        .quick-btn.email i{color:#f59e0b}
         
         /* Main Grid */
         .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start}
+        .left-col{display:flex;flex-direction:column;gap:20px}
         
-        /* Left Column */
-        .left-col{display:flex;flex-direction:column;gap:24px}
-        
-        /* Enhanced Info Cards */
-        .info-card{
-            display:flex;align-items:center;gap:18px;padding:22px;
-            background:var(--card);border:1px solid var(--border);
-            border-radius:18px;transition:all .4s cubic-bezier(.175,.885,.32,1.275);
-            text-decoration:none;color:inherit;position:relative;overflow:hidden;
-        }
-        .info-card::before{
-            content:'';position:absolute;top:0;left:0;width:4px;height:100%;
-            background:var(--accent);opacity:0;transition:opacity .3s;
-        }
-        .info-card:hover{
-            border-color:var(--accent);transform:translateX(10px) scale(1.02);
-            box-shadow:0 10px 40px rgba(16,185,129,0.15);
-        }
+        /* Info Cards */
+        .info-card{display:flex;align-items:center;gap:18px;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:18px;transition:all .4s cubic-bezier(.175,.885,.32,1.275);text-decoration:none;color:inherit;position:relative;overflow:hidden}
+        .info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent);opacity:0;transition:opacity .3s}
+        .info-card:hover{border-color:var(--accent);transform:translateX(10px) scale(1.02);box-shadow:0 10px 40px rgba(16,185,129,0.15)}
         .info-card:hover::before{opacity:1}
-        
-        .info-icon{
-            width:58px;height:58px;border-radius:16px;
-            background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.05));
-            display:flex;align-items:center;justify-content:center;
-            color:var(--accent);font-size:1.35rem;flex-shrink:0;
-            transition:all .3s;
-        }
-        .info-card:hover .info-icon{
-            transform:scale(1.1) rotate(-5deg);
-            background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(16,185,129,0.1));
-        }
+        .info-icon{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.05));display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.35rem;flex-shrink:0;transition:all .3s}
+        .info-card:hover .info-icon{transform:scale(1.1) rotate(-5deg);background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(16,185,129,0.1))}
         .info-details h3{font-size:1.05rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
         .info-details p{color:var(--text2);font-size:.93rem}
-        
-        /* Feature 7: Copy Button */
-        .copy-btn{
-            width:28px;height:28px;border-radius:8px;background:transparent;
-            border:1px solid var(--border);color:var(--text2);cursor:pointer;
-            transition:all .3s;display:flex;align-items:center;justify-content:center;
-            font-size:.75rem;opacity:0;
-        }
+        .copy-btn{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:.75rem;opacity:0}
         .info-card:hover .copy-btn{opacity:1}
         .copy-btn:hover{background:var(--accent);color:white;border-color:var(--accent)}
         .copy-btn.copied{background:var(--success);color:white;border-color:var(--success)}
         
-        /* Feature 6: Working Hours Card */
-        .hours-card{
-            background:var(--card);border:1px solid var(--border);
-            border-radius:18px;padding:24px;
-        }
-        .hours-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+        /* Working Hours Card */
+        .hours-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px}
+        .hours-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
         .hours-header h3{font-size:1.05rem;display:flex;align-items:center;gap:10px}
-        .timezone-badge{
-            font-size:.75rem;padding:5px 12px;border-radius:20px;
-            background:rgba(59,130,246,0.15);color:var(--accent2);font-weight:600;
-        }
-        .hours-list{display:flex;flex-direction:column;gap:10px}
-        .hour-row{
-            display:flex;justify-content:space-between;padding:10px 0;
-            border-bottom:1px solid var(--border);font-size:.9rem;
-        }
+        .timezone-badge{font-size:.75rem;padding:5px 12px;border-radius:20px;background:rgba(59,130,246,0.15);color:var(--accent2);font-weight:600}
+        .hours-list{display:flex;flex-direction:column;gap:8px}
+        .hour-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem}
         .hour-row:last-child{border-bottom:none}
         .hour-day{color:var(--text2)}
         .hour-time{font-weight:600;color:var(--accent)}
         .hour-time.closed{color:var(--text2);font-style:italic}
         
-        /* Right Column - Enhanced Form */
-        .form-wrap{
-            background:var(--card);border:1px solid var(--border);
-            border-radius:24px;padding:36px;position:relative;overflow:hidden;
-        }
-        .form-wrap::before{
-            content:'';position:absolute;top:0;left:0;right:0;height:4px;
-            background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));
-        }
+        /* Feature 6: QR Code Section */
+        .qr-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;text-align:center}
+        .qr-section h3{font-size:1rem;margin-bottom:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+        .qr-codes{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+        .qr-item{text-align:center}
+        .qr-code{width:110px;height:110px;background:white;border-radius:14px;padding:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:transform .3s}
+        .qr-code:hover{transform:scale(1.08)}
+        .qr-code img,.qr-code canvas{width:100%;height:100%;object-fit:contain}
+        .qr-label{font-size:.78rem;color:var(--text2)}
+        
+        /* Feature 7: Interactive Map */
+        .map-section{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+        .map-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .map-header h3{font-size:1rem;display:flex;align-items:center;gap:8px}
+        .map-link{font-size:.85rem;color:var(--accent);text-decoration:none;font-weight:500}
+        .map-link:hover{text-decoration:underline}
+        .map-container{height:180px;position:relative;background:var(--bg2);overflow:hidden}
+        .map-container iframe{width:100%;height:100%;border:none;filter:grayscale(30%) contrast(1.1);transition:filter .3s}
+        .map-container:hover iframe{filter:grayscale(0%) contrast(1)}
+        .map-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.05);pointer-events:none}
+        .map-pin{font-size:2.5rem;animation:bounce 2s infinite}
+        @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        
+        /* ===== ENHANCED FORM WITH ANIMATED BORDER (Feature 1) ===== */
+        .form-wrap{position:relative;border-radius:24px;padding:4px;background:linear-gradient(var(--accent),var(--accent2),#8b5cf6,var(--accent));background-size:300% 300%;animation:borderGlow 4s linear infinite}
+        @keyframes borderGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        .form-inner{background:var(--card);border-radius:21px;padding:36px;position:relative;z-index:1}
+        .form-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:21px 21px 0 0}
         
         .form-title{font-size:1.5rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-        .form-subtitle{color:var(--text2);font-size:.9rem;margin-bottom:28px}
+        .form-subtitle{color:var(--text2);font-size:.9rem;margin-bottom:24px}
         
-        /* Feature 10: Form Progress */
-        .form-progress{
-            display:flex;gap:6px;margin-bottom:28px;
-        }
-        .progress-step{
-            flex:1;height:4px;border-radius:2px;background:var(--bg);
-            transition:all .4s;position:relative;
-        }
+        /* Form Progress */
+        .form-progress{display:flex;gap:6px;margin-bottom:24px}
+        .progress-step{flex:1;height:4px;border-radius:2px;background:var(--bg);transition:all .4s}
         .progress-step.active{background:var(--accent)}
         .progress-step.filled{background:var(--accent)}
         
-        .form-group{margin-bottom:20px;position:relative}
-        .form-group label{
-            display:block;font-size:.88rem;font-weight:600;
-            color:var(--text2);margin-bottom:8px;
-        }
-        .form-input,.form-textarea{
-            width:100%;padding:16px 18px;background:var(--bg2);
-            border:2px solid var(--border);border-radius:14px;
-            color:var(--text);font-size:1rem;font-family:inherit;
-            transition:all .3s;
-        }
-        .form-input:focus,.form-textarea:focus{
-            outline:none;border-color:var(--accent);
-            box-shadow:0 0 0 4px rgba(16,185,129,0.1);
-            transform:translateY(-2px);
-        }
+        .form-group{margin-bottom:18px;position:relative}
+        .form-group label{display:block;font-size:.88rem;font-weight:600;color:var(--text2);margin-bottom:8px}
+        .form-input,.form-textarea{width:100%;padding:15px 17px;background:var(--bg2);border:2px solid var(--border);border-radius:13px;color:var(--text);font-size:1rem;font-family:inherit;transition:all .3s}
+        .form-input:focus,.form-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(16,185,129,0.1);transform:translateY(-2px)}
         .form-input.valid{border-color:var(--success)}
-        .form-input.invalid{border-color:#ef4444}
-        
-        .validation-msg{
-            font-size:.8rem;margin-top:6px;display:none;
-        }
-        .validation-msg.error{display:block;color:#ef4444}
+        .form-input.invalid{border-color:var(--danger)}
+        .validation-msg{font-size:.8rem;margin-top:5px;display:none}
+        .validation-msg.error{display:block;color:var(--danger)}
         .validation-msg.success{display:block;color:var(--success)}
         
-        .form-textarea{min-height:130px;resize:vertical}
+        /* Feature 2: Character Counter */
+        .char-counter{position:absolute;right:14px;bottom:10px;font-size:.75rem;color:var(--text2);transition:color .3s}
+        .char-counter.warning{color:var(--warning)}
+        .char-counter.danger{color:var(--danger)}
+        
+        .form-textarea{min-height:120px;resize:vertical;padding-right:70px}
         
         /* Subject Tags */
-        .subject-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-        .subject-tag{
-            padding:8px 16px;border-radius:20px;background:var(--bg);
-            border:1px solid var(--border);color:var(--text2);cursor:pointer;
-            font-size:.85rem;transition:all .3s;font-family:inherit;
-        }
-        .subject-tag:hover,.subject-tag.active{
-            background:var(--accent);color:white;border-color:var(--accent);
-        }
+        .subject-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+        .subject-tag{padding:8px 16px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:.84rem;transition:all .3s;font-family:inherit}
+        .subject-tag:hover,.subject-tag.active{background:var(--accent);color:white;border-color:var(--accent)}
         
-        .submit-btn{
-            width:100%;padding:18px;background:var(--gradient);
-            border:none;border-radius:14px;color:white;font-size:1.05rem;
-            font-weight:700;cursor:pointer;display:flex;align-items:center;
-            justify-content:center;gap:10px;transition:all .4s;
-            font-family:inherit;position:relative;overflow:hidden;
-        }
-        .submit-btn::before{
-            content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
-            transition:left .5s;
-        }
+        /* Send Options */
+        .send-options{display:flex;gap:10px;margin-bottom:20px}
+        .send-option{flex:1;padding:12px;border-radius:13px;background:var(--bg);border:2px solid var(--border);cursor:pointer;transition:all .3s;text-align:center;font-family:inherit}
+        .send-option:hover{border-color:var(--accent)}
+        .send-option.active{border-color:var(--accent);background:rgba(16,185,129,0.08)}
+        .send-option i{font-size:1.3rem;display:block;margin-bottom:6px;color:var(--accent)}
+        .send-option span{font-size:.82rem;color:var(--text2);font-weight:500}
+        .send-option.active span{color:var(--accent)}
+        
+        /* Submit Button */
+        .submit-btn{width:100%;padding:18px;background:var(--gradient);border:none;border-radius:14px;color:white;font-size:1.05rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .4s;font-family:inherit;position:relative;overflow:hidden}
+        .submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left .5s}
         .submit-btn:hover::before{left:100%}
         .submit-btn:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(16,185,129,0.35)}
         .submit-btn:active{transform:translateY(-1px)}
-        .submit-btn.loading{pointer-events:none;opacity:.8}
-        .submit-btn .spinner{
-            display:none;width:20px;height:20px;border:2px solid transparent;
-            border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;
-        }
+        .submit-btn.loading{pointer-events:none;opacity:.85}
+        .submit-btn .spinner{display:none;width:20px;height:20px;border:2px solid transparent;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}
         .submit-btn.loading .spinner{display:block}
         .submit-btn.loading .btn-text{display:none}
         @keyframes spin{to{transform:rotate(360deg)}}
         
-        /* Success Message */
-        .success-msg{
-            display:none;padding:20px;background:rgba(16,185,129,0.1);
-            border:1px solid var(--accent);border-radius:14px;text-align:center;
-            margin-top:20px;animation:slideInUp .4s ease;
-        }
+        /* Feature 5: Redirect Timer */
+        .redirect-timer{display:none;margin-top:18px;padding:16px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:13px;text-align:center}
+        .redirect-timer.show{display:block;animation:slideInUp .4s ease}
         @keyframes slideInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        .timer-text{font-size:.92rem;color:var(--accent2);margin-bottom:10px}
+        .countdown-circle{width:60px;height:60px;border-radius:50%;border:3px solid var(--bg);border-top-color:var(--accent2);margin:0 auto 10px;animation:spinCount 1s linear infinite}
+        @keyframes spinCount{to{transform:rotate(360deg)}}
+        .timer-number{font-size:1.8rem;font-weight:700;color:var(--accent2)}
+        .cancel-redirect{font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:8px}
+        .cancel-redirect:hover{color:var(--danger)}
+        
+        /* Success Message */
+        .success-msg{display:none;padding:18px;background:rgba(16,185,129,0.1);border:1px solid var(--accent);border-radius:13px;text-align:center;margin-top:18px;animation:slideInUp .4s ease}
         .success-msg.show{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--accent);font-weight:600}
         .success-msg i{font-size:1.3rem}
         
-        /* Feature 3: FAQ Accordion */
-        .faq-section{margin-top:60px}
-        .faq-header{text-align:center;margin-bottom:35px}
-        .faq-header h2{font-size:1.8rem;font-weight:700}
-        .faq-header p{color:var(--text2);margin-top:8px}
+        /* Feature 4: Draft Saved Indicator */
+        .draft-indicator{display:none;align-items:center;gap:8px;padding:10px 16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;font-size:.85rem;color:var(--warning);margin-bottom:16px}
+        .draft-indicator.show{display:flex}
+        .draft-indicator i{animation:pulse 1.5s infinite}
         
-        .faq-list{max-width:750px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-        .faq-item{
-            background:var(--card);border:1px solid var(--border);
-            border-radius:16px;overflow:hidden;transition:all .3s;
-        }
+        /* FAQ Section */
+        .faq-section{margin-top:55px}
+        .faq-header{text-align:center;margin-bottom:28px}
+        .faq-header h2{font-size:1.7rem;font-weight:700}
+        .faq-header p{color:var(--text2);margin-top:6px}
+        .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;transition:all .3s}
         .faq-item:hover{border-color:rgba(16,185,129,0.3)}
-        .faq-question{
-            padding:20px 24px;display:flex;justify-content:space-between;
-            align-items:center;cursor:pointer;font-weight:600;font-size:1rem;
-            transition:all .3s;
-        }
+        .faq-question{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:.96rem;transition:all .3s}
         .faq-question:hover{color:var(--accent)}
-        .faq-icon{
-            width:32px;height:32px;border-radius:8px;background:var(--bg);
-            display:flex;align-items:center;justify-content:center;
-            transition:transform .3s;color:var(--text2);flex-shrink:0;
-        }
+        .faq-icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:transform .3s,color .3s,var(--bg) .3s;flex-shrink:0;color:var(--text2)}
         .faq-item.active .faq-icon{transform:rotate(180deg);background:var(--accent);color:white}
-        .faq-answer{
-            max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;
-        }
-        .faq-item.active .faq-answer{max-height:300px;padding:0 24px 20px}
-        .faq-answer p{color:var(--text2);line-height:1.7;font-size:.95rem}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+        .faq-item.active .faq-answer{max-height:250px;padding:0 22px 18px}
+        .faq-answer p{color:var(--text2);line-height:1.7;font-size:.92rem}
         
-        /* Feature 9: Testimonials */
-        .testimonials-section{margin-top:70px}
-        .testimonials-header{text-align:center;margin-bottom:35px}
-        .testimonials-header h2{font-size:1.8rem;font-weight:700}
-        
-        .testimonial-slider{max-width:800px;margin:0 auto;position:relative;overflow:hidden}
+        /* Testimonials */
+        .testimonials-section{margin-top:60px}
+        .testimonials-header{text-align:center;margin-bottom:28px}
+        .testimonials-header h2{font-size:1.7rem;font-weight:700}
+        .testimonial-slider{max-width:780px;margin:0 auto;position:relative;overflow:hidden}
         .testimonial-track{display:flex;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
-        .testimonial-card{
-            min-width:100%;padding:35px;background:var(--card);
-            border:1px solid var(--border);border-radius:20px;text-align:center;
-        }
-        .testimonial-avatar{
-            width:80px;height:80px;border-radius:50%;
-            background:linear-gradient(135deg,var(--accent),var(--accent2));
-            display:flex;align-items:center;justify-content:center;
-            margin:0 auto 18px;font-size:2rem;color:white;font-weight:700;
-        }
-        .testimonial-text{
-            font-size:1.05rem;line-height:1.8;color:var(--text2);
-            margin-bottom:20px;font-style:italic;
-        }
-        .testimonial-text::before{content:'"';font-size:3rem;color:var(--accent);line-height:0;display:block;margin-bottom:15px}
-        .testimonial-author{font-weight:700;font-size:1.05rem}
-        .testimonial-role{color:var(--text2);font-size:.9rem;margin-top:4px}
-        .testimonial-stars{color:var(--warning);margin-top:10px;font-size:.9rem}
-        
-        .slider-controls{display:flex;justify-content:center;gap:12px;margin-top:25px}
-        .slider-btn{
-            width:44px;height:44px;border-radius:50%;background:var(--card);
-            border:1px solid var(--border);color:var(--text2);cursor:pointer;
-            transition:all .3s;display:flex;align-items:center;justify-content:center;
-        }
+        .testimonial-card{min-width:100%;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:18px;text-align:center}
+        .testimonial-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem;color:white;font-weight:700}
+        .testimonial-text{font-size:1rem;line-height:1.8;color:var(--text2);margin-bottom:18px;font-style:italic}
+        .testimonial-text::before{content:'"';font-size:2.8rem;color:var(--accent);line-height:0;display:block;margin-bottom:14px}
+        .testimonial-author{font-weight:700;font-size:1rem}
+        .testimonial-role{color:var(--text2);font-size:.88rem;margin-top:4px}
+        .testimonial-stars{color:var(--warning);margin-top:8px;font-size:.88rem}
+        .slider-controls{display:flex;justify-content:center;gap:12px;margin-top:22px}
+        .slider-btn{width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
         .slider-btn:hover{background:var(--accent);color:white;border-color:var(--accent);transform:scale(1.1)}
         .slider-dots{display:flex;gap:8px;align-items:center}
-        .slider-dot{
-            width:10px;height:10px;border-radius:50%;background:var(--border);
-            cursor:pointer;transition:all .3s;
-        }
-        .slider-dot.active{background:var(--accent);width:28px;border-radius:5px}
+        .slider-dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s}
+        .slider-dot.active{background:var(--accent);width:26px;border-radius:5px}
         
         /* Social Row */
-        .social-section{margin-top:60px;text-align:center}
-        .social-label{font-size:.9rem;color:var(--text2);margin-bottom:18px;text-transform:uppercase;letter-spacing:2px}
-        .social-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-        .social-btn{
-            width:54px;height:54px;border-radius:16px;background:var(--card);
-            border:1px solid var(--border);display:flex;align-items:center;
-            justify-content:center;color:var(--text2);text-decoration:none;
-            font-size:1.2rem;transition:all .4s cubic-bezier(.175,.885,.32,1.275);
-            position:relative;
-        }
-        .social-btn:hover{
-            transform:translateY(-6px) scale(1.1);
-            color:white;border-color:transparent;
-        }
+        .social-section{margin-top:55px;text-align:center}
+        .social-label{font-size:.88rem;color:var(--text2);margin-bottom:16px;text-transform:uppercase;letter-spacing:2px}
+        .social-row{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+        .social-btn{width:52px;height:52px;border-radius:15px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);text-decoration:none;font-size:1.15rem;transition:all .4s cubic-bezier(.175,.885,.32,1.275)}
+        .social-btn:hover{transform:translateY(-6px) scale(1.1);color:white;border-color:transparent}
         .social-btn.tiktok:hover{background:#000000}
         .social-btn.facebook:hover{background:#1877f2}
         .social-btn.instagram:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
@@ -383,44 +257,23 @@
         .social-btn.twitter:hover{background:#000}
         .social-btn.linkedin:hover{background:#0a66c2}
         
-        /* Feature 4: Floating Chat Widget */
-        .chat-widget{
-            position:fixed;bottom:30px;right:30px;z-index:9999;
-        }
-        .chat-toggle{
-            width:62px;height:62px;border-radius:50%;
-            background:linear-gradient(135deg,#25d366,#128c7e);
-            border:none;color:white;font-size:1.6rem;cursor:pointer;
-            display:flex;align-items:center;justify-content:center;
-            box-shadow:0 8px 30px rgba(37,211,106,0.4);
-            transition:all .3s;animation:chatPulse 2s infinite;
-        }
+        /* Floating Chat Widget */
+        .chat-widget{position:fixed;bottom:28px;right:28px;z-index:9999}
+        .chat-toggle{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--whatsapp),#128c7e);border:none;color:white;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(37,211,106,0.4);transition:all .3s;animation:chatPulse 2s infinite}
         @keyframes chatPulse{0%,100%{box-shadow:0 8px 30px rgba(37,211,106,0.4)}50%{box-shadow:0 8px 40px rgba(37,211,106,0.6),0 0 0 15px rgba(37,211,106,0.1)}}
         .chat-toggle:hover{transform:scale(1.1)}
-        
-        .chat-tooltip{
-            position:absolute;right:72px;top:50%;transform:translateY(-50%);
-            background:var(--card);border:1px solid var(--border);
-            padding:12px 18px;border-radius:12px;white-space:nowrap;
-            font-size:.88rem;font-weight:500;opacity:0;pointer-events:none;
-            transition:all .3s;box-shadow:0 5px 20px rgba(0,0,0,0.2);
-        }
-        .chat-tooltip::after{
-            content:'';position:absolute;right:-8px;top:50%;transform:translateY(-50%);
-            border:8px solid transparent;border-left-color:var(--border);
-        }
+        .chat-tooltip{position:absolute;right:72px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);padding:12px 18px;border-radius:12px;white-space:nowrap;font-size:.86rem;font-weight:500;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 5px 20px rgba(0,0,0,0.2)}
+        .chat-tooltip::after{content:'';position:absolute;right:-8px;top:50%;transform:translateY(-50%);border:8px solid transparent;border-left-color:var(--border)}
         .chat-widget:hover .chat-tooltip{opacity:1;right:76px}
         
-        /* Toast Notification */
-        .toast{
-            position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
-            background:var(--card);border:1px solid var(--border);
-            color:var(--text);padding:14px 28px;border-radius:12px;
-            font-weight:500;z-index:12000;opacity:0;transition:all .3s;
-            box-shadow:0 10px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:10px;
-        }
+        /* Toast */
+        .toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:13px 26px;border-radius:12px;font-weight:500;z-index:12000;opacity:0;transition:all .3s;box-shadow:0 10px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:10px}
         .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
         .toast.success{border-color:var(--accent);color:var(--accent)}
+        
+        /* Keyboard Shortcut Hint */
+        .shortcut-hint{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:.72rem;color:var(--text2);margin-left:10px}
+        .shortcut-hint kbd{padding:2px 6px;background:var(--card);border-radius:4px;font-family:inherit;font-size:.7rem;border:1px solid var(--border)}
         
         /* Responsive */
         @media(max-width:900px){
@@ -429,29 +282,25 @@
             .contact-section{padding:95px 16px 60px}
             .contact-title{font-size:2.2rem}
             .quick-actions{flex-direction:column;align-items:center}
-            .quick-btn{width:100%;max-width:300px;justify-content:center}
+            .quick-btn{width:100%;max-width:280px;justify-content:center}
+            .send-options{flex-direction:column}
         }
     </style>
 </head>
 <body>
 
-<!-- Animated Background -->
 <div class="bg-animation">
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
 </div>
 
-<!-- Navigation -->
 <nav class="nav">
     <div class="nav-left">
-        <a href="index.html" class="nav-back">
-            <i class="fa-solid fa-arrow-left"></i> Back
-        </a>
+        <a href="index.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Back</a>
         <div class="nav-logo">📧 Contact Me</div>
     </div>
     <div class="nav-actions">
-        <!-- Feature 5: Theme Toggle -->
         <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
             <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
@@ -460,12 +309,11 @@
 
 <section class="contact-section">
     <div class="contact-container">
-        <!-- Header with Typing Animation -->
+        <!-- Header -->
         <div class="contact-header">
             <h1 class="contact-title">Let's Work Together</h1>
             <p class="contact-sub typing-text"><span id="typingText"></span><span class="typing-cursor"></span></p>
             
-            <!-- Feature 1: Live Availability Status -->
             <div class="status-bar">
                 <span class="status-dot" id="statusDot"></span>
                 <span class="status-text" id="statusText">Checking...</span>
@@ -473,47 +321,48 @@
             </div>
         </div>
         
-        <!-- Feature 2: Quick Actions Bar -->
+        <!-- Quick Actions -->
         <div class="quick-actions">
-            <a href="https://wa.me/94775048455?text=Hi! I'd like to schedule a call." target="_blank" class="quick-btn whatsapp">
+            <a href="https://wa.me/947775048455?text=Hi! I'd like to discuss a project." target="_blank" class="quick-btn whatsapp">
                 <i class="fa-brands fa-whatsapp"></i> Quick WhatsApp
             </a>
-            <a href="tel:+94775048455" class="quick-btn call">
-                <i class="fa-solid fa-phone"></i> Schedule a Call
+            <a href="tel:+947775048455" class="quick-btn call">
+                <i class="fa-solid fa-phone"></i> Call Me
+            </a>
+            <a href="mailto:chat.dmkaawya@gmail.com?subject=Project Inquiry&body=Hi Kaawya," target="_blank" class="quick-btn email">
+                <i class="fa-solid fa-envelope"></i> Open Email App
             </a>
             <a href="#" onclick="showToast('CV download coming soon!')" class="quick-btn cv">
                 <i class="fa-solid fa-download"></i> Download CV
-            </a>
-            <a href="https://t.me/dmkaawya" target="_blank" class="quick-btn">
-                <i class="fa-brands fa-telegram"></i> Telegram
             </a>
         </div>
         
         <div class="contact-grid">
             <!-- Left Column -->
             <div class="left-col">
-                <!-- Contact Info Cards with Copy Feature -->
-                <a href="https://wa.me/94775048455" target="_blank" class="info-card">
+                <!-- WhatsApp - UPDATED NUMBER -->
+                <a href="https://wa.me/947775048455" target="_blank" class="info-card">
                     <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
                     <div class="info-details">
                         <h3>WhatsApp 
-                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('+94 775 048 455',this)" title="Copy number">
+                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('+94 77 504 8455',this)" title="Copy">
                                 <i class="fa-solid fa-copy"></i>
                             </button>
                         </h3>
-                        <p>+94 775 048 455</p>
+                        <p>+94 77 504 8455</p>
                     </div>
                 </a>
                 
-                <a href="mailto:dmkaawya@gmail.com" class="info-card">
+                <!-- Email - UPDATED EMAIL -->
+                <a href="mailto:chat.dmkaawya@gmail.com" class="info-card">
                     <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="info-details">
-                        <h3>Email
-                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('dmkaawya@gmail.com',this)" title="Copy email">
+                        <h3>Email 
+                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('chat.dmkaawya@gmail.com',this)" title="Copy">
                                 <i class="fa-solid fa-copy"></i>
                             </button>
                         </h3>
-                        <p>dmkaawya@gmail.com</p>
+                        <p>chat.dmkaawya@gmail.com</p>
                     </div>
                 </a>
                 
@@ -533,11 +382,11 @@
                     </div>
                 </div>
                 
-                <!-- Feature 6: Working Hours -->
+                <!-- Working Hours -->
                 <div class="hours-card">
                     <div class="hours-header">
                         <h3><i class="fa-regular fa-clock" style="color:var(--accent)"></i> Working Hours</h3>
-                        <span class="timezone-badge" id="timezone">IST +5:30</span>
+                        <span class="timezone-badge">IST +5:30</span>
                     </div>
                     <div class="hours-list">
                         <div class="hour-row">
@@ -554,78 +403,141 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Right Column - Enhanced Form -->
-            <div class="form-wrap">
-                <h2 class="form-title"><i class="fa-solid fa-paper-plane" style="color:var(--accent)"></i> Send Message</h2>
-                <p class="form-subtitle">Fill out the form and I'll get back to you within 24 hours ⚡</p>
                 
-                <!-- Feature 10: Form Progress -->
-                <div class="form-progress">
-                    <div class="progress-step active" id="step1"></div>
-                    <div class="progress-step" id="step2"></div>
-                    <div class="progress-step" id="step3"></div>
-                    <div class="progress-step" id="step4"></div>
+                <!-- Feature 6: QR Codes -->
+                <div class="qr-section">
+                    <h3><i class="fa-solid fa-qrcode" style="color:var(--accent)"></i> Scan to Connect</h3>
+                    <div class="qr-codes">
+                        <div class="qr-item">
+                            <div class="qr-code" id="qrWhatsapp">
+                                <canvas id="qrCanvasWA" width="94" height="94"></canvas>
+                            </div>
+                            <span class="qr-label">WhatsApp</span>
+                        </div>
+                        <div class="qr-item">
+                            <div class="qr-code" id="qrEmail">
+                                <canvas id="qrCanvasEmail" width="94" height="94"></canvas>
+                            </div>
+                            <span class="qr-label">Email</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label>Your Name *</label>
-                        <input type="text" class="form-input" id="nameInput" placeholder="John Doe" required oninput="validateField(this,'name');updateProgress()">
-                        <div class="validation-msg" id="nameMsg"></div>
+                <!-- Feature 7: Map -->
+                <div class="map-section">
+                    <div class="map-header">
+                        <h3><i class="fa-solid fa-map-location-dot" style="color:var(--accent)"></i> Find Me</h3>
+                        <a href="https://maps.google.com/?q=Kalutara,Sri+Lanka" target="_blank" class="map-link">Open in Maps →</a>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Your Email *</label>
-                        <input type="email" class="form-input" id="emailInput" placeholder="john@example.com" required oninput="validateField(this,'email');updateProgress()">
-                        <div class="validation-msg" id="emailMsg"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Subject</label>
-                        <div class="subject-tags">
-                            <span class="subject-tag" onclick="selectSubject(this)">Project Inquiry</span>
-                            <span class="subject-tag" onclick="selectSubject(this)">Job Opportunity</span>
-                            <span class="subject-tag" onclick="selectSubject(this)">Collaboration</span>
-                            <span class="subject-tag" onclick="selectSubject(this)">Just Saying Hi 👋</span>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158430.6541649549!2d79.89!3d6.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae144072f2ef2db%3A0xf0eebcaabc4d50!2sKalutara%2C+Sri+Lanka!5e0!3m2!1sen!2slk!4v1704000000000!5m2!1sen!2slk" allowfullscreen="" loading="lazy"></iframe>
+                        <div class="map-overlay">
+                            <span class="map-pin">📍</span>
                         </div>
-                        <input type="text" class="form-input" id="subjectInput" placeholder="Or type your own subject...">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Form -->
+            <div class="form-wrap">
+                <div class="form-inner">
+                    <h2 class="form-title"><i class="fa-solid fa-paper-plane" style="color:var(--accent)"></i> Send Message</h2>
+                    <p class="form-subtitle">Fill out and I'll respond within 24 hours ⚡</p>
+                    
+                    <!-- Form Progress -->
+                    <div class="form-progress">
+                        <div class="progress-step active" id="step1"></div>
+                        <div class="progress-step" id="step2"></div>
+                        <div class="progress-step" id="step3"></div>
+                        <div class="progress-step" id="step4"></div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Your Message *</label>
-                        <textarea class="form-textarea" id="msgInput" placeholder="Tell me about your project or idea..." required oninput="validateField(this,'message');updateProgress()"></textarea>
-                        <div class="validation-msg" id="msgMsg"></div>
+                    <!-- Feature 4: Draft Indicator -->
+                    <div class="draft-indicator" id="draftIndicator">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Draft saved automatically</span>
                     </div>
                     
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text"><i class="fa-solid fa-paper-plane"></i> Send Message</span>
-                        <span class="spinner"></span>
-                    </button>
-                    
-                    <div class="success-msg" id="successMsg">
-                        <i class="fa-solid fa-circle-check"></i>
-                        <span>Message sent successfully! Redirecting to WhatsApp...</span>
-                    </div>
-                </form>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Your Name * <span class="shortcut-hint"><kbd>Tab</kbd></span></label>
+                            <input type="text" class="form-input" id="nameInput" placeholder="John Doe" required oninput="validateField(this,'name');updateProgress();autoSaveDraft()">
+                            <div class="validation-msg" id="nameMsg"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Your Email *</label>
+                            <input type="email" class="form-input" id="emailInput" placeholder="john@example.com" required oninput="validateField(this,'email');updateProgress();autoSaveDraft()">
+                            <div class="validation-msg" id="emailMsg"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <div class="subject-tags">
+                                <span class="subject-tag" onclick="selectSubject(this)">Project Inquiry</span>
+                                <span class="subject-tag" onclick="selectSubject(this)">Job Opportunity</span>
+                                <span class="subject-tag" onclick="selectSubject(this)">Collaboration</span>
+                                <span class="subject-tag" onclick="selectSubject(this)">Just Saying Hi 👋</span>
+                            </div>
+                            <input type="text" class="form-input" id="subjectInput" placeholder="Or type your own..." oninput="autoSaveDraft()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Your Message * <span class="shortcut-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> send</span></label>
+                            <textarea class="form-textarea" id="msgInput" placeholder="Tell me about your project or idea..." required oninput="validateField(this,'message');updateProgress();updateCharCounter();autoSaveDraft()"></textarea>
+                            <!-- Feature 2: Character Counter -->
+                            <span class="char-counter" id="charCounter">0 / 500</span>
+                            <div class="validation-msg" id="msgMsg"></div>
+                        </div>
+                        
+                        <!-- Feature 8: Send Options (WhatsApp / Email) -->
+                        <div class="send-options">
+                            <div class="send-option active" data-method="whatsapp" onclick="selectSendMethod(this)">
+                                <i class="fa-brands fa-whatsapp"></i>
+                                <span>Send via WhatsApp</span>
+                            </div>
+                            <div class="send-option" data-method="email" onclick="selectSendMethod(this)">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>Open Email App</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <span class="btn-text"><i class="fa-solid fa-paper-plane"></i> Send Message</span>
+                            <span class="spinner"></span>
+                        </button>
+                        
+                        <!-- Feature 5: Redirect Timer -->
+                        <div class="redirect-timer" id="redirectTimer">
+                            <div class="countdown-circle"></div>
+                            <p class="timer-text">Opening WhatsApp in...</p>
+                            <span class="timer-number" id="timerNumber">5</span>
+                            <p class="cancel-redirect" onclick="cancelRedirect()">Cancel or stay on this page</p>
+                        </div>
+                        
+                        <div class="success-msg" id="successMsg">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span id="successText">Message prepared!</span>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         
-        <!-- Feature 3: FAQ Section -->
+        <!-- FAQ Section -->
         <div class="faq-section">
             <div class="faq-header">
                 <h2><i class="fa-solid fa-circle-question" style="color:var(--accent)"></i> Frequently Asked Questions</h2>
                 <p>Quick answers to common questions</p>
             </div>
             <div class="faq-list">
-                <div class="faq-item">
+                <div class="faq-item active">
                     <div class="faq-question" onclick="toggleFaq(this)">
                         <span>What services do you offer?</span>
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>I offer web development, mobile app development, UI/UX design, and consulting services. I specialize in modern technologies like React, Node.js, Flutter, and more.</p>
+                        <p>I offer web development, mobile app development, UI/UX design, and consulting services. Specializing in React, Node.js, Flutter, and modern technologies.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -634,7 +546,7 @@
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>I typically respond within 24 hours during business days. For urgent matters, you can reach me directly on WhatsApp for faster response!</p>
+                        <p>I typically respond within 24 hours during business days. For urgent matters, reach me directly on WhatsApp for faster response!</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -643,31 +555,22 @@
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>Absolutely! I work with clients from all around the world. Time zone differences are never an issue - I'm flexible with meeting times and communication methods.</p>
+                        <p>Absolutely! I work with clients worldwide. Time zone differences are never an issue - I'm flexible with meeting times.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>How do we get started with a project?</span>
+                        <span>How do we get started?</span>
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div class="faq-answer">
-                        <p>Simply send me a message through this form or WhatsApp. We'll have a free consultation to discuss your requirements, timeline, and budget. Then I'll provide a detailed proposal.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>What are your payment terms?</span>
-                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>I typically work with a 40% upfront payment and 60% upon completion. For larger projects, we can discuss milestone-based payments. I accept bank transfers, PayPal, and Wise.</p>
+                        <p>Simply send me a message through this form or WhatsApp. We'll have a free consultation to discuss your requirements.</p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Feature 9: Testimonials -->
+        <!-- Testimonials -->
         <div class="testimonials-section">
             <div class="testimonials-header">
                 <h2><i class="fa-solid fa-star" style="color:var(--warning)"></i> What Clients Say</h2>
@@ -676,21 +579,21 @@
                 <div class="testimonial-track" id="testimonialTrack">
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">AS</div>
-                        <p class="testimonial-text">Kaawya delivered exceptional work on our e-commerce platform. His attention to detail and technical expertise exceeded our expectations. Highly recommended!</p>
+                        <p class="testimonial-text">Kaawya delivered exceptional work on our e-commerce platform. His attention to detail exceeded our expectations!</p>
                         <div class="testimonial-author">Amanda Silva</div>
                         <div class="testimonial-role">CEO, TechStart Solutions</div>
                         <div class="testimonial-stars">★★★★★</div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">RP</div>
-                        <p class="testimonial-text">Working with Kaawya was a fantastic experience. He understood our vision perfectly and transformed it into a beautiful, functional application. Will definitely work again!</p>
+                        <p class="testimonial-text">Working with Kaawya was fantastic. He understood our vision perfectly and transformed it into reality!</p>
                         <div class="testimonial-author">Rajith Perera</div>
                         <div class="testimonial-role">Founder, AppVenture</div>
                         <div class="testimonial-stars">★★★★★</div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">NF</div>
-                        <p class="testimonial-text">Professional, punctual, and incredibly talented. Kaawya helped us redesign our entire brand identity and website. The results were outstanding!</p>
+                        <p class="testimonial-text">Professional, punctant, and incredibly talented. The results were outstanding!</p>
                         <div class="testimonial-author">Nimal Fernando</div>
                         <div class="testimonial-role">Marketing Director, BrandCo</div>
                         <div class="testimonial-stars">★★★★★</div>
@@ -724,10 +627,10 @@
     </div>
 </section>
 
-<!-- Feature 4: Floating Chat Widget -->
+<!-- Floating Chat Widget - Updated Number -->
 <div class="chat-widget">
-    <div class="chat-tooltip">Chat with me on WhatsApp 💬</div>
-    <button class="chat-toggle" onclick="window.open('https://wa.me/94775048455?text=Hi! I need help.','_blank')">
+    <div class="chat-tooltip">Chat on WhatsApp 💬</div>
+    <button class="chat-toggle" onclick="window.open('https://wa.me/947775048455?text=Hi! I need help.','_blank')">
         <i class="fa-brands fa-whatsapp"></i>
     </button>
 </div>
@@ -736,133 +639,109 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== FEATURE 8: TYPING ANIMATION =====
+// ===== CONFIGURATION - UPDATED CONTACT INFO =====
+const CONFIG = {
+    whatsapp: '947775048455',
+    whatsappDisplay: '+94 77 504 8455',
+    email: 'chat.dmkaawya@gmail.com',
+    name: 'Kaawya Chandrasekara'
+};
+
+// ===== TYPING ANIMATION =====
 const typingTexts = [
     "Have a project in mind? Let's talk!",
     "I'd love to hear from you! 🚀",
     "Building amazing things together.",
     "Your ideas, my expertise. Let's connect!"
 ];
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
+let textIndex = 0, charIndex = 0, isDeleting = false;
 
 function typeText() {
-    const element = document.getElementById('typingText');
-    const currentText = typingTexts[textIndex];
+    const el = document.getElementById('typingText');
+    const current = typingTexts[textIndex];
     
     if (isDeleting) {
-        element.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
+        el.textContent = current.substring(0, --charIndex);
     } else {
-        element.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
+        el.textContent = current.substring(0, ++charIndex);
     }
     
-    let speed = isDeleting ? 30 : 80;
+    let speed = isDeleting ? 25 : 75;
     
-    if (!isDeleting && charIndex === currentText.length) {
-        speed = 2500;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % typingTexts.length;
-        speed = 500;
-    }
+    if (!isDeleting && charIndex === current.length) {speed = 2200; isDeleting = true;}
+    else if (isDeleting && charIndex === 0) {isDeleting = false; textIndex = (textIndex + 1) % typingTexts.length; speed = 450;}
     
     setTimeout(typeText, speed);
 }
 typeText();
 
-// ===== FEATURE 1: LIVE AVAILABILITY STATUS =====
+// ===== LIVE STATUS =====
 function updateStatus() {
     const now = new Date();
-    const hours = now.getUTCHours() + 5; // IST UTC+5:30 (approximate)
-    const minutes = now.getMinutes();
+    const hours = now.getUTCHours() + 5;
     const day = now.getDay();
-    
     const statusDot = document.getElementById('statusDot');
     const statusText = document.getElementById('statusText');
-    const currentTimeEl = document.getElementById('currentTime');
+    document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
     
-    // Format time
-    currentTimeEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    
-    // Check working hours (9AM-6PM Mon-Fri, 10AM-2PM Sat)
-    const isWeekday = day >= 1 && day <= 5;
-    const isSaturday = day === 6;
-    const isWorkingHours = (isWeekday && hours >= 9 && hours < 18) || (isSaturday && hours >= 10 && hours < 14);
-    
-    if (isWorkingHours) {
-        statusDot.classList.remove('offline');
-        statusText.textContent = 'Currently Online';
-        statusText.style.color = 'var(--success)';
-    } else {
-        statusDot.classList.add('offline');
-        statusText.textContent = 'Away right now';
-        statusText.style.color = 'var(--text2)';
-    }
+    const isWorking = (day >= 1 && day <= 5 && hours >= 9 && hours < 18) || (day === 6 && hours >= 10 && hours < 14);
+    statusDot.classList.toggle('offline', !isWorking);
+    statusText.textContent = isWorking ? 'Currently Online' : 'Away right now';
+    statusText.style.color = isWorking ? 'var(--success)' : 'var(--text2)';
 }
-
 setInterval(updateStatus, 1000);
 updateStatus();
 
-// ===== FEATURE 5: THEME TOGGLE =====
+// ===== THEME TOGGLE =====
 function toggleTheme() {
     const html = document.documentElement;
     const icon = document.getElementById('themeIcon');
-    
     if (html.dataset.theme === 'light') {
-        html.dataset.theme = 'dark';
-        icon.className = 'fa-solid fa-moon';
+        html.dataset.theme = 'dark'; icon.className = 'fa-solid fa-moon';
         localStorage.setItem('contactTheme', 'dark');
     } else {
-        html.dataset.theme = 'light';
-        icon.className = 'fa-solid fa-sun';
+        html.dataset.theme = 'light'; icon.className = 'fa-solid fa-sun';
         localStorage.setItem('contactTheme', 'light');
     }
 }
+(function(){const s=localStorage.getItem('contactTheme');if(s==='light'){document.documentElement.dataset.theme='light';document.getElementById('themeIcon').className='fa-solid fa-sun'}})();
 
-// Load saved theme
-(function() {
-    const saved = localStorage.getItem('contactTheme');
-    if (saved === 'light') {
-        document.documentElement.dataset.theme = 'light';
-        document.getElementById('themeIcon').className = 'fa-solid fa-sun';
-    }
-})();
-
-// ===== FEATURE 7: COPY TO CLIPBOARD =====
+// ===== COPY TO CLIPBOARD =====
 function copyToClipboard(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-        btn.classList.add('copied');
-        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-        showToast(`${text} copied to clipboard!`, 'success');
-        
-        setTimeout(() => {
-            btn.classList.remove('copied');
-            btn.innerHTML = '<i class="fa-solid fa-copy"></i>';
-        }, 2000);
+        btn.classList.add('copied'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        showToast(`Copied: ${text}`, 'success');
+        setTimeout(() => {btn.classList.remove('copied'); btn.innerHTML = '<i class="fa-solid fa-copy"></i>'}, 2000);
     });
 }
 
-// ===== FEATURE 10: FORM PROGRESS & VALIDATION =====
+// ===== FEATURE 2: CHARACTER COUNTER =====
+function updateCharCounter() {
+    const msg = document.getElementById('msgInput').value;
+    const counter = document.getElementById('charCounter');
+    const len = msg.length;
+    const max = 500;
+    
+    counter.textContent = `${len} / ${max}`;
+    counter.className = 'char-counter';
+    if (len > max * 0.9) counter.classList.add('danger');
+    else if (len > max * 0.7) counter.classList.add('warning');
+}
+
+// ===== FORM VALIDATION & PROGRESS =====
 function validateField(input, type) {
     const msgEl = document.getElementById(type + 'Msg');
     const value = input.value.trim();
-    let isValid = true;
-    let message = '';
-    
-    input.classList.remove('valid', 'invalid');
+    let isValid = true, message = '';
+    input.classList.remove('valid','invalid');
     
     if (type === 'name') {
-        if (value.length < 2) {isValid = false; message = 'Name must be at least 2 characters'}
-        else if (value.length > 50) {isValid = false; message = 'Name too long'}
+        if (value.length < 2) {isValid=false;message='Min 2 characters'}
+        else if (value.length > 50) {isValid=false;message='Too long'}
     } else if (type === 'email') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {isValid = false; message = 'Please enter a valid email address'}
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {isValid=false;message='Invalid email format'}
     } else if (type === 'message') {
-        if (value.length < 10) {isValid = false; message = 'Message must be at least 10 characters'}
+        if (value.length < 10) {isValid=false;message='Min 10 characters'}
     }
     
     if (value.length > 0) {
@@ -871,9 +750,7 @@ function validateField(input, type) {
         msgEl.textContent = isValid ? '✓ Looks good!' : '✗ ' + message;
     } else {
         msgEl.className = 'validation-msg';
-        msgEl.textContent = '';
     }
-    
     return isValid;
 }
 
@@ -881,22 +758,19 @@ function updateProgress() {
     const name = document.getElementById('nameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
     const msg = document.getElementById('msgInput').value.trim();
-    
-    const steps = ['step1','step2','step3','step4'];
     let filled = 0;
     if (name.length >= 2) filled++;
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) filled++;
     if (document.querySelector('.subject-tag.active')) filled++;
     if (msg.length >= 10) filled++;
     
-    steps.forEach((id, i) => {
+    ['step1','step2','step3','step4'].forEach((id,i) => {
         const el = document.getElementById(id);
         el.classList.toggle('filled', i < filled);
         el.classList.toggle('active', i === filled);
     });
 }
 
-// Subject tags selection
 function selectSubject(tag) {
     document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
     tag.classList.add('active');
@@ -904,25 +778,76 @@ function selectSubject(tag) {
     updateProgress();
 }
 
-// Form submission
+// ===== FEATURE 8: SEND METHOD SELECTION =====
+let sendMethod = 'whatsapp';
+
+function selectSendMethod(option) {
+    document.querySelectorAll('.send-option').forEach(o => o.classList.remove('active'));
+    option.classList.add('active');
+    sendMethod = option.dataset.method;
+    playClickSound();
+}
+
+// ===== FEATURE 4: AUTO-SAVE DRAFT =====
+let draftTimeout;
+function autoSaveDraft() {
+    clearTimeout(draftTimeout);
+    draftTimeout = setTimeout(() => {
+        const draft = {
+            name: document.getElementById('nameInput').value,
+            email: document.getElementById('emailInput').value,
+            subject: document.getElementById('subjectInput').value,
+            message: document.getElementById('msgInput').value
+        };
+        localStorage.setItem('contactFormDraft', JSON.stringify(draft));
+        document.getElementById('draftIndicator').classList.add('show');
+        setTimeout(() => document.getElementById('draftIndicator').classList.remove('show'), 2500);
+    }, 1500);
+}
+
+function loadDraft() {
+    const saved = localStorage.getItem('contactFormDraft');
+    if (saved) {
+        const d = JSON.parse(saved);
+        if (d.name) document.getElementById('nameInput').value = d.name;
+        if (d.email) document.getElementById('emailInput').value = d.email;
+        if (d.subject) document.getElementById('subjectInput').value = d.subject;
+        if (d.message) document.getElementById('msgInput').value = d.message;
+        updateCharCounter();
+        updateProgress();
+        showToast('Draft restored from last session ♻️');
+    }
+}
+loadDraft();
+
+// ===== FEATURE 9: KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', (e) => {
+    // Ctrl+Enter to submit
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('submitBtn').click();
+    }
+});
+
+// ===== FORM SUBMISSION =====
+let redirectInterval;
+
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const btn = document.getElementById('submitBtn');
-    const successMsg = document.getElementById('successMsg');
-    
-    // Validate all fields
     const nameValid = validateField(document.getElementById('nameInput'), 'name');
     const emailValid = validateField(document.getElementById('emailInput'), 'email');
     const msgValid = validateField(document.getElementById('msgInput'), 'message');
     
     if (!nameValid || !emailValid || !msgValid) {
-        showToast('Please fix the errors above ❌');
+        showToast('Please fix errors above ❌');
+        playErrorSound();
         return;
     }
     
-    // Show loading state
+    const btn = document.getElementById('submitBtn');
     btn.classList.add('loading');
+    playClickSound();
     
     setTimeout(() => {
         const inputs = this.querySelectorAll('input, textarea');
@@ -931,84 +856,199 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         const subject = inputs[2].value || 'General Inquiry';
         const message = inputs[3].value;
         
-        // Create WhatsApp message
-        const text = `*New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
+        const text = `*New Message from Portfolio*\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
         
-        // Open WhatsApp
-        window.open(`https://wa.me/94775048455?text=${encodeURIComponent(text)}`, '_blank');
-        
-        // Show success
         btn.classList.remove('loading');
-        successMsg.classList.add('show');
-        this.reset();
-        document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.form-input').forEach(i => i.classList.remove('valid','invalid'));
-        document.querySelectorAll('.validation-msg').forEach(m => m.className='validation-msg');
-        updateProgress();
         
+        // Clear draft
+        localStorage.removeItem('contactFormDraft');
+        
+        if (sendMethod === 'whatsapp') {
+            // Show redirect timer (Feature 5)
+            document.getElementById('successMsg').classList.add('show');
+            document.getElementById('successText').textContent = 'Message prepared! Opening WhatsApp...';
+            document.getElementById('redirectTimer').classList.add('show');
+            
+            let count = 5;
+            document.getElementById('timerNumber').textContent = count;
+            
+            redirectInterval = setInterval(() => {
+                count--;
+                document.getElementById('timerNumber').textContent = count;
+                if (count <= 0) {
+                    clearInterval(redirectInterval);
+                    window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
+                    document.getElementById('redirectTimer').classList.remove('show');
+                }
+            }, 1000);
+        } else {
+            // Open email client (Feature 8)
+            window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replace(/\*/g,''))}%0A%0AFrom: ${name}%0AEmail: ${email}`;
+            document.getElementById('successMsg').classList.add('show');
+            document.getElementById('successText').textContent = 'Opening your email app...';
+        }
+        
+        // Reset form after delay
         setTimeout(() => {
-            successMsg.classList.remove('show');
-        }, 5000);
+            this.reset();
+            document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form-input').forEach(i => i.classList.remove('valid','invalid'));
+            document.querySelectorAll('.validation-msg').forEach(m => m.className='validation-msg');
+            updateProgress();
+            updateCharCounter();
+        }, 500);
         
-        showToast('Message sent successfully! 🎉', 'success');
-    }, 1500);
+        showToast(sendMethod === 'whatsapp' ? 'Opening WhatsApp... 📱' : 'Opening email app... 📧', 'success');
+    }, 1200);
 });
 
-// ===== FEATURE 3: FAQ ACCORDION =====
-function toggleFaq(question) {
-    const item = question.parentElement;
-    const isActive = item.classList.contains('active');
-    
-    // Close all
-    document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('active'));
-    
-    // Open clicked if wasn't active
-    if (!isActive) item.classList.add('active');
+// Cancel redirect
+function cancelRedirect() {
+    clearInterval(redirectInterval);
+    document.getElementById('redirectTimer').classList.remove('show');
+    showToast('Redirect cancelled');
 }
 
-// Open first FAQ by default
-document.querySelector('.faq-item').classList.add('active');
+// ===== FAQ ACCORDION =====
+function toggleFaq(q) {
+    const item = q.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+}
 
-// ===== FEATURE 9: TESTIMONIALS SLIDER =====
+// ===== TESTIMONIALS =====
 let currentTestimonial = 0;
-const totalTestimonials = 3;
+function moveTestimonial(dir) {
+    currentTestimonial = (currentTestimonial + dir + 3) % 3;
+    document.getElementById('testimonialTrack').style.transform = `translateX(-${currentTestimonial * 100}%)`;
+    document.querySelectorAll('.slider-dot').forEach((d,i) => d.classList.toggle('active', i === currentTestimonial));
+}
+function goToTestimonial(i) {currentTestimonial = i; moveTestimonial(0);}
+setInterval(() => moveTestimonial(1), 6000);
 
-function moveTestimonial(direction) {
-    currentTestimonial += direction;
-    if (currentTestimonial < 0) currentTestimonial = totalTestimonials - 1;
-    if (currentTestimonial >= totalTestimonials) currentTestimonial = 0;
-    updateTestimonialSlider();
+// ===== TOAST =====
+function showToast(msg, type='') {
+    const t = document.getElementById('toast');
+    t.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-info-circle'}"></i> ${msg}`;
+    t.className = 'toast show ' + type;
+    setTimeout(() => t.classList.remove('show'), 3200);
 }
 
-function goToTestimonial(index) {
-    currentTestimonial = index;
-    updateTestimonialSlider();
+// ===== FEATURE 3: SOUND EFFECTS =====
+let audioCtx;
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
 
-function updateTestimonialSlider() {
-    const track = document.getElementById('testimonialTrack');
-    track.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+function playClickSound() {
+    try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.frequency.value = 800; osc.type = 'sine';
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+    } catch(e){}
+}
+
+function playErrorSound() {
+    try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.frequency.value = 300; osc.type = 'square';
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+    } catch(e){}
+}
+
+// ===== FEATURE 6: SIMPLE QR CODE GENERATION =====
+function generateQR(canvasId, data) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const size = canvas.width;
+    const moduleCount = 21;
+    const moduleSize = size / moduleCount;
     
-    document.querySelectorAll('.slider-dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentTestimonial);
-    });
-}
-
-// Auto-slide testimonials
-setInterval(() => {
-    moveTestimonial(1);
-}, 6000);
-
-// ===== TOAST NOTIFICATION =====
-function showToast(message, type = '') {
-    const toast = document.getElementById('toast');
-    toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-info-circle'}"></i> ${message}`;
-    toast.className = 'toast show ' + type;
+    // Simple pattern generator based on data
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,size,size);
+    ctx.fillStyle = '#1a1a2e';
     
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3500);
+    // Finder patterns (corners)
+    drawFinderPattern(ctx, 0, 0, moduleSize);
+    drawFinderPattern(ctx, (moduleCount-7)*moduleSize, 0, moduleSize);
+    drawFinderPattern(ctx, 0, (moduleCount-7)*moduleSize, moduleSize);
+    
+    // Data modules (pseudo-random based on input)
+    let hash = 0;
+    for(let i=0;i<data.length;i++) hash = ((hash<<5)-hash)+data.charCodeAt(i);
+    
+    for(let row=0;row<moduleCount;row++){
+        for(let col=0;col<moduleCount;col++){
+            // Skip finder patterns
+            if((row<8&&col<8)||(row<8&&col>=moduleCount-8)||(row>=moduleCount-8&&col<8)) continue;
+            if(row===6||col===6) continue;
+            
+            const seed = (row * 31 + col * 17 + hash) % 100;
+            if(seed < 45){
+                ctx.fillRect(col*moduleSize, row*moduleSize, moduleSize-1, moduleSize-1);
+            }
+        }
+    }
+    
+    // Timing patterns
+    for(let i=8;i<moduleCount-8;i++){
+        if(i%2===0){
+            ctx.fillRect(6*moduleSize, i*moduleSize, moduleSize-1, moduleSize-1);
+            ctx.fillRect(i*moduleSize, 6*moduleSize, moduleSize-1, moduleSize-1);
+        }
+    }
 }
+
+function drawFinderPattern(ctx, x, y, ms) {
+    // Outer black square
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(x,y,7*ms,7*ms);
+    // Inner white
+    ctx.fillStyle = 'white';
+    ctx.fillRect(x+ms,y+ms,5*ms,5*ms);
+    // Center black
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(x+2*ms,y+2*ms,3*ms,3*ms);
+}
+
+// Generate QR codes on load
+generateQR('qrCanvasWA', 'https://wa.me/' + CONFIG.whatsapp);
+generateQR('qrCanvasEmail', 'mailto:' + CONFIG.email);
+
+// ===== FEATURE 10: SMART SUBJECT DETECTION =====
+document.getElementById('msgInput').addEventListener('input', function() {
+    const msg = this.value.toLowerCase();
+    const tags = document.querySelectorAll('.subject-tag');
+    
+    // Reset active state if user typed custom subject
+    if (msg.length > 20 && !document.querySelector('.subject-tag.active')) {
+        const keywords = {
+            'project': 0, 'job': 1, 'collaborat': 2, 'hello|hi|hey|hey': 3,
+            'website|web|app|develop': 0, 'hire|career|position': 1,
+            'partner|together|team': 2, 'connect|reach|contact': 3
+        };
+        
+        for (const [key, idx] of Object.entries(keywords)) {
+            const regex = new RegExp(key, 'i');
+            if (regex.test(msg)) {
+                tags[idx].click();
+                break;
+            }
+        }
+    }
+});
 </script>
 
 </body>
