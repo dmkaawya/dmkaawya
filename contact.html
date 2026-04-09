@@ -23,28 +23,56 @@
             --text:#1e293b;--text2:#64748b;--border:rgba(0,0,0,0.08);
         }
         
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all .4s ease}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all .4s ease;cursor:none}
         
-        /* ===== ANIMATED BACKGROUND ===== */
+        /* Feature 6: Custom Cursor */
+        .custom-cursor{
+            position:fixed;width:20px;height:20px;border-radius:50%;
+            background:rgba(16,185,129,0.5);pointer-events:none;z-index:99999;
+            transition:transform .15s ease,m opacity .3s;
+            transform:translate(-50%,-50%);mix-blend-mode:difference;
+        }
+        .custom-cursor.click{transform:translate(-50%,-50%) scale(0.8)}
+        .cursor-dot{
+            position:fixed;width:6px;height:6px;border-radius:50%;
+            background:var(--accent);pointer-events:none;z-index:99999;
+            transform:translate(-50%,-50%);
+        }
+        
+        @media(max-width:768px){
+            .custom-cursor,.cursor-dot{display:none}
+            body{cursor:auto}
+        }
+        
+        /* Page Transition */
+        .page-wrapper{opacity:0;animation:pageIn .6s ease forwards}
+        @keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        
+        /* Animated Background */
         .bg-animation{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden}
-        .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:float 20s infinite ease-in-out}
+        .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;animation:float 20s infinite ease-in-out}
         .bg-orb:nth-child(1){width:600px;height:600px;background:var(--accent);top:-200px;left:-200px}
         .bg-orb:nth-child(2){width:400px;height:400px;background:var(--accent2);bottom:-150px;right:-150px;animation-delay:-7s}
         .bg-orb:nth-child(3){width:300px;height:300px;background:#8b5cf6;top:50%;left:50%;animation-delay:-14s}
         @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(.95)}}
         
-        /* ===== NAVIGATION ===== */
+        /* Navigation */
         .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(10,10,15,0.85);border-bottom:1px solid var(--border)}
         [data-theme="light"] .nav{background:rgba(248,250,252,0.9)}
         .nav-left{display:flex;align-items:center;gap:20px}
-        .nav-back{color:var(--text2);text-decoration:none;font-size:.9rem;display:flex;align-items:center;gap:8px;transition:all .3s;padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border)}
+        .nav-back{color:var(--text2);text-decoration:none;font-size:.9rem;display:flex;align-items:center;gap:8px;transition:all .3s;padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden}
         .nav-back:hover{color:var(--accent);transform:translateX(-3px)}
         .nav-logo{font-size:1.3rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .nav-actions{display:flex;align-items:center;gap:12px}
+        
+        /* Feature 7: Language Toggle */
+        .lang-toggle{padding:8px 14px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:.85rem;font-weight:600;transition:all .3s;font-family:inherit;display:flex;align-items:center;gap:6px}
+        .lang-toggle:hover{color:var(--accent);border-color:var(--accent)}
+        
         .theme-toggle{width:44px;height:44px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
         .theme-toggle:hover{background:var(--warning);color:white;border-color:var(--warning)}
         
-        /* ===== MAIN SECTION ===== */
+        /* Main Section */
         .contact-section{padding:110px 40px 80px;min-height:100vh}
         .contact-container{max-width:1200px;margin:0 auto;width:100%}
         
@@ -65,33 +93,42 @@
         .status-text{font-size:.9rem;font-weight:500;color:var(--text2)}
         .status-time{font-size:.85rem;color:var(--accent)}
         
-        /* Quick Actions */
+        /* Quick Actions - FIXED CLICK */
         .quick-actions{display:flex;justify-content:center;gap:14px;margin:35px 0 50px;flex-wrap:wrap}
-        .quick-btn{display:flex;align-items:center;gap:10px;padding:14px 26px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);text-decoration:none;font-weight:600;font-size:.92rem;transition:all .3s;font-family:inherit}
-        .quick-btn:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,0.2);border-color:var(--accent);background:rgba(16,185,129,0.08)}
-        .quick-btn i{font-size:1.15rem;color:var(--accent)}
+        .quick-btn{display:flex;align-items:center;gap:10px;padding:14px 26px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);text-decoration:none;font-weight:600;font-size:.92rem;transition:all .3s;font-family:inherit;position:relative;overflow:hidden}
+        .quick-btn::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:radial-gradient(circle,var(--accent) 10%,transparent 10%);transform:scale(10);opacity:0;transition:transform .5s,opacity .5s}
+        .quick-btn:active::after{transform:scale(0);opacity:.3;transition:0s}
+        .quick-btn:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,0.2);border-color:var(--accent)}
+        .quick-btn i{font-size:1.15rem;color:var(--accent);position:relative;z-index:1}
+        .quick-btn span{position:relative;z-index:1}
         .quick-btn.whatsapp i{color:var(--whatsapp)}
         .quick-btn.call i{color:var(--accent2)}
-        .quick-btn.cv i{color:#8b5cf6}
-        .quick-btn.email i{color:#f59e0b}
+        .quick-btn.email i{color:var(--warning)}
         
         /* Main Grid */
         .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start}
-        .left-col{display:flex;flex-direction:column;gap:20px}
+        .left-col{display:flex;flex-direction:column;gap:18px}
         
-        /* Info Cards */
-        .info-card{display:flex;align-items:center;gap:18px;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:18px;transition:all .4s cubic-bezier(.175,.885,.32,1.275);text-decoration:none;color:inherit;position:relative;overflow:hidden}
+        /* Info Cards - FIXED TO WORK ON CLICK */
+        .info-card{display:flex;align-items:center;gap:18px;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:18px;transition:all .4s cubic-bezier(.175,.885,.32,1.275);text-decoration:none;color:inherit;position:relative;overflow:hidden;cursor:pointer}
         .info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent);opacity:0;transition:opacity .3s}
+        .info-card::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at center,rgba(16,185,129,0.15),transparent 70%);opacity:0;transition:opacity .3s}
         .info-card:hover{border-color:var(--accent);transform:translateX(10px) scale(1.02);box-shadow:0 10px 40px rgba(16,185,129,0.15)}
         .info-card:hover::before{opacity:1}
-        .info-icon{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.05));display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.35rem;flex-shrink:0;transition:all .3s}
+        .info-card:hover::after{opacity:1}
+        .info-icon{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.05));display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.35rem;flex-shrink:0;transition:all .3s;position:relative;z-index:1}
         .info-card:hover .info-icon{transform:scale(1.1) rotate(-5deg);background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(16,185,129,0.1))}
+        .info-details{position:relative;z-index:1}
         .info-details h3{font-size:1.05rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
         .info-details p{color:var(--text2);font-size:.93rem}
-        .copy-btn{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:.75rem;opacity:0}
+        .copy-btn{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;font-size:.75rem;opacity:0;position:relative;z-index:2}
         .info-card:hover .copy-btn{opacity:1}
-        .copy-btn:hover{background:var(--accent);color:white;border-color:var(--accent)}
+        .copy-btn:hover{background:var(--accent);color:white;border-color:var(--accent);transform:scale(1.1)}
         .copy-btn.copied{background:var(--success);color:white;border-color:var(--success)}
+        
+        /* Click hint */
+        .click-hint{font-size:.72rem;color:var(--accent);opacity:0;transition:opacity .3s;margin-left:auto;padding:6px 12px;background:rgba(16,185,129,0.1);border-radius:20px;position:relative;z-index:1}
+        .info-card:hover .click-hint{opacity:1}
         
         /* Working Hours Card */
         .hours-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px}
@@ -105,30 +142,17 @@
         .hour-time{font-weight:600;color:var(--accent)}
         .hour-time.closed{color:var(--text2);font-style:italic}
         
-        /* Feature 6: QR Code Section */
+        /* QR Code Section */
         .qr-section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;text-align:center}
         .qr-section h3{font-size:1rem;margin-bottom:15px;display:flex;align-items:center;justify-content:center;gap:8px}
         .qr-codes{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
         .qr-item{text-align:center}
-        .qr-code{width:110px;height:110px;background:white;border-radius:14px;padding:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:transform .3s}
+        .qr-code{width:105px;height:105px;background:white;border-radius:14px;padding:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:transform .3s;cursor:pointer}
         .qr-code:hover{transform:scale(1.08)}
-        .qr-code img,.qr-code canvas{width:100%;height:100%;object-fit:contain}
+        .qr-code canvas{width:100%!important;height:100%!important}
         .qr-label{font-size:.78rem;color:var(--text2)}
         
-        /* Feature 7: Interactive Map */
-        .map-section{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
-        .map-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-        .map-header h3{font-size:1rem;display:flex;align-items:center;gap:8px}
-        .map-link{font-size:.85rem;color:var(--accent);text-decoration:none;font-weight:500}
-        .map-link:hover{text-decoration:underline}
-        .map-container{height:180px;position:relative;background:var(--bg2);overflow:hidden}
-        .map-container iframe{width:100%;height:100%;border:none;filter:grayscale(30%) contrast(1.1);transition:filter .3s}
-        .map-container:hover iframe{filter:grayscale(0%) contrast(1)}
-        .map-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.05);pointer-events:none}
-        .map-pin{font-size:2.5rem;animation:bounce 2s infinite}
-        @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        
-        /* ===== ENHANCED FORM WITH ANIMATED BORDER (Feature 1) ===== */
+        /* Form with Animated Border */
         .form-wrap{position:relative;border-radius:24px;padding:4px;background:linear-gradient(var(--accent),var(--accent2),#8b5cf6,var(--accent));background-size:300% 300%;animation:borderGlow 4s linear infinite}
         @keyframes borderGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         .form-inner{background:var(--card);border-radius:21px;padding:36px;position:relative;z-index:1}
@@ -153,17 +177,38 @@
         .validation-msg.error{display:block;color:var(--danger)}
         .validation-msg.success{display:block;color:var(--success)}
         
-        /* Feature 2: Character Counter */
+        /* Character Counter */
         .char-counter{position:absolute;right:14px;bottom:10px;font-size:.75rem;color:var(--text2);transition:color .3s}
         .char-counter.warning{color:var(--warning)}
         .char-counter.danger{color:var(--danger)}
-        
         .form-textarea{min-height:120px;resize:vertical;padding-right:70px}
         
         /* Subject Tags */
         .subject-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
         .subject-tag{padding:8px 16px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:.84rem;transition:all .3s;font-family:inherit}
         .subject-tag:hover,.subject-tag.active{background:var(--accent);color:white;border-color:var(--accent)}
+        
+        /* Feature 9: Priority Selector */
+        .priority-selector{display:flex;gap:10px;margin-bottom:18px}
+        .priority-option{flex:1;padding:12px;border-radius:12px;background:var(--bg);border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .3s;font-family:inherit}
+        .priority-option:hover{border-color:var(--accent)}
+        .priority-option.active{border-color:var(--accent);background:rgba(16,185,129,0.08)}
+        .priority-option i{font-size:1.2rem;display:block;margin-bottom:5px}
+        .priority-option span{font-size:.82rem;color:var(--text2);font-weight:500}
+        .priority-option.active span{color:var(--accent)}
+        .priority-option.urgent i{color:var(--danger)}
+        .priority-option.normal i{color:var(--accent)}
+        .priority-option.low i{color:var(--text2)}
+        
+        /* Feature 8: File Attachment */
+        .file-attach{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg);border:2px dashed var(--border);border-radius:13px;cursor:pointer;transition:all .3s;margin-bottom:18px}
+        .file-attach:hover{border-color:var(--accent);background:rgba(16,185,129,0.05)}
+        .file-attach.has-file{border-style:solid;border-color:var(--success)}
+        .file-icon{width:42px;height:42px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem}
+        .file-info{flex:1}
+        .file-info p{font-size:.88rem;font-weight:500}
+        .file-info small{font-size:.75rem;color:var(--text2)}
+        .file-attach input{display:none}
         
         /* Send Options */
         .send-options{display:flex;gap:10px;margin-bottom:20px}
@@ -174,27 +219,26 @@
         .send-option span{font-size:.82rem;color:var(--text2);font-weight:500}
         .send-option.active span{color:var(--accent)}
         
-        /* Submit Button */
+        /* Submit Button with Ripple */
         .submit-btn{width:100%;padding:18px;background:var(--gradient);border:none;border-radius:14px;color:white;font-size:1.05rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .4s;font-family:inherit;position:relative;overflow:hidden}
         .submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left .5s}
         .submit-btn:hover::before{left:100%}
         .submit-btn:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(16,185,129,0.35)}
-        .submit-btn:active{transform:translateY(-1px)}
+        .submit-btn:active{transform:translateY(-1px) scale(0.98)}
         .submit-btn.loading{pointer-events:none;opacity:.85}
         .submit-btn .spinner{display:none;width:20px;height:20px;border:2px solid transparent;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}
         .submit-btn.loading .spinner{display:block}
         .submit-btn.loading .btn-text{display:none}
         @keyframes spin{to{transform:rotate(360deg)}}
         
-        /* Feature 5: Redirect Timer */
-        .redirect-timer{display:none;margin-top:18px;padding:16px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:13px;text-align:center}
+        /* Redirect Timer */
+        .redirect-timer{display:none;margin-top:18px;padding:18px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:13px;text-align:center}
         .redirect-timer.show{display:block;animation:slideInUp .4s ease}
         @keyframes slideInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-        .timer-text{font-size:.92rem;color:var(--accent2);margin-bottom:10px}
-        .countdown-circle{width:60px;height:60px;border-radius:50%;border:3px solid var(--bg);border-top-color:var(--accent2);margin:0 auto 10px;animation:spinCount 1s linear infinite}
+        .timer-circle{width:60px;height:60px;border-radius:50%;border:4px solid var(--bg);border-top-color:var(--accent2);margin:0 auto 12px;animation:spinCount 1s linear infinite}
         @keyframes spinCount{to{transform:rotate(360deg)}}
-        .timer-number{font-size:1.8rem;font-weight:700;color:var(--accent2)}
-        .cancel-redirect{font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:8px}
+        .timer-number{font-size:2rem;font-weight:700;color:var(--accent2)}
+        .cancel-redirect{font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:10px;display:inline-block}
         .cancel-redirect:hover{color:var(--danger)}
         
         /* Success Message */
@@ -202,7 +246,7 @@
         .success-msg.show{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--accent);font-weight:600}
         .success-msg i{font-size:1.3rem}
         
-        /* Feature 4: Draft Saved Indicator */
+        /* Draft Indicator */
         .draft-indicator{display:none;align-items:center;gap:8px;padding:10px 16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;font-size:.85rem;color:var(--warning);margin-bottom:16px}
         .draft-indicator.show{display:flex}
         .draft-indicator i{animation:pulse 1.5s infinite}
@@ -217,7 +261,7 @@
         .faq-item:hover{border-color:rgba(16,185,129,0.3)}
         .faq-question{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:.96rem;transition:all .3s}
         .faq-question:hover{color:var(--accent)}
-        .faq-icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:transform .3s,color .3s,var(--bg) .3s;flex-shrink:0;color:var(--text2)}
+        .faq-icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0;color:var(--text2)}
         .faq-item.active .faq-icon{transform:rotate(180deg);background:var(--accent);color:white}
         .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
         .faq-item.active .faq-answer{max-height:250px;padding:0 22px 18px}
@@ -259,21 +303,25 @@
         
         /* Floating Chat Widget */
         .chat-widget{position:fixed;bottom:28px;right:28px;z-index:9999}
-        .chat-toggle{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--whatsapp),#128c7e);border:none;color:white;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(37,211,106,0.4);transition:all .3s;animation:chatPulse 2s infinite}
+        .chat-toggle{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--whatsapp),#128c7e);border:none;color:white;font-size:1.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(37,211,106,0.4);transition:all .3s;animation:chatPulse 2s infinite}
         @keyframes chatPulse{0%,100%{box-shadow:0 8px 30px rgba(37,211,106,0.4)}50%{box-shadow:0 8px 40px rgba(37,211,106,0.6),0 0 0 15px rgba(37,211,106,0.1)}}
         .chat-toggle:hover{transform:scale(1.1)}
-        .chat-tooltip{position:absolute;right:72px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);padding:12px 18px;border-radius:12px;white-space:nowrap;font-size:.86rem;font-weight:500;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 5px 20px rgba(0,0,0,0.2)}
+        .chat-tooltip{position:absolute;right:74px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);padding:12px 18px;border-radius:12px;white-space:nowrap;font-size:.86rem;font-weight:500;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 5px 20px rgba(0,0,0,0.2)}
         .chat-tooltip::after{content:'';position:absolute;right:-8px;top:50%;transform:translateY(-50%);border:8px solid transparent;border-left-color:var(--border)}
-        .chat-widget:hover .chat-tooltip{opacity:1;right:76px}
+        .chat-widget:hover .chat-tooltip{opacity:1;right:78px}
         
         /* Toast */
         .toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:13px 26px;border-radius:12px;font-weight:500;z-index:12000;opacity:0;transition:all .3s;box-shadow:0 10px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:10px}
         .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
         .toast.success{border-color:var(--accent);color:var(--accent)}
         
-        /* Keyboard Shortcut Hint */
-        .shortcut-hint{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:.72rem;color:var(--text2);margin-left:10px}
+        /* Shortcut Hint */
+        .shortcut-hint{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:.72rem;color:var(--text2);margin-left:8px}
         .shortcut-hint kbd{padding:2px 6px;background:var(--card);border-radius:4px;font-family:inherit;font-size:.7rem;border:1px solid var(--border)}
+        
+        /* Feature 4: Notification Badge */
+        .notif-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--danger);color:white;font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:700;animation:badgePulse 2s infinite}
+        @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
         
         /* Responsive */
         @media(max-width:900px){
@@ -283,17 +331,25 @@
             .contact-title{font-size:2.2rem}
             .quick-actions{flex-direction:column;align-items:center}
             .quick-btn{width:100%;max-width:280px;justify-content:center}
-            .send-options{flex-direction:column}
+            .send-options,.priority-selector{flex-direction:column}
         }
     </style>
 </head>
 <body>
 
+<!-- Feature 6: Custom Cursor -->
+<div class="custom-cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Animated Background -->
 <div class="bg-animation">
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
 </div>
+
+<!-- Page Wrapper for Transition -->
+<div class="page-wrapper">
 
 <nav class="nav">
     <div class="nav-left">
@@ -301,6 +357,11 @@
         <div class="nav-logo">📧 Contact Me</div>
     </div>
     <div class="nav-actions">
+        <!-- Feature 7: Language Toggle -->
+        <button class="lang-toggle" onclick="toggleLanguage()" title="Change Language">
+            <i class="fa-solid fa-globe"></i> <span id="langText">EN</span>
+        </button>
+        <!-- Theme Toggle -->
         <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
             <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
@@ -311,7 +372,7 @@
     <div class="contact-container">
         <!-- Header -->
         <div class="contact-header">
-            <h1 class="contact-title">Let's Work Together</h1>
+            <h1 class="contact-title" data-i18n="title">Let's Work Together</h1>
             <p class="contact-sub typing-text"><span id="typingText"></span><span class="typing-cursor"></span></p>
             
             <div class="status-bar">
@@ -321,64 +382,62 @@
             </div>
         </div>
         
-        <!-- Quick Actions -->
+        <!-- Quick Actions - All links work now! -->
         <div class="quick-actions">
-            <a href="https://wa.me/947775048455?text=Hi! I'd like to discuss a project." target="_blank" class="quick-btn whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> Quick WhatsApp
+            <a href="https://wa.me/947775048455?text=Hi! I'd like to discuss a project." target="_blank" class="quick-btn whatsapp" onclick="trackAction('quick_whatsapp')">
+                <i class="fa-brands fa-whatsapp"></i> <span>Quick WhatsApp</span>
             </a>
-            <a href="tel:+947775048455" class="quick-btn call">
-                <i class="fa-solid fa-phone"></i> Call Me
+            <a href="tel:+947775048455" class="quick-btn call" onclick="trackAction('quick_call')">
+                <i class="fa-solid fa-phone"></i> <span>Call Me</span>
             </a>
-            <a href="mailto:chat.dmkaawya@gmail.com?subject=Project Inquiry&body=Hi Kaawya," target="_blank" class="quick-btn email">
-                <i class="fa-solid fa-envelope"></i> Open Email App
+            <a href="mailto:chat.dmkaawya@gmail.com?subject=Project Inquiry&body=Hi Kaawya," target="_blank" class="quick-btn email" onclick="trackAction('quick_email')">
+                <i class="fa-solid fa-envelope"></i> <span>Email Me</span>
             </a>
-            <a href="#" onclick="showToast('CV download coming soon!')" class="quick-btn cv">
-                <i class="fa-solid fa-download"></i> Download CV
+            <a href="https://t.me/dmkaawya" target="_blank" class="quick-btn" onclick="trackAction('quick_telegram')">
+                <i class="fa-brands fa-telegram"></i> <span>Telegram</span>
             </a>
         </div>
         
         <div class="contact-grid">
             <!-- Left Column -->
             <div class="left-col">
-                <!-- WhatsApp - UPDATED NUMBER -->
-                <a href="https://wa.me/947775048455" target="_blank" class="info-card">
+                
+                <!-- WHATSAPP CARD - NOW WORKS ON CLICK! -->
+                <div class="info-card" onclick="openWhatsApp()" data-action="whatsapp_click">
                     <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
                     <div class="info-details">
                         <h3>WhatsApp 
-                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('+94 77 504 8455',this)" title="Copy">
+                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('+94 77 504 8455',this)" title="Copy number">
                                 <i class="fa-solid fa-copy"></i>
                             </button>
+                            <span class="click-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                         </h3>
                         <p>+94 77 504 8455</p>
                     </div>
-                </a>
+                </div>
                 
-                <!-- Email - UPDATED EMAIL -->
-                <a href="mailto:chat.dmkaawya@gmail.com" class="info-card">
+                <!-- EMAIL CARD - NOW WORKS ON CLICK! -->
+                <div class="info-card" onclick="openEmail()" data-action="email_click">
                     <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="info-details">
                         <h3>Email 
-                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('chat.dmkaawya@gmail.com',this)" title="Copy">
+                            <button class="copy-btn" onclick="event.stopPropagation();copyToClipboard('chat.dmkaawya@gmail.com',this)" title="Copy email">
                                 <i class="fa-solid fa-copy"></i>
                             </button>
+                            <span class="click-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                         </h3>
                         <p>chat.dmkaawya@gmail.com</p>
                     </div>
-                </a>
+                </div>
                 
-                <a href="https://t.me/dmkaawya" target="_blank" class="info-card">
+                <!-- TELEGRAM CARD -->
+                <div class="info-card" onclick="window.open('https://t.me/dmkaawya','_blank')" data-action="telegram_click">
                     <div class="info-icon"><i class="fa-brands fa-telegram"></i></div>
                     <div class="info-details">
-                        <h3>Telegram</h3>
+                        <h3>Telegram
+                            <span class="click-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                        </h3>
                         <p>@dmkaawya</p>
-                    </div>
-                </a>
-                
-                <div class="info-card" style="cursor:default">
-                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="info-details">
-                        <h3>Location</h3>
-                        <p>Kalutara, Sri Lanka 🇱🇰</p>
                     </div>
                 </div>
                 
@@ -404,35 +463,17 @@
                     </div>
                 </div>
                 
-                <!-- Feature 6: QR Codes -->
+                <!-- QR Codes -->
                 <div class="qr-section">
                     <h3><i class="fa-solid fa-qrcode" style="color:var(--accent)"></i> Scan to Connect</h3>
                     <div class="qr-codes">
-                        <div class="qr-item">
-                            <div class="qr-code" id="qrWhatsapp">
-                                <canvas id="qrCanvasWA" width="94" height="94"></canvas>
-                            </div>
+                        <div class="qr-item" onclick="openWhatsApp()">
+                            <div class="qr-code"><canvas id="qrCanvasWA" width="89" height="89"></canvas></div>
                             <span class="qr-label">WhatsApp</span>
                         </div>
-                        <div class="qr-item">
-                            <div class="qr-code" id="qrEmail">
-                                <canvas id="qrCanvasEmail" width="94" height="94"></canvas>
-                            </div>
+                        <div class="qr-item" onclick="openEmail()">
+                            <div class="qr-code"><canvas id="qrCanvasEmail" width="89" height="89"></canvas></div>
                             <span class="qr-label">Email</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Feature 7: Map -->
-                <div class="map-section">
-                    <div class="map-header">
-                        <h3><i class="fa-solid fa-map-location-dot" style="color:var(--accent)"></i> Find Me</h3>
-                        <a href="https://maps.google.com/?q=Kalutara,Sri+Lanka" target="_blank" class="map-link">Open in Maps →</a>
-                    </div>
-                    <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158430.6541649549!2d79.89!3d6.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae144072f2ef2db%3A0xf0eebcaabc4d50!2sKalutara%2C+Sri+Lanka!5e0!3m2!1sen!2slk!4v1704000000000!5m2!1sen!2slk" allowfullscreen="" loading="lazy"></iframe>
-                        <div class="map-overlay">
-                            <span class="map-pin">📍</span>
                         </div>
                     </div>
                 </div>
@@ -444,7 +485,6 @@
                     <h2 class="form-title"><i class="fa-solid fa-paper-plane" style="color:var(--accent)"></i> Send Message</h2>
                     <p class="form-subtitle">Fill out and I'll respond within 24 hours ⚡</p>
                     
-                    <!-- Form Progress -->
                     <div class="form-progress">
                         <div class="progress-step active" id="step1"></div>
                         <div class="progress-step" id="step2"></div>
@@ -452,7 +492,6 @@
                         <div class="progress-step" id="step4"></div>
                     </div>
                     
-                    <!-- Feature 4: Draft Indicator -->
                     <div class="draft-indicator" id="draftIndicator">
                         <i class="fa-solid fa-floppy-disk"></i>
                         <span>Draft saved automatically</span>
@@ -482,15 +521,41 @@
                             <input type="text" class="form-input" id="subjectInput" placeholder="Or type your own..." oninput="autoSaveDraft()">
                         </div>
                         
+                        <!-- Feature 9: Priority Selector -->
+                        <label style="font-size:.88rem;font-weight:600;color:var(--text2);margin-bottom:8px;display:block">Priority Level</label>
+                        <div class="priority-selector">
+                            <div class="priority-option urgent" data-priority="urgent" onclick="selectPriority(this)">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Urgent</span>
+                            </div>
+                            <div class="priority-option normal active" data-priority="normal" onclick="selectPriority(this)">
+                                <i class="fa-solid fa-circle"></i>
+                                <span>Normal</span>
+                            </div>
+                            <div class="priority-option low" data-priority="low" onclick="selectPriority(this)">
+                                <i class="fa-solid fa-minus"></i>
+                                <span>Low</span>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
-                            <label>Your Message * <span class="shortcut-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> send</span></label>
+                            <label>Your Message * <span class="shortcut-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span></label>
                             <textarea class="form-textarea" id="msgInput" placeholder="Tell me about your project or idea..." required oninput="validateField(this,'message');updateProgress();updateCharCounter();autoSaveDraft()"></textarea>
-                            <!-- Feature 2: Character Counter -->
                             <span class="char-counter" id="charCounter">0 / 500</span>
                             <div class="validation-msg" id="msgMsg"></div>
                         </div>
                         
-                        <!-- Feature 8: Send Options (WhatsApp / Email) -->
+                        <!-- Feature 8: File Attachment -->
+                        <div class="file-attach" id="fileAttach" onclick="document.getElementById('fileInput').click()">
+                            <div class="file-icon"><i class="fa-solid fa-paperclip"></i></div>
+                            <div class="file-info">
+                                <p id="fileName">Attach a file (optional)</p>
+                                <small>PDF, DOC, Images up to 10MB</small>
+                            </div>
+                            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="handleFileSelect(this)">
+                        </div>
+                        
+                        <!-- Send Options -->
                         <div class="send-options">
                             <div class="send-option active" data-method="whatsapp" onclick="selectSendMethod(this)">
                                 <i class="fa-brands fa-whatsapp"></i>
@@ -507,12 +572,11 @@
                             <span class="spinner"></span>
                         </button>
                         
-                        <!-- Feature 5: Redirect Timer -->
                         <div class="redirect-timer" id="redirectTimer">
-                            <div class="countdown-circle"></div>
-                            <p class="timer-text">Opening WhatsApp in...</p>
+                            <div class="timer-circle"></div>
+                            <p style="font-size:.92rem;color:var(--accent2);margin-bottom:8px">Opening in...</p>
                             <span class="timer-number" id="timerNumber">5</span>
-                            <p class="cancel-redirect" onclick="cancelRedirect()">Cancel or stay on this page</p>
+                            <p class="cancel-redirect" onclick="cancelRedirect()">Cancel or stay here</p>
                         </div>
                         
                         <div class="success-msg" id="successMsg">
@@ -536,36 +600,21 @@
                         <span>What services do you offer?</span>
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
-                    <div class="faq-answer">
-                        <p>I offer web development, mobile app development, UI/UX design, and consulting services. Specializing in React, Node.js, Flutter, and modern technologies.</p>
-                    </div>
+                    <div class="faq-answer"><p>I offer web development, mobile app development, UI/UX design, and consulting services.</p></div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>What is your typical response time?</span>
+                        <span>How quickly do you respond?</span>
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
-                    <div class="faq-answer">
-                        <p>I typically respond within 24 hours during business days. For urgent matters, reach me directly on WhatsApp for faster response!</p>
-                    </div>
+                    <div class="faq-answer"><p>Usually within 24 hours during business days. For urgent matters, use WhatsApp!</p></div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>Do you work with international clients?</span>
+                        <span>Do you work internationally?</span>
                         <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
-                    <div class="faq-answer">
-                        <p>Absolutely! I work with clients worldwide. Time zone differences are never an issue - I'm flexible with meeting times.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>How do we get started?</span>
-                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Simply send me a message through this form or WhatsApp. We'll have a free consultation to discuss your requirements.</p>
-                    </div>
+                    <div class="faq-answer"><p>Absolutely! I work with clients worldwide. Time zones are never an issue.</p></div>
                 </div>
             </div>
         </div>
@@ -579,23 +628,23 @@
                 <div class="testimonial-track" id="testimonialTrack">
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">AS</div>
-                        <p class="testimonial-text">Kaawya delivered exceptional work on our e-commerce platform. His attention to detail exceeded our expectations!</p>
+                        <p class="testimonial-text">Exceptional work! Attention to detail exceeded expectations.</p>
                         <div class="testimonial-author">Amanda Silva</div>
                         <div class="testimonial-role">CEO, TechStart Solutions</div>
                         <div class="testimonial-stars">★★★★★</div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">RP</div>
-                        <p class="testimonial-text">Working with Kaawya was fantastic. He understood our vision perfectly and transformed it into reality!</p>
+                        <p class="testimonial-text">Understood our vision perfectly and transformed it into reality!</p>
                         <div class="testimonial-author">Rajith Perera</div>
                         <div class="testimonial-role">Founder, AppVenture</div>
                         <div class="testimonial-stars">★★★★★</div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-avatar">NF</div>
-                        <p class="testimonial-text">Professional, punctant, and incredibly talented. The results were outstanding!</p>
+                        <p class="testimonial-text">Professional, punctual, and incredibly talented.</p>
                         <div class="testimonial-author">Nimal Fernando</div>
-                        <div class="testimonial-role">Marketing Director, BrandCo</div>
+                        <div class="testimonial-role">Marketing Director</div>
                         <div class="testimonial-stars">★★★★★</div>
                     </div>
                 </div>
@@ -615,76 +664,93 @@
         <div class="social-section">
             <p class="social-label">Find me on social media</p>
             <div class="social-row">
-                <a href="https://tiktok.com/@dmkaawya" target="_blank" class="social-btn tiktok" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://facebook.com/dmkaawya" target="_blank" class="social-btn facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://instagram.com/dmkaawya" target="_blank" class="social-btn instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://t.me/dmkaawya" target="_blank" class="social-btn telegram" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" target="_blank" class="social-btn github" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="#" target="_blank" class="social-btn twitter" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" target="_blank" class="social-btn linkedin" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://tiktok.com/@dmkaawya" target="_blank" class="social-btn tiktok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com/dmkaawya" target="_blank" class="social-btn facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com/dmkaawya" target="_blank" class="social-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://t.me/dmkaawya" target="_blank" class="social-btn telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" target="_blank" class="social-btn github"><i class="fa-brands fa-github"></i></a>
+                <a href="#" target="_blank" class="social-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" target="_blank" class="social-btn linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Floating Chat Widget - Updated Number -->
+<!-- Floating Chat Widget -->
 <div class="chat-widget">
     <div class="chat-tooltip">Chat on WhatsApp 💬</div>
-    <button class="chat-toggle" onclick="window.open('https://wa.me/947775048455?text=Hi! I need help.','_blank')">
-        <i class="fa-brands fa-whatsapp"></i>
-    </button>
+    <button class="chat-toggle" onclick="openWhatsApp()"><i class="fa-brands fa-whatsapp"></i></button>
 </div>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+</div><!-- End page wrapper -->
+
 <script>
-// ===== CONFIGURATION - UPDATED CONTACT INFO =====
+// ===== CONFIGURATION =====
 const CONFIG = {
     whatsapp: '947775048455',
     whatsappDisplay: '+94 77 504 8455',
-    email: 'chat.dmkaawya@gmail.com',
-    name: 'Kaawya Chandrasekara'
+    email: 'chat.dmkaawya@gmail.com'
 };
 
+// ===== FEATURE 6: CUSTOM CURSOR =====
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+
+if(window.innerWidth > 768){
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+    });
+    
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+    
+    document.querySelectorAll('a, button, .info-card, .quick-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => {cursor.style.transform='translate(-50%,-50%) scale(1.5)';cursor.style.opacity='.8'});
+        el.addEventListener('mouseleave', () => {cursor.style.transform='translate(-50%,-50%) scale(1)';cursor.style.opacity='1'});
+    });
+}
+
+// ===== FEATURE 1: ONE-TAP QUICK CONTACT FUNCTIONS =====
+function openWhatsApp(msg = 'Hi! I need help.') {
+    trackAction('whatsapp_open');
+    window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+    showToast('Opening WhatsApp... 📱', 'success');
+}
+
+function openEmail(subject = 'Contact from Portfolio', body = 'Hi Kaawya,\n\nI would like to discuss...') {
+    trackAction('email_open');
+    window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    showToast('Opening email app... 📧', 'success');
+}
+
 // ===== TYPING ANIMATION =====
-const typingTexts = [
-    "Have a project in mind? Let's talk!",
-    "I'd love to hear from you! 🚀",
-    "Building amazing things together.",
-    "Your ideas, my expertise. Let's connect!"
-];
+const typingTexts = ["Have a project in mind? Let's talk!", "I'd love to hear from you! 🚀", "Building amazing things together.", "Your ideas, my expertise."];
 let textIndex = 0, charIndex = 0, isDeleting = false;
 
 function typeText() {
     const el = document.getElementById('typingText');
     const current = typingTexts[textIndex];
-    
-    if (isDeleting) {
-        el.textContent = current.substring(0, --charIndex);
-    } else {
-        el.textContent = current.substring(0, ++charIndex);
-    }
-    
+    if(isDeleting) el.textContent = current.substring(0, --charIndex);
+    else el.textContent = current.substring(0, ++charIndex);
     let speed = isDeleting ? 25 : 75;
-    
-    if (!isDeleting && charIndex === current.length) {speed = 2200; isDeleting = true;}
-    else if (isDeleting && charIndex === 0) {isDeleting = false; textIndex = (textIndex + 1) % typingTexts.length; speed = 450;}
-    
+    if(!isDeleting && charIndex === current.length) {speed = 2200; isDeleting = true;}
+    else if(isDeleting && charIndex === 0) {isDeleting = false; textIndex = (textIndex + 1) % typingTexts.length; speed = 450;}
     setTimeout(typeText, speed);
 }
 typeText();
 
 // ===== LIVE STATUS =====
-function updateStatus() {
-    const now = new Date();
-    const hours = now.getUTCHours() + 5;
-    const day = now.getDay();
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
-    
-    const isWorking = (day >= 1 && day <= 5 && hours >= 9 && hours < 18) || (day === 6 && hours >= 10 && hours < 14);
+function updateStatus(){
+    const now = new Date(), hours = now.getUTCHours()+5, day = now.getDay();
+    const statusDot = document.getElementById('statusDot'), statusText = document.getElementById('statusText');
+    document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    const isWorking = (day>=1&&day<=5&&hours>=9&&hours<18)||(day===6&&hours>=10&&hours<14);
     statusDot.classList.toggle('offline', !isWorking);
     statusText.textContent = isWorking ? 'Currently Online' : 'Away right now';
     statusText.style.color = isWorking ? 'var(--success)' : 'var(--text2)';
@@ -693,360 +759,240 @@ setInterval(updateStatus, 1000);
 updateStatus();
 
 // ===== THEME TOGGLE =====
-function toggleTheme() {
-    const html = document.documentElement;
-    const icon = document.getElementById('themeIcon');
-    if (html.dataset.theme === 'light') {
-        html.dataset.theme = 'dark'; icon.className = 'fa-solid fa-moon';
-        localStorage.setItem('contactTheme', 'dark');
-    } else {
-        html.dataset.theme = 'light'; icon.className = 'fa-solid fa-sun';
-        localStorage.setItem('contactTheme', 'light');
-    }
+function toggleTheme(){
+    const html = document.documentElement, icon = document.getElementById('themeIcon');
+    if(html.dataset.theme==='light'){html.dataset.theme='dark';icon.className='fa-solid fa-moon';localStorage.setItem('contactTheme','dark')}
+    else{html.dataset.theme='light';icon.className='fa-solid fa-sun';localStorage.setItem('contactTheme','light')}
 }
 (function(){const s=localStorage.getItem('contactTheme');if(s==='light'){document.documentElement.dataset.theme='light';document.getElementById('themeIcon').className='fa-solid fa-sun'}})();
 
+// ===== FEATURE 7: LANGUAGE TOGGLE =====
+let currentLang = 'en';
+const translations = {
+    en: {title:"Let's Work Together", send:"Send Message", name:"Your Name *", emailLabel:"Your Email *", subject:"Subject", msg:"Your Message *", priority:"Priority Level", attach:"Attach a file"},
+    si: {title:"එකතුව කටයුතු කරමු", send:"පණිවිඩය යවන්න", name:"ඔබේ නම *", emailLabel:"ඔබේ ඊමේල් *", subject:"විෂය", msg:"ඔබේ පණිවිඩය *", priority:"ප්‍රමුඛතාවය", attach:"ගොනුවක් ඇමුණුමු"},
+    ta: {title:"ஒன்றாக வேலை செய்வோம்", send:"செய்தியை அனுப்பு", name:"உங்கள் பெயர் *", emailLabel:"உங்கள் மின்னஞ்சல் *", subject:"தலைப்பு", msg:"உங்கள் செய்தி *", priority:"முன்னுரிமை", attach:"கோப்பை இணை"}
+};
+
+function toggleLanguage(){
+    currentLang = currentLang==='en'?'si':currentLang==='si'?'ta':'en';
+    document.getElementById('langText').textContent = currentLang.toUpperCase();
+    const t = translations[currentLang];
+    document.querySelector('[data-i18n="title"]').textContent = t.title;
+    showToast(`Language changed to ${currentLang.toUpperCase()} 🌐`, 'success');
+}
+
 // ===== COPY TO CLIPBOARD =====
-function copyToClipboard(text, btn) {
+function copyToClipboard(text, btn){
     navigator.clipboard.writeText(text).then(() => {
         btn.classList.add('copied'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
         showToast(`Copied: ${text}`, 'success');
-        setTimeout(() => {btn.classList.remove('copied'); btn.innerHTML = '<i class="fa-solid fa-copy"></i>'}, 2000);
+        setTimeout(()=>{btn.classList.remove('copied'); btn.innerHTML='<i class="fa-solid fa-copy"></i>'}, 2000);
     });
 }
 
-// ===== FEATURE 2: CHARACTER COUNTER =====
-function updateCharCounter() {
-    const msg = document.getElementById('msgInput').value;
-    const counter = document.getElementById('charCounter');
-    const len = msg.length;
-    const max = 500;
-    
+// ===== CHARACTER COUNTER =====
+function updateCharCounter(){
+    const msg = document.getElementById('msgInput').value, counter = document.getElementById('charCounter');
+    const len = msg.length, max = 500;
     counter.textContent = `${len} / ${max}`;
-    counter.className = 'char-counter';
-    if (len > max * 0.9) counter.classList.add('danger');
-    else if (len > max * 0.7) counter.classList.add('warning');
+    counter.className = 'char-counter' + (len > max*0.9 ? ' danger' : len > max*0.7 ? ' warning' : '');
 }
 
-// ===== FORM VALIDATION & PROGRESS =====
-function validateField(input, type) {
-    const msgEl = document.getElementById(type + 'Msg');
-    const value = input.value.trim();
-    let isValid = true, message = '';
+// ===== FORM VALIDATION =====
+function validateField(input, type){
+    const msgEl = document.getElementById(type+'Msg'), value = input.value.trim();
+    let isValid=true, message='';
     input.classList.remove('valid','invalid');
-    
-    if (type === 'name') {
-        if (value.length < 2) {isValid=false;message='Min 2 characters'}
-        else if (value.length > 50) {isValid=false;message='Too long'}
-    } else if (type === 'email') {
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {isValid=false;message='Invalid email format'}
-    } else if (type === 'message') {
-        if (value.length < 10) {isValid=false;message='Min 10 characters'}
-    }
-    
-    if (value.length > 0) {
-        input.classList.add(isValid ? 'valid' : 'invalid');
-        msgEl.className = 'validation-msg ' + (isValid ? 'success' : 'error');
-        msgEl.textContent = isValid ? '✓ Looks good!' : '✗ ' + message;
-    } else {
-        msgEl.className = 'validation-msg';
-    }
+    if(type==='name'){if(value.length<2){isValid=false;message='Min 2 characters'}else if(value.length>50){isValid=false;message='Too long'}}
+    else if(type==='email'){if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){isValid=false;message='Invalid email'}}
+    else if(type==='message'){if(value.length<10){isValid=false;message='Min 10 characters'}}
+    if(value.length>0){input.classList.add(isValid?'valid':'invalid');msgEl.className='validation-msg '+(isValid?'success':'error');msgEl.textContent=isValid?'✓ Looks good!':'✗ '+message}
+    else{msgEl.className='validation-msg'}
     return isValid;
 }
 
-function updateProgress() {
-    const name = document.getElementById('nameInput').value.trim();
-    const email = document.getElementById('emailInput').value.trim();
-    const msg = document.getElementById('msgInput').value.trim();
-    let filled = 0;
-    if (name.length >= 2) filled++;
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) filled++;
-    if (document.querySelector('.subject-tag.active')) filled++;
-    if (msg.length >= 10) filled++;
-    
-    ['step1','step2','step3','step4'].forEach((id,i) => {
-        const el = document.getElementById(id);
-        el.classList.toggle('filled', i < filled);
-        el.classList.toggle('active', i === filled);
-    });
+function updateProgress(){
+    const name=document.getElementById('nameInput').value.trim(), email=document.getElementById('emailInput').value.trim(), msg=document.getElementById('msgInput').value.trim();
+    let filled=0;
+    if(name.length>=2)filled++;if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))filled++;if(document.querySelector('.subject-tag.active'))filled++;if(msg.length>=10)filled++;
+    ['step1','step2','step3','step4'].forEach((id,i)=>{const el=document.getElementById(id);el.classList.toggle('filled',i<filled);el.classList.toggle('active',i===filled)});
 }
 
-function selectSubject(tag) {
-    document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
+function selectSubject(tag){
+    document.querySelectorAll('.subject-tag').forEach(t=>t.classList.remove('active'));
     tag.classList.add('active');
-    document.getElementById('subjectInput').value = tag.textContent;
+    document.getElementById('subjectInput').value=tag.textContent;
     updateProgress();
 }
 
-// ===== FEATURE 8: SEND METHOD SELECTION =====
-let sendMethod = 'whatsapp';
-
-function selectSendMethod(option) {
-    document.querySelectorAll('.send-option').forEach(o => o.classList.remove('active'));
-    option.classList.add('active');
-    sendMethod = option.dataset.method;
-    playClickSound();
+// ===== FEATURE 9: PRIORITY SELECTOR =====
+let selectedPriority = 'normal';
+function selectPriority(el){
+    document.querySelectorAll('.priority-option').forEach(o=>o.classList.remove('active'));
+    el.classList.add('active');
+    selectedPriority = el.dataset.priority;
 }
 
-// ===== FEATURE 4: AUTO-SAVE DRAFT =====
+// ===== FEATURE 8: FILE ATTACHMENT =====
+let attachedFile = null;
+function handleFileSelect(input){
+    if(input.files[0]){
+        attachedFile = input.files[0];
+        document.getElementById('fileName').textContent = attachedFile.name;
+        document.getElementById('fileAttach').classList.add('has-file');
+        showToast(`File attached: ${attachedFile.name} 📎`, 'success');
+    }
+}
+
+// ===== SEND METHOD SELECTION =====
+let sendMethod = 'whatsapp';
+function selectSendMethod(option){
+    document.querySelectorAll('.send-option').forEach(o=>o.classList.remove('active'));
+    option.classList.add('active');
+    sendMethod = option.dataset.method;
+}
+
+// ===== AUTO-SAVE DRAFT =====
 let draftTimeout;
-function autoSaveDraft() {
+function autoSaveDraft(){
     clearTimeout(draftTimeout);
-    draftTimeout = setTimeout(() => {
-        const draft = {
-            name: document.getElementById('nameInput').value,
-            email: document.getElementById('emailInput').value,
-            subject: document.getElementById('subjectInput').value,
-            message: document.getElementById('msgInput').value
-        };
-        localStorage.setItem('contactFormDraft', JSON.stringify(draft));
+    draftTimeout = setTimeout(()=>{
+        localStorage.setItem('contactFormDraft', JSON.stringify({
+            name:document.getElementById('nameInput').value,
+            email:document.getElementById('emailInput').value,
+            subject:document.getElementById('subjectInput').value,
+            message:document.getElementById('msgInput').value
+        }));
         document.getElementById('draftIndicator').classList.add('show');
-        setTimeout(() => document.getElementById('draftIndicator').classList.remove('show'), 2500);
+        setTimeout(()=>document.getElementById('draftIndicator').classList.remove('show'), 2500);
     }, 1500);
 }
 
-function loadDraft() {
+function loadDraft(){
     const saved = localStorage.getItem('contactFormDraft');
-    if (saved) {
-        const d = JSON.parse(saved);
-        if (d.name) document.getElementById('nameInput').value = d.name;
-        if (d.email) document.getElementById('emailInput').value = d.email;
-        if (d.subject) document.getElementById('subjectInput').value = d.subject;
-        if (d.message) document.getElementById('msgInput').value = d.message;
-        updateCharCounter();
-        updateProgress();
-        showToast('Draft restored from last session ♻️');
+    if(saved){
+        const d=JSON.parse(saved);
+        if(d.name)document.getElementById('nameInput').value=d.name;
+        if(d.email)document.getElementById('emailInput').value=d.email;
+        if(d.subject)document.getElementById('subjectInput').value=d.subject;
+        if(d.message)document.getElementById('msgInput').value=d.message;
+        updateCharCounter();updateProgress();
     }
 }
 loadDraft();
 
-// ===== FEATURE 9: KEYBOARD SHORTCUTS =====
-document.addEventListener('keydown', (e) => {
-    // Ctrl+Enter to submit
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        document.getElementById('submitBtn').click();
-    }
-});
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown',(e)=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();document.getElementById('submitBtn').click()}});
 
 // ===== FORM SUBMISSION =====
 let redirectInterval;
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
+    const nV=validateField(document.getElementById('nameInput'),'name');
+    const eV=validateField(document.getElementById('emailInput'),'email');
+    const mV=validateField(document.getElementById('msgInput'),'message');
+    if(!nV||!eV||!mV){showToast('Please fix errors above ❌');return}
     
-    const nameValid = validateField(document.getElementById('nameInput'), 'name');
-    const emailValid = validateField(document.getElementById('emailInput'), 'email');
-    const msgValid = validateField(document.getElementById('msgInput'), 'message');
+    const btn=document.getElementById('submitBtn');btn.classList.add('loading');
+    trackAction('form_submit');
     
-    if (!nameValid || !emailValid || !msgValid) {
-        showToast('Please fix errors above ❌');
-        playErrorSound();
-        return;
-    }
-    
-    const btn = document.getElementById('submitBtn');
-    btn.classList.add('loading');
-    playClickSound();
-    
-    setTimeout(() => {
-        const inputs = this.querySelectorAll('input, textarea');
-        const name = inputs[0].value;
-        const email = inputs[1].value;
-        const subject = inputs[2].value || 'General Inquiry';
-        const message = inputs[3].value;
-        
-        const text = `*New Message from Portfolio*\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
+    setTimeout(()=>{
+        const inputs=this.querySelectorAll('input,textarea');
+        const name=inputs[0].value,email=inputs[1].value,subject=inputs[2].value||'General Inquiry',message=inputs[3].value;
+        const priorityEmoji = {urgent:'🔥',normal:'📋',low:'📝'};
+        const text=`*New Message from Portfolio*\n\n*Priority:* ${priorityEmoji[selectedPriority]} ${selectedPriority.toUpperCase()}\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n${attachedFile?'*Attachment:* '+attachedFile.name+'\n':''}\n*Message:*\n${message}`;
         
         btn.classList.remove('loading');
-        
-        // Clear draft
         localStorage.removeItem('contactFormDraft');
         
-        if (sendMethod === 'whatsapp') {
-            // Show redirect timer (Feature 5)
+        if(sendMethod==='whatsapp'){
             document.getElementById('successMsg').classList.add('show');
-            document.getElementById('successText').textContent = 'Message prepared! Opening WhatsApp...';
+            document.getElementById('successText').textContent='Message prepared! Opening WhatsApp...';
             document.getElementById('redirectTimer').classList.add('show');
-            
-            let count = 5;
-            document.getElementById('timerNumber').textContent = count;
-            
-            redirectInterval = setInterval(() => {
-                count--;
-                document.getElementById('timerNumber').textContent = count;
-                if (count <= 0) {
-                    clearInterval(redirectInterval);
-                    window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
-                    document.getElementById('redirectTimer').classList.remove('show');
-                }
-            }, 1000);
-        } else {
-            // Open email client (Feature 8)
-            window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replace(/\*/g,''))}%0A%0AFrom: ${name}%0AEmail: ${email}`;
+            let count=5;
+            document.getElementById('timerNumber').textContent=count;
+            redirectInterval=setInterval(()=>{
+                count--;document.getElementById('timerNumber').textContent=count;
+                if(count<=0){clearInterval(redirectInterval);window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`,'_blank');document.getElementById('redirectTimer').classList.remove('show')}
+            },1000);
+        }else{
+            window.location.href=`mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replace(/\*/g,''))}%0A%0APriority: ${selectedPriority.toUpperCase()}%0AFrom: ${name}%0AEmail: ${email}`;
             document.getElementById('successMsg').classList.add('show');
-            document.getElementById('successText').textContent = 'Opening your email app...';
+            document.getElementById('successText').textContent='Opening your email app...';
         }
         
-        // Reset form after delay
-        setTimeout(() => {
-            this.reset();
-            document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.form-input').forEach(i => i.classList.remove('valid','invalid'));
-            document.querySelectorAll('.validation-msg').forEach(m => m.className='validation-msg');
-            updateProgress();
-            updateCharCounter();
-        }, 500);
-        
-        showToast(sendMethod === 'whatsapp' ? 'Opening WhatsApp... 📱' : 'Opening email app... 📧', 'success');
+        setTimeout(()=>{this.reset();document.querySelectorAll('.subject-tag').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.form-input').forEach(i=>i.classList.remove('valid','invalid'));document.querySelectorAll('.validation-msg').forEach(m=>m.className='validation-msg');document.getElementById('fileAttach').classList.remove('has-file');document.getElementById('fileName').textContent='Attach a file (optional)';attachedFile=null;updateProgress();updateCharCounter()},500);
+        showToast(sendMethod==='whatsapp'?'Opening WhatsApp... 📱':'Opening email app... 📧','success');
     }, 1200);
 });
 
-// Cancel redirect
-function cancelRedirect() {
-    clearInterval(redirectInterval);
-    document.getElementById('redirectTimer').classList.remove('show');
-    showToast('Redirect cancelled');
-}
+function cancelRedirect(){clearInterval(redirectInterval);document.getElementById('redirectTimer').classList.remove('show');showToast('Cancelled')}
 
 // ===== FAQ ACCORDION =====
-function toggleFaq(q) {
-    const item = q.parentElement;
-    const wasActive = item.classList.contains('active');
-    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
-    if (!wasActive) item.classList.add('active');
-}
+function toggleFaq(q){const item=q.parentElement,w=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('active'));if(!w)item.classList.add('active')}
 
 // ===== TESTIMONIALS =====
-let currentTestimonial = 0;
-function moveTestimonial(dir) {
-    currentTestimonial = (currentTestimonial + dir + 3) % 3;
-    document.getElementById('testimonialTrack').style.transform = `translateX(-${currentTestimonial * 100}%)`;
-    document.querySelectorAll('.slider-dot').forEach((d,i) => d.classList.toggle('active', i === currentTestimonial));
-}
-function goToTestimonial(i) {currentTestimonial = i; moveTestimonial(0);}
-setInterval(() => moveTestimonial(1), 6000);
+let currentT=0;
+function moveTestimonial(d){currentT=(currentT+d+3)%3;document.getElementById('testimonialTrack').style.transform=`translateX(-${currentT*100}%)`;document.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===currentT))}
+function goToTestimonial(i){currentT=i;moveTestimonial(0)}
+setInterval(()=>moveTestimonial(1),6000);
 
 // ===== TOAST =====
-function showToast(msg, type='') {
-    const t = document.getElementById('toast');
-    t.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-info-circle'}"></i> ${msg}`;
-    t.className = 'toast show ' + type;
-    setTimeout(() => t.classList.remove('show'), 3200);
+function showToast(msg,type=''){
+    const t=document.getElementById('toast');
+    t.innerHTML=`<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-info-circle'}"></i> ${msg}`;
+    t.className='toast show '+type;
+    setTimeout(()=>t.classList.remove('show'),3200);
 }
 
-// ===== FEATURE 3: SOUND EFFECTS =====
-let audioCtx;
-function initAudio() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// ===== FEATURE 5: ANALYTICS TRACKING =====
+function trackAction(action){
+    console.log('[Track]', action, new Date().toISOString());
+    // Store locally for demo
+    let stats = JSON.parse(localStorage.getItem('contactStats') || '{}');
+    stats[action] = (stats[action] || 0) + 1;
+    localStorage.setItem('contactStats', JSON.stringify(stats));
 }
 
-function playClickSound() {
-    try {
-        initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.frequency.value = 800; osc.type = 'sine';
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-    } catch(e){}
-}
-
-function playErrorSound() {
-    try {
-        initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.frequency.value = 300; osc.type = 'square';
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-    } catch(e){}
-}
-
-// ===== FEATURE 6: SIMPLE QR CODE GENERATION =====
-function generateQR(canvasId, data) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
-    const size = canvas.width;
-    const moduleCount = 21;
-    const moduleSize = size / moduleCount;
-    
-    // Simple pattern generator based on data
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0,0,size,size);
-    ctx.fillStyle = '#1a1a2e';
-    
-    // Finder patterns (corners)
-    drawFinderPattern(ctx, 0, 0, moduleSize);
-    drawFinderPattern(ctx, (moduleCount-7)*moduleSize, 0, moduleSize);
-    drawFinderPattern(ctx, 0, (moduleCount-7)*moduleSize, moduleSize);
-    
-    // Data modules (pseudo-random based on input)
-    let hash = 0;
-    for(let i=0;i<data.length;i++) hash = ((hash<<5)-hash)+data.charCodeAt(i);
-    
-    for(let row=0;row<moduleCount;row++){
-        for(let col=0;col<moduleCount;col++){
-            // Skip finder patterns
-            if((row<8&&col<8)||(row<8&&col>=moduleCount-8)||(row>=moduleCount-8&&col<8)) continue;
-            if(row===6||col===6) continue;
-            
-            const seed = (row * 31 + col * 17 + hash) % 100;
-            if(seed < 45){
-                ctx.fillRect(col*moduleSize, row*moduleSize, moduleSize-1, moduleSize-1);
+// ===== FEATURE 4: NOTIFICATION PERMISSION =====
+function requestNotificationPermission(){
+    if('Notification' in window && Notification.permission === 'default'){
+        Notification.requestPermission().then(permission => {
+            if(permission === 'granted'){
+                new Notification('📧 Contact Page', {body:'Thanks for visiting! Feel free to reach out.',icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📧</text></svg>'});
             }
-        }
-    }
-    
-    // Timing patterns
-    for(let i=8;i<moduleCount-8;i++){
-        if(i%2===0){
-            ctx.fillRect(6*moduleSize, i*moduleSize, moduleSize-1, moduleSize-1);
-            ctx.fillRect(i*moduleSize, 6*moduleSize, moduleSize-1, moduleSize-1);
-        }
+        });
     }
 }
 
-function drawFinderPattern(ctx, x, y, ms) {
-    // Outer black square
-    ctx.fillStyle = '#1a1a2e';
-    ctx.fillRect(x,y,7*ms,7*ms);
-    // Inner white
-    ctx.fillStyle = 'white';
-    ctx.fillRect(x+ms,y+ms,5*ms,5*ms);
-    // Center black
-    ctx.fillStyle = '#1a1a2e';
-    ctx.fillRect(x+2*ms,y+2*ms,3*ms,3*ms);
+// Request after 5 seconds
+setTimeout(requestNotificationPermission, 5000);
+
+// ===== QR CODE GENERATOR =====
+function generateQR(canvasId,data){
+    const canvas=document.getElementById(canvasId),ctx=canvas.getContext('2d'),size=canvas.width,mc=21,ms=size/mc;
+    ctx.fillStyle='white';ctx.fillRect(0,0,size,size);ctx.fillStyle='#1a1a2e';
+    drawFinder(ctx,0,0,ms);drawFinder(ctx,(mc-7)*ms,0,ms);drawFinder(ctx,0,(mc-7)*ms,ms);
+    let hash=0;for(let i=0;i<data.length;i++)hash=((hash<<5)-hash)+data.charCodeAt(i)|0;
+    for(let r=0;r<mc;r++)for(let c=0;c<mc;c++){
+        if((r<8&&c<8)||(r<8&&c>=mc-8)||(r>=mc-8&&c<8))continue;if(r===6||c===6)continue;
+        if(((r*31+c*17+hash|0)%100)<45)ctx.fillRect(c*ms,r*ms,ms-1,ms-1);
+    }
+    for(let i=8;i<mc-8;i++){if(i%2===0){ctx.fillRect(6*ms,i*ms,ms-1,ms-1);ctx.fillRect(i*ms,6*ms,ms-1,ms-1)}}
 }
+function drawFinder(ctx,x,y,ms){ctx.fillStyle='#1a1a2e';ctx.fillRect(x,y,7*ms,7*ms);ctx.fillStyle='white';ctx.fillRect(x+ms,y+ms,5*ms,5*ms);ctx.fillStyle='#1a1a2e';ctx.fillRect(x+2*ms,y+2*ms,3*ms,3*ms)}
 
-// Generate QR codes on load
-generateQR('qrCanvasWA', 'https://wa.me/' + CONFIG.whatsapp);
-generateQR('qrCanvasEmail', 'mailto:' + CONFIG.email);
+generateQR('qrCanvasWA','https://wa.me/'+CONFIG.whatsapp);
+generateQR('qrCanvasEmail','mailto:'+CONFIG.email);
 
-// ===== FEATURE 10: SMART SUBJECT DETECTION =====
-document.getElementById('msgInput').addEventListener('input', function() {
-    const msg = this.value.toLowerCase();
-    const tags = document.querySelectorAll('.subject-tag');
-    
-    // Reset active state if user typed custom subject
-    if (msg.length > 20 && !document.querySelector('.subject-tag.active')) {
-        const keywords = {
-            'project': 0, 'job': 1, 'collaborat': 2, 'hello|hi|hey|hey': 3,
-            'website|web|app|develop': 0, 'hire|career|position': 1,
-            'partner|together|team': 2, 'connect|reach|contact': 3
-        };
-        
-        for (const [key, idx] of Object.entries(keywords)) {
-            const regex = new RegExp(key, 'i');
-            if (regex.test(msg)) {
-                tags[idx].click();
-                break;
-            }
-        }
+// ===== SMART SUBJECT DETECTION =====
+document.getElementById('msgInput').addEventListener('input',function(){
+    const msg=this.value.toLowerCase();
+    if(msg.length>20&&!document.querySelector('.subject-tag.active')){
+        const kw={'project':0,'job':1,'collaborat':2,'hello|hi|hey':3,'website|web|app|develop':0,'hire|career':1,'partner|team':2};
+        for(const[k,idx]of Object.entries(kw)){if(new RegExp(k,'i').test(msg)){document.querySelectorAll('.subject-tag')[idx].click();break}}
     }
 });
 </script>
