@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Kaawya Chandrasekara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#0a0a0f;--bg2:#111118;--card:#14141e;
+            --text:#f5f5f7;--text2:#a1a1aa;--accent:#10b981;
+            --accent2:#3b82f6;--border:rgba(255,255,255,0.06);
+        }
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+        
+        .nav{
+            position:fixed;top:0;left:0;right:0;z-index:1000;
+            padding:18px 40px;display:flex;justify-content:space-between;align-items:center;
+            backdrop-filter:blur(20px);background:rgba(10,10,15,0.9);border-bottom:1px solid var(--border);
+        }
+        .nav-logo{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .nav-back{color:var(--text2);text-decoration:none;font-size:.9rem;display:flex;align-items:center;gap:8px;transition:color .3s}
+        .nav-back:hover{color:var(--accent)}
+        
+        .contact-section{padding:120px 40px 80px;min-height:100vh;display:flex;align-items:center}
+        .contact-container{max-width:1000px;margin:0 auto;width:100%}
+        
+        .contact-header{text-align:center;margin-bottom:60px}
+        .contact-title{font-size:2.8rem;font-weight:700;margin-bottom:16px}
+        .contact-sub{color:var(--text2);font-size:1.1rem}
+        
+        .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:start}
+        
+        .contact-info{display:flex;flex-direction:column;gap:20px}
+        
+        .info-card{
+            display:flex;align-items:center;gap:18px;
+            padding:24px;background:var(--card);border:1px solid var(--border);
+            border-radius:16px;transition:all .3s;text-decoration:none;color:inherit;
+        }
+        .info-card:hover{border-color:var(--accent);transform:translateX(8px)}
+        
+        .info-icon{
+            width:56px;height:56px;border-radius:14px;
+            background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;
+            color:var(--accent);font-size:1.3rem;flex-shrink:0
+        }
+        .info-details h3{font-size:1.1rem;margin-bottom:4px}
+        .info-details p{color:var(--text2);font-size:.95rem}
+        
+        .contact-form-wrap{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:24px;padding:40px;
+        }
+        .form-title{font-size:1.5rem;font-weight:700;margin-bottom:28px}
+        
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;font-size:.9rem;font-weight:600;color:var(--text2);margin-bottom:8px}
+        .form-input,.form-textarea{
+            width:100%;padding:16px 18px;background:var(--bg2);
+            border:1px solid var(--border);border-radius:12px;
+            color:var(--text);font-size:1rem;font-family:inherit;
+            transition:all .3s;
+        }
+        .form-input:focus,.form-textarea:focus{
+            outline:none;border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(16,185,129,0.1)
+        }
+        .form-textarea{min-height:140px;resize:vertical}
+        
+        .submit-btn{
+            width:100%;padding:18px;background:linear-gradient(135deg,#10b981,#059669);
+            border:none;border-radius:12px;color:white;font-size:1.05rem;
+            font-weight:700;cursor:pointer;display:flex;align-items:center;
+            justify-content:center;gap:10px;transition:all .3s;font-family:inherit;
+        }
+        .submit-btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(16,185,129,0.4)}
+        
+        .map-section{margin-top:60px;text-align:center}
+        .map-title{font-size:1.5rem;margin-bottom:20px}
+        .map-embed{
+            width:100%;height:400px;border-radius:20px;border:1px solid var(--border);
+            background:var(--bg2);
+        }
+        
+        .social-row{
+            display:flex;justify-content:center;gap:16px;margin-top:40px;
+        }
+        .social-btn{
+            width:50px;height:50px;border-radius:14px;
+            background:var(--card);border:1px solid var(--border);
+            display:flex;align-items:center;justify-content:center;
+            color:var(--text2);text-decoration:none;font-size:1.15rem;
+            transition:all .3s
+        }
+        .social-btn:hover{background:var(--accent);border-color:var(--accent);color:white;transform:translateY(-4px)}
+        
+        .success-msg{
+            display:none;padding:20px;background:rgba(16,185,129,0.1);
+            border:1px solid var(--accent);border-radius:12px;text-align:center;
+            color:var(--accent);font-weight:600;margin-top:20px;
+        }
+        
+        @media(max-width:768px){
+            .nav{padding:14px 20px}
+            .contact-section{padding:100px 20px 60px}
+            .contact-grid{grid-template-columns:1fr}
+            .map-embed{height:300px}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <a href="index.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+    </a>
+    <div class="nav-logo">Contact Me</div>
+</nav>
+
+<section class="contact-section">
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1 class="contact-title">Let's Work Together</h1>
+            <p class="contact-sub">Have a project in mind? Fill out the form below or reach out directly.</p>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <a href="https://wa.me/94775048455" target="_blank" class="info-card">
+                    <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="info-details">
+                        <h3>WhatsApp</h3>
+                        <p>+94 775 048 455</p>
+                    </div>
+                </a>
+                
+                <a href="mailto:dmkaawya@gmail.com" class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="info-details">
+                        <h3>Email</h3>
+                        <p>dmkaawya@gmail.com</p>
+                    </div>
+                </a>
+                
+                <a href="https://t.me/dmkaawya" target="_blank" class="info-card">
+                    <div class="info-icon"><i class="fa-brands fa-telegram"></i></div>
+                    <div class="info-details">
+                        <h3>Telegram</h3>
+                        <p>@dmkaawya</p>
+                    </div>
+                </a>
+                
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-details">
+                        <h3>Location</h3>
+                        <p>Kalutara, Sri Lanka 🇱🇰</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="info-details">
+                        <h3>Response Time</h3>
+                        <p>Usually within 24 hours ⚡</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form-wrap">
+                <h2 class="form-title">Send me a message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" class="form-input" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Your Email *</label>
+                        <input type="email" class="form-input" placeholder="john@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" class="form-input" placeholder="Project Inquiry">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Your Message *</label>
+                        <textarea class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                    
+                    <div class="success-msg" id="successMsg">
+                        <i class="fa-solid fa-circle-check"></i> Message sent successfully! I'll get back to you soon.
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="social-row">
+            <a href="https://tiktok.com/@dmkaawya" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://facebook.com/dmkaawya" target="_blank" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com/dmkaawya" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://t.me/dmkaawya" target="_blank" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-github"></i></a>
+            <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+    </div>
+</section>
+
+<script>
+// Contact form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const inputs = this.querySelectorAll('input, textarea');
+    const name = inputs[0].value;
+    const email = inputs[1].value;
+    const subject = inputs[2].value || 'General Inquiry';
+    const message = inputs[3].value;
+    
+    // Create WhatsApp message
+    const text = `*New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
+    
+    // Open WhatsApp
+    window.open(`https://wa.me/94775048455?text=${encodeURIComponent(text)}`, '_blank');
+    
+    // Show success message
+    document.getElementById('successMsg').style.display = 'block';
+    this.reset();
+    
+    setTimeout(() => {
+        document.getElementById('successMsg').style.display = 'none';
+    }, 5000);
+});
+</script>
+
+</body>
+</html>
